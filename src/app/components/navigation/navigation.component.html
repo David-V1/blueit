@@ -1,1 +1,139 @@
-<p>navigation works!</p>
+<!-- NAVIGATION BAR -->
+<div class="nav-container py-4">
+  <div class="n-logo">
+    <span>logo</span>
+  </div>
+  <div class="n-search py-4">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input
+        class="p-inputtext-sm"
+        type="text"
+        pInputText
+        placeholder="Search"
+        [(ngModel)]="searchValue"
+      />
+    </span>
+  </div>
+  <div class="n-btns py-4">
+    <p-button
+      type="button"
+      label="login"
+      styleClass="p-button-sm"
+      (click)="showBasicDialog()"
+    ></p-button>
+  </div>
+</div>
+
+<!-- external LOGIN dialog -->
+<p-dialog
+  header="Welcome Back!"
+  [(visible)]="displayLogin"
+  [style]="{ width: 'auto' }"
+>
+  <div class="dialog-wrapper d-flex flex-column justify-content-center w-100">
+    <!-- email -->
+    <small>@</small>
+    <span class="p-float-label mb-1 py-1">
+      <input
+        type="email"
+        id="inputtext"
+        pInputText
+        required
+        [(ngModel)]="loginData.email"
+      />
+      <label for="inputtext" class="ps-1">Email</label>
+    </span>
+
+    <!-- password -->
+    <small>*</small>
+    <span class="p-float-label mb-1 py-1">
+      <p-password
+        class="w-100"
+        inputId="password"
+        [(ngModel)]="loginData.password"
+      ></p-password>
+      <label for="password">Password</label>
+    </span>
+    <!-- log BTN-->
+    <br />
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="LOGIN"
+      class="p-button-raised"
+      (click)="onLogin()"
+    ></button>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="ft-form">
+      <small>
+        Don't have an account?
+        <button id="signup-button" (click)="showSignup()">Sign Up</button>
+      </small>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<!-- Create Account Dialog -->
+<p-dialog
+  header="Create Account"
+  [(visible)]="displayCreateAccount"
+  [style]="{ width: 'auto' }"
+>
+  <div class="dialog-wrapper d-flex flex-column justify-content-center w-100">
+    <!-- username -->
+    <i class="pi pi-user me-5 mt-3"></i>
+    <span class="p-float-label mb-1 py-1">
+      <input
+        id="float-input"
+        type="text"
+        pInputText
+        [(ngModel)]="newAccountData.username"
+      />
+      <label for="float-input" class="ps-1">Username</label>
+    </span>
+    <!-- email -->
+    <small>@</small>
+    <span class="p-float-label mb-1 py-1">
+      <input
+        type="email"
+        id="inputtext"
+        pInputText
+        required
+        [(ngModel)]="newAccountData.email"
+      />
+      <label for="inputtext" class="ps-1">Email</label>
+    </span>
+
+    <!-- password -->
+    <small>*</small>
+    <span class="p-float-label mb-1 py-1">
+      <p-password
+        class="w-100"
+        inputId="password"
+        [(ngModel)]="newAccountData.password"
+      ></p-password>
+      <label for="password">Password</label>
+    </span>
+    <!-- signup BTN-->
+    <br />
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Create Account"
+      class="p-button-raised"
+      (click)="onSingup()"
+    ></button>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="ft-form">
+      <small>
+        Already have an account?
+        <button id="signup-button" (click)="showLogin()">Login</button>
+      </small>
+    </div>
+  </ng-template>
+</p-dialog>
