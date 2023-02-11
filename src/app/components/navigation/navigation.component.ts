@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
+import {MessageService} from 'primeng/api';
 import { User } from 'src/app/models/User';
+import { UiService } from 'src/app/services/ui.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss']
+  styleUrls: ['./navigation.component.scss'],
+  providers: [MessageService]
 })
 export class NavigationComponent implements OnInit {
   loginData = {} as User;
@@ -14,7 +18,11 @@ export class NavigationComponent implements OnInit {
   displayLogin: boolean = false;
   displayCreateAccount: boolean = false;
 
-  public constructor(private primengConfig: PrimeNGConfig) { }
+  public constructor(
+    public ui: UiService,
+    private userService: UserService,
+    private primengConfig: PrimeNGConfig,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
@@ -25,13 +33,14 @@ export class NavigationComponent implements OnInit {
   }
 
   public onLogin() {
-    console.log(this.loginData);
+    this.userService.getUserByEmailAndPassword(this.loginData.email, this.loginData.password);
     this.displayLogin = false;
     this.resetLoginFields();
   }
 
   public onSingup() {
-    console.log(this.newAccountData);
+    this.showInfo();
+    this.userService.createUser(this.newAccountData);
     this.displayCreateAccount = false
     this.resetLoginFields();
   }
@@ -48,6 +57,26 @@ export class NavigationComponent implements OnInit {
 
   public resetLoginFields(){
     this.loginData = {} as User;
+    this.newAccountData = {} as User;
   }
+
+
+  // primeNG Toast
+  public showInfo() {
+    this.messageService.add({severity:'info', summary: 'Account Created!', detail: `Welcome ${this.newAccountData.username}!`});
+  }
+
+  public showError() {
+    this.messageService.add({severity:'error', summary: 'Error', detail: 'Message Content'});
+  }
+
+  onConfirm() {
+    this.messageService.clear('c');
+  }
+
+  onReject() {
+      this.messageService.clear('c');
+  }
+  
 
 }
