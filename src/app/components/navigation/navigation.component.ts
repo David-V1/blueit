@@ -4,6 +4,7 @@ import {MessageService} from 'primeng/api';
 import { User } from 'src/app/models/User';
 import { UiService } from 'src/app/services/ui.service';
 import { UserService } from 'src/app/services/user.service';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-navigation',
@@ -17,25 +18,29 @@ export class NavigationComponent implements OnInit {
   searchValue: string = '';
   displayLogin: boolean = false;
   displayCreateAccount: boolean = false;
+  navMenuItems: MenuItem[] = [];
+  username: string = localStorage.getItem('username')!;
+  loggedInMenuItems: MenuItem[] = [];
 
   public constructor(
     public ui: UiService,
-    private userService: UserService,
+    public userService: UserService,
     private primengConfig: PrimeNGConfig,
-    private messageService: MessageService) { }
+    private messageService: MessageService) {
+      this.userService.menu$.subscribe(menuItems => {
+        this.navMenuItems = menuItems;
+      });
+    }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
   }
-
-  public showBasicDialog() {
-    this.displayLogin = true;
-  }
-
+ 
   public onLogin() {
     this.userService.getUserByEmailAndPassword(this.loginData.email, this.loginData.password);
-    this.displayLogin = false;
+    this.userService.displayLogin = false;
     this.resetLoginFields();
+
   }
 
   public onSingup() {
@@ -46,12 +51,12 @@ export class NavigationComponent implements OnInit {
   }
 
   public showLogin() {
-    this.displayLogin = true;
+    this.userService.displayLogin = true;
     this.displayCreateAccount = false;
   }
 
   public showSignup() {
-    this.displayLogin = false;
+    this.userService.displayLogin = false;
     this.displayCreateAccount = true;
   }
 
@@ -61,7 +66,7 @@ export class NavigationComponent implements OnInit {
   }
 
 
-  // primeNG Toast
+  // PrimeNG Toast //@Component level:providers: [MessageService]
   public showInfo() {
     this.messageService.add({severity:'info', summary: 'Account Created!', detail: `Welcome ${this.newAccountData.username}!`});
   }
