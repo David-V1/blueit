@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -16,6 +18,7 @@ import {DialogModule} from 'primeng/dialog';
 import {PasswordModule} from 'primeng/password';
 import { DividerModule } from "primeng/divider";
 import {RippleModule} from 'primeng/ripple';
+import {ToastModule} from 'primeng/toast';
 
 @NgModule({
   declarations: [
@@ -28,13 +31,16 @@ import {RippleModule} from 'primeng/ripple';
     BrowserModule,
     BrowserAnimationsModule,
     NgbModule,
+    HttpClientModule,
+    MatSnackBarModule,
     FormsModule,
     ButtonModule,
     InputTextModule,
     DialogModule,
     PasswordModule,
     DividerModule,
-    RippleModule
+    RippleModule,
+    ToastModule
   ],
   providers: [],
   bootstrap: [AppComponent]
