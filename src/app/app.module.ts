@@ -19,6 +19,8 @@ import {PasswordModule} from 'primeng/password';
 import { DividerModule } from "primeng/divider";
 import {RippleModule} from 'primeng/ripple';
 import {ToastModule} from 'primeng/toast';
+import {MenuModule} from 'primeng/menu';
+import {MenubarModule} from 'primeng/menubar';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import {ToastModule} from 'primeng/toast';
     PasswordModule,
     DividerModule,
     RippleModule,
-    ToastModule
+    ToastModule,
+    MenuModule,
+    MenubarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

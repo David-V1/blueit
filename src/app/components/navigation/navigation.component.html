@@ -1,34 +1,21 @@
-<!-- NAVIGATION BAR -->
-<div class="nav-container py-4">
-  <div class="n-logo">
-    <span>logo</span>
-  </div>
-  <div class="n-search py-4">
-    <span class="p-input-icon-left">
-      <i class="pi pi-search"></i>
-      <input
-        class="p-inputtext-sm"
-        type="text"
-        pInputText
-        placeholder="Search"
-        [(ngModel)]="searchValue"
-      />
-    </span>
-  </div>
-  <div class="n-btns py-4">
-    <p-button
-      type="button"
-      label="login"
-      styleClass="p-button-sm"
-      (click)="showBasicDialog()"
-    ></p-button>
-  </div>
-</div>
+<!-- NAVIGATION BAR for Logged In-->
+<p-menubar [model]="navMenuItems">
+  <ng-template pTemplate="start">
+    <img
+      src="https://images.vexels.com/media/users/3/137279/isolated/preview/e489b2b3639a9179cf9caa168ca24911-foursquare-icon-logo.png"
+      height="40"
+      class="ms-2 px-4"
+    />
+  </ng-template>
+  <ng-template pTemplate="end">
+    <input type="text" pInputText placeholder="Search" class="me-4" />
+  </ng-template>
+</p-menubar>
 
 <!-- external LOGIN dialog -->
 <p-dialog
   header="Welcome Back!"
-  [(visible)]="displayLogin"
+  [(visible)]="userService.displayLogin"
   [style]="{ width: 'auto' }"
 >
   <div class="dialog-wrapper d-flex flex-column justify-content-center w-100">
@@ -138,12 +125,11 @@
   </ng-template>
 </p-dialog>
 
-<!-- TOAST MSGs -->
+<!--**** TOAST MSGs ****-->
 <p-toast></p-toast>
 <p-toast position="top-left" key="tl"></p-toast>
 <p-toast position="top-center" key="tc"></p-toast>
 <p-toast position="bottom-center" key="bc"></p-toast>
-
 <p-toast
   position="bottom-center"
   key="c"
