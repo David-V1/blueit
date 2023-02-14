@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { UiService } from './services/ui.service';
+import { PageName } from './enums/PageEnum';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'blueit';
+  public PageName = PageName;
+
+  constructor(public ui: UiService) { }
 }

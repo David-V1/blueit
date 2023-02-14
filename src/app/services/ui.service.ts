@@ -3,16 +3,24 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from '../models/User';
+import { PageName } from '../enums/PageEnum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UiService {
+  pageName: Number | null = null;
   isLoggedIn: boolean = false;
   currentUsername: string = localStorage.getItem('username') ? localStorage.getItem('username')! : '';
 
   constructor(public http: HttpClient, private _snackBar: MatSnackBar ) {
+    localStorage.getItem("page") ? this.pageName = Number(localStorage.getItem("page")) : this.pageName = 0;
    }
+
+   public changePage(page: number): void {
+    localStorage.setItem("page", page.toString());
+    this.pageName = page
+  }
 
 
   public onValidLogin(loginData: User): void {

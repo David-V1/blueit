@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import {MessageService} from 'primeng/api';
 import { User } from 'src/app/models/User';
 import { UiService } from 'src/app/services/ui.service';
 import { UserService } from 'src/app/services/user.service';
 import { MenuItem } from 'primeng/api';
+import { Subscription } from 'rxjs';
+import { PageName } from 'src/app/enums/PageEnum';
 
 @Component({
   selector: 'app-navigation',
@@ -12,7 +14,8 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./navigation.component.scss'],
   providers: [MessageService]
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent implements OnInit, OnDestroy {
+  PageName = PageName;
   loginData = {} as User;
   newAccountData = {} as User;
   searchValue: string = '';
@@ -21,13 +24,14 @@ export class NavigationComponent implements OnInit {
   navMenuItems: MenuItem[] = [];
   username: string = localStorage.getItem('username')!;
   loggedInMenuItems: MenuItem[] = [];
+  menuSubscription: Subscription;
 
   public constructor(
     public ui: UiService,
     public userService: UserService,
     private primengConfig: PrimeNGConfig,
     private messageService: MessageService) {
-      this.userService.menu$.subscribe(menuItems => {
+      this.menuSubscription = this.userService.menu$.subscribe(menuItems => {
         this.navMenuItems = menuItems;
       });
     }
@@ -35,7 +39,7 @@ export class NavigationComponent implements OnInit {
   ngOnInit(): void {
     this.primengConfig.ripple = true;
   }
- 
+
   public onLogin() {
     this.userService.getUserByEmailAndPassword(this.loginData.email, this.loginData.password);
     this.userService.displayLogin = false;
@@ -83,5 +87,8 @@ export class NavigationComponent implements OnInit {
       this.messageService.clear('c');
   }
   
+  ngOnDestroy(): void {
+    this.menuSubscription.unsubscribe();
+  }
 
 }

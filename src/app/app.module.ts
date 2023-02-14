@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -21,13 +21,20 @@ import {RippleModule} from 'primeng/ripple';
 import {ToastModule} from 'primeng/toast';
 import {MenuModule} from 'primeng/menu';
 import {MenubarModule} from 'primeng/menubar';
+import {PostComponent} from './components/post/post.component';
+import {ProfileComponent} from './components/profile/profile.component';
+import {SelectButtonModule} from 'primeng/selectbutton';
+import {EditorModule} from 'primeng/editor';
+import {FileUploadModule} from 'primeng/fileupload';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    NavigationComponent
+    NavigationComponent,
+    PostComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +52,9 @@ import {MenubarModule} from 'primeng/menubar';
     ToastModule,
     MenuModule,
     MenubarModule,
+    SelectButtonModule,
+    EditorModule,
+    FileUploadModule
   ],
   providers: [],
   bootstrap: [AppComponent]

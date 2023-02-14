@@ -1,0 +1,21 @@
+$p-indentation: 0 3%;
+// Decided to encapsulate the editor in a container to make it easier to style
+:host ::ng-deep {
+  .post-e-container.p-editor-container {
+    .p-editor-content {
+      height: 40vh;
+    }
+  }
+}
+
+.post-container {
+  margin: $p-indentation;
+}
+
+:host ::ng-deep {
+  .p-fileupload-custom.p-fileupload {
+    .p-fileupload-content {
+      height: 40vh;
+    }
+  }
+}
