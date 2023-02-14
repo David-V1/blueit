@@ -1,0 +1,73 @@
+<app-navigation></app-navigation>
+<div class="post-container">
+  <div class="p-heading d-flex justify-content-between">
+    <h2>Create Post</h2>
+    <span>Drafts 0</span>
+  </div>
+  <p-divider></p-divider>
+  <!-- USER -->
+  <span>{{ userService.currentUser.username }}</span>
+  <!-- POST TOOLS -->
+  <p-selectButton
+    [options]="stateOptions"
+    [(ngModel)]="value1"
+    optionLabel="label"
+    optionValue="value"
+    (onOptionClick)="showImgOrVideo()"
+  ></p-selectButton>
+
+  <!-- TITLE -->
+  <span class="p-input-icon-left w-100">
+    <i class="pi pi-ticket"></i>
+    <input
+      id="float-input"
+      type="text"
+      pInputText
+      [(ngModel)]="newPost.title"
+      class="w-100"
+      placeholder="Add a title"
+    />
+  </span>
+  <!-- POST TEXT-AREA -->
+  <p-editor
+    *ngIf="!changeTextArea"
+    [(ngModel)]="newPost.content"
+    styleClass="post-e-container"
+    placeholder="Text"
+  ></p-editor>
+</div>
+<!-- POST IMAGES or VIDEO -->
+<div class="post-container" *ngIf="changeTextArea">
+  <div class="d-flex justify-content-between">
+    <div class="p-fileupload w-100">
+      <!-- UPLOAD CTRLS -->
+      <p-fileUpload
+        name="demo[]"
+        url="./api/upload.php"
+        [multiple]="true"
+        onBeforeUpload="onBeforeUpload"
+        (onSelect)="onUpload($event)"
+        (onUpload)="onUpload($event)"
+        accept="image/*"
+        [maxFileSize]="1000000"
+        styleClass="p-fileupload-custom"
+      >
+        <!-- DRAG N DROP AREA -->
+        <ng-template pTemplate="content">
+          <ul *ngIf="uploadedFiles.length">
+            <li *ngFor="let file of uploadedFiles">
+              {{ file.name }} - {{ file.size }} bytes
+            </li>
+          </ul>
+        </ng-template>
+      </p-fileUpload>
+    </div>
+  </div>
+</div>
+<p-divider></p-divider>
+<div class="post-container">
+  <div class="btn-layout d-flex justify-content-end">
+    <p-button label="Cancel" class="pe-3"></p-button>
+    <p-button label="Post" (onClick)="postNewPost()"></p-button>
+  </div>
+</div>

@@ -4,6 +4,7 @@ import { User } from '../models/User';
 import { BehaviorSubject, Observable, Subject, take } from 'rxjs';
 import { UiService } from './ui.service';
 import { MenuItem } from 'primeng/api';
+import { PageName } from '../enums/PageEnum';
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +72,9 @@ export class UserService {
         {
           label: 'New Post',
           icon: 'pi pi-fw pi-plus',
+          command: () => {
+            this.ui.changePage(PageName.POST);
+          }
         },
         {
           label: 'My Profile',
