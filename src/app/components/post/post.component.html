@@ -47,7 +47,7 @@
         [multiple]="true"
         onBeforeUpload="onBeforeUpload"
         (onSelect)="onUpload($event)"
-        (onUpload)="onUpload($event)"
+        [showUploadButton]="false"
         accept="image/*"
         [maxFileSize]="1000000"
         styleClass="p-fileupload-custom"

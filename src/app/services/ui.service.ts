@@ -12,6 +12,7 @@ export class UiService {
   pageName: Number | null = null;
   isLoggedIn: boolean = false;
   currentUsername: string = localStorage.getItem('username') ? localStorage.getItem('username')! : '';
+  currentUserId: string = localStorage.getItem('id')!;
 
   constructor(public http: HttpClient, private _snackBar: MatSnackBar ) {
     localStorage.getItem("page") ? this.pageName = Number(localStorage.getItem("page")) : this.pageName = 0;

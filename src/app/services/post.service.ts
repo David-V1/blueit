@@ -30,7 +30,7 @@ export class PostService {
 
   //Create
   public createPost(post: FormData): void{
-    this.http.post<Post>(this.postUrl, post)
+    this.http.post<Post>(this.postUrl+"/"+this.ui.currentUserId, post)
     .subscribe({
       next: () => {
         this.ui.openSnackBar('Post created successfully');
