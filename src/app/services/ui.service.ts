@@ -38,6 +38,7 @@ export class UiService {
     localStorage.removeItem('email');
     localStorage.removeItem('password');
     localStorage.removeItem('id');
+    localStorage.removeItem('username');
     localStorage.setItem('isLoggedIn', this.isLoggedIn.toString());
   }
 

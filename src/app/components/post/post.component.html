@@ -5,8 +5,35 @@
     <span>Drafts 0</span>
   </div>
   <p-divider></p-divider>
-  <!-- USER -->
-  <span>{{ userService.currentUser.username }}</span>
+  <!-- COMMUNITY SELECTION -->
+  <p-dropdown
+    [options]="countries"
+    [(ngModel)]="selectedCountry"
+    optionLabel="name"
+    [filter]="true"
+    filterBy="name"
+    [showClear]="true"
+    placeholder="Select a Commuity"
+  >
+    <ng-template pTemplate="selectedItem">
+      <div class="country-item country-item-value" *ngIf="selectedCountry">
+        <img
+          src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+          [class]="'flag flag-' + selectedCountry.code.toLowerCase()"
+        />
+        <div>{{ selectedCountry.name }}</div>
+      </div>
+    </ng-template>
+    <ng-template let-country pTemplate="item">
+      <div class="country-item">
+        <img
+          src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+          [class]="'flag flag-' + country.code.toLowerCase()"
+        />
+        <div>{{ country.name }}</div>
+      </div>
+    </ng-template>
+  </p-dropdown>
   <!-- POST TOOLS -->
   <p-selectButton
     [options]="stateOptions"

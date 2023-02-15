@@ -26,6 +26,9 @@ import {ProfileComponent} from './components/profile/profile.component';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import {EditorModule} from 'primeng/editor';
 import {FileUploadModule} from 'primeng/fileupload';
+import {DropdownModule} from 'primeng/dropdown';
+import { CommunityComponent } from './components/community/community.component';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +37,8 @@ import {FileUploadModule} from 'primeng/fileupload';
     LoginComponent,
     NavigationComponent,
     PostComponent,
-    ProfileComponent
+    ProfileComponent,
+    CommunityComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +58,8 @@ import {FileUploadModule} from 'primeng/fileupload';
     MenubarModule,
     SelectButtonModule,
     EditorModule,
-    FileUploadModule
+    FileUploadModule,
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]

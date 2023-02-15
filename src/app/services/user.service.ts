@@ -38,7 +38,9 @@ export class UserService {
   public onLogout(): void {
     this.ui.onLogout();
     this.userSubject.next(this.currentUser);
-    this.updateMenu(this.activeMenuItem());
+    this.updateMenu(this.activeMenuItem()); // change view to login
+    this.ui.changePage(PageName.HOME);
+
   }
 
   public showBasicDialog() {
@@ -69,13 +71,7 @@ export class UserService {
       label: `${this.currentUser.username}`,
       icon: 'pi pi-fw pi-user',
       items: [
-        {
-          label: 'New Post',
-          icon: 'pi pi-fw pi-plus',
-          command: () => {
-            this.ui.changePage(PageName.POST);
-          }
-        },
+        
         {
           label: 'My Profile',
           icon: 'pi pi-fw pi-user-edit',
@@ -92,7 +88,29 @@ export class UserService {
           }
         }
       ]
-    }] :
+    },
+    {
+      label: 'New Post',
+      icon: 'pi pi-fw pi-plus',
+      command: () => {
+        this.ui.changePage(PageName.POST);
+      }
+    },
+    {
+      label: 'Community',
+      icon: 'pi pi-fw pi-users',
+      items: [
+        {
+          label: 'Create Community',
+          icon: 'pi pi-fw pi-plus',
+          command: () => {
+            this.ui.changePage(PageName.COMMUNITY);
+          }
+        }
+      ]
+    }
+  // Else Not logged in so show this:
+  ] :
     [{
       label: 'Login',
       icon: 'pi pi-fw pi-sign-in',
