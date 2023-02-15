@@ -14,14 +14,16 @@
 </p-menubar>
 
 <!-- external LOGIN dialog -->
-<p-dialog
+<app-login></app-login>
+<!-- <p-dialog
   header="Welcome Back!"
   [(visible)]="userService.displayLogin"
   [style]="{ width: 'auto' }"
 >
-  <div class="dialog-wrapper d-flex flex-column justify-content-center w-100">
-    <!-- email -->
-    <small>@</small>
+  <div class="dialog-wrapper d-flex flex-column justify-content-center w-100"> -->
+<!-- email -->
+
+<!-- <small>@</small>
     <span class="p-float-label mb-1 py-1">
       <input
         type="email"
@@ -31,10 +33,11 @@
         [(ngModel)]="loginData.email"
       />
       <label for="inputtext" class="ps-1">Email</label>
-    </span>
+    </span> -->
 
-    <!-- password -->
-    <small>*</small>
+<!-- password -->
+
+<!-- <small>*</small>
     <span class="p-float-label mb-1 py-1">
       <p-password
         class="w-100"
@@ -42,9 +45,11 @@
         [(ngModel)]="loginData.password"
       ></p-password>
       <label for="password">Password</label>
-    </span>
-    <!-- log BTN-->
-    <br />
+    </span> -->
+
+<!-- log BTN-->
+
+<!-- <br />
     <button
       pButton
       pRipple
@@ -62,17 +67,20 @@
       </small>
     </div>
   </ng-template>
-</p-dialog>
+</p-dialog> -->
 
 <!-- Create Account Dialog -->
-<p-dialog
+
+<!-- <p-dialog
   header="Create Account"
   [(visible)]="displayCreateAccount"
   [style]="{ width: 'auto' }"
->
-  <div class="dialog-wrapper d-flex flex-column justify-content-center w-100">
-    <!-- username -->
-    <i class="pi pi-user me-5 mt-3"></i>
+> -->
+
+<!-- <div class="dialog-wrapper d-flex flex-column justify-content-center w-100"> -->
+<!-- username -->
+
+<!-- <i class="pi pi-user me-5 mt-3"></i>
     <span class="p-float-label mb-1 py-1">
       <input
         id="float-input"
@@ -81,9 +89,11 @@
         [(ngModel)]="newAccountData.username"
       />
       <label for="float-input" class="ps-1">Username</label>
-    </span>
-    <!-- email -->
-    <small>@</small>
+    </span> -->
+
+<!-- email -->
+
+<!-- <small>@</small>
     <span class="p-float-label mb-1 py-1">
       <input
         type="email"
@@ -93,9 +103,10 @@
         [(ngModel)]="newAccountData.email"
       />
       <label for="inputtext" class="ps-1">Email</label>
-    </span>
+    </span> -->
 
-    <!-- password -->
+<!-- password -->
+<!--     
     <small>*</small>
     <span class="p-float-label mb-1 py-1">
       <p-password
@@ -104,8 +115,10 @@
         [(ngModel)]="newAccountData.password"
       ></p-password>
       <label for="password">Password</label>
-    </span>
-    <!-- signup BTN-->
+    </span> -->
+
+<!-- signup BTN-->
+<!--     
     <br />
     <button
       pButton
@@ -124,7 +137,7 @@
       </small>
     </div>
   </ng-template>
-</p-dialog>
+</p-dialog> -->
 
 <!--**** TOAST MSGs ****-->
 <p-toast></p-toast>

@@ -6,6 +6,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FileHandler } from 'src/app/models/FileHandler';
 import { Post } from 'src/app/models/Post';
 import { PostService } from 'src/app/services/post.service';
+import {DropdownFilterOptions} from 'primeng/dropdown';
+
+interface City {
+  name: string,
+  code: string
+}
 
 
 @Component({
@@ -22,6 +28,10 @@ export class PostComponent {
   textArea: string = 'Text (Optional)';
   changeTextArea: boolean = false;
   uploadedFiles: any[] = [];
+  countries: any[];
+  selectedCountry: City = {name: 'Select a Country', code: ''};
+
+  filterValue = '';
 
   newPost: Post = {
     id: null,
@@ -42,7 +52,24 @@ export class PostComponent {
         value: 'IMG',
         icon: 'pi pi-fw pi-image' },
     ];
+    // communites dummy data
+    this.countries = [
+      {name: 'Australia', code: 'AU'},
+      {name: 'Brazil', code: 'BR'},
+      {name: 'China', code: 'CN'},
+      {name: 'Egypt', code: 'EG'},
+      {name: 'France', code: 'FR'},
+      {name: 'Germany', code: 'DE'},
+      {name: 'India', code: 'IN'},
+      {name: 'Japan', code: 'JP'},
+      {name: 'Spain', code: 'ES'},
+      {name: 'United States', code: 'US'}
+  ];
    }
+   
+   myResetFunction(options: DropdownFilterOptions) {
+    this.filterValue = '';
+}
 
    public showImgOrVideo() {
       if (this.value1 === 'IMG') {

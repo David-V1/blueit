@@ -1,5 +1,6 @@
 export enum PageName {
   HOME,
   POST,
-  PROFILE
+  PROFILE,
+  COMMUNITY,
 }
