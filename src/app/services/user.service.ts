@@ -14,6 +14,7 @@ export class UserService {
   public currentUser = {} as User;
   public username: string = '';
   displayLogin: boolean = false;
+  showAddCommunity: boolean = false;
 
   private userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(this.currentUser);
   public user$ = this.userSubject.asObservable();
@@ -47,6 +48,10 @@ export class UserService {
     this.displayLogin = true;
   }
 
+  public showAddCommunityForm() {
+    this.showAddCommunity = true;
+  }
+
   //Create
   public createUser(newUser: User): void{
     this.http.post<User>(this.url, newUser)
@@ -54,7 +59,7 @@ export class UserService {
     .subscribe({
       next: user => {
         this.userSubject.next(user);
-        this.ui.openSnackBar(`Welcome ${user.username}!`);
+        // if (user.username) {this.ui.openSnackBar(`Welcome ${user.username}!`);}
       },
       error: err => {
         console.error(err);
@@ -98,13 +103,13 @@ export class UserService {
     },
     {
       label: 'Community',
-      icon: 'pi pi-fw pi-users',
+      icon: 'pi pi-fw pi-reddit',
       items: [
         {
           label: 'Create Community',
           icon: 'pi pi-fw pi-plus',
           command: () => {
-            this.ui.changePage(PageName.COMMUNITY);
+            this.showAddCommunityForm();
           }
         }
       ]

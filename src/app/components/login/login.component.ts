@@ -30,6 +30,7 @@ export class LoginComponent {
 
   public onSingup() {
     this.showInfo();
+    console.log('newAccountData : ',this.newAccountData)
     this.userService.createUser(this.newAccountData);
     this.displayCreateAccount = false
     this.resetLoginFields();
@@ -50,17 +51,17 @@ export class LoginComponent {
     this.messageService.add({severity:'info', summary: 'Account Created!', detail: `Welcome ${this.newAccountData.username}!`});
   }
 
-  public showError() {
-    this.messageService.add({severity:'error', summary: 'Error', detail: 'Message Content'});
-  }
+  // public showError() {
+  //   this.messageService.add({severity:'error', summary: 'Error', detail: 'Message Content'});
+  // }
 
-  onConfirm() {
-    this.messageService.clear('c');
-  }
+  // onConfirm() {
+  //   this.messageService.clear('c');
+  // }
 
-  onReject() {
-      this.messageService.clear('c');
-  }
+  // onReject() {
+  //     this.messageService.clear('c');
+  // }
   
 
 }

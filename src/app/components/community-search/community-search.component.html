@@ -1,0 +1,18 @@
+<!-- COMMUNITY SELECTION -->
+<p-dropdown
+  [options]="communities"
+  [(ngModel)]="selectedCommunity"
+  optionLabel="name"
+  [filter]="true"
+  filterBy="name"
+  [showClear]="true"
+  placeholder="Select a Commuity"
+  [virtualScroll]="true"
+  [virtualScrollItemSize]="20"
+>
+  <ng-template pTemplate="selectedItem">
+    <div class="country-item country-item-value" *ngIf="selectedCommunity">
+      <div>{{ selectedCommunity.name }}</div>
+    </div>
+  </ng-template>
+</p-dropdown>

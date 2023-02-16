@@ -16,14 +16,9 @@ import { PageName } from 'src/app/enums/PageEnum';
 })
 export class NavigationComponent implements OnInit, OnDestroy {
   PageName = PageName;
-  loginData = {} as User;
-  newAccountData = {} as User;
+  // newAccountData = {} as User;
   searchValue: string = '';
-  displayLogin: boolean = false;
-  displayCreateAccount: boolean = false;
   navMenuItems: MenuItem[] = [];
-  username: string = localStorage.getItem('username')!;
-  loggedInMenuItems: MenuItem[] = [];
   menuSubscription: Subscription;
 
   public constructor(
@@ -40,40 +35,12 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.primengConfig.ripple = true;
   }
 
-  public onLogin() {
-    this.userService.getUserByEmailAndPassword(this.loginData.email, this.loginData.password);
-    this.userService.displayLogin = false;
-    this.resetLoginFields();
-
-  }
-
-  public onSingup() {
-    this.showInfo();
-    this.userService.createUser(this.newAccountData);
-    this.displayCreateAccount = false
-    this.resetLoginFields();
-  }
-
-  public showLogin() {
-    this.userService.displayLogin = true;
-    this.displayCreateAccount = false;
-  }
-
-  public showSignup() {
-    this.userService.displayLogin = false;
-    this.displayCreateAccount = true;
-  }
-
-  public resetLoginFields(){
-    this.loginData = {} as User;
-    this.newAccountData = {} as User;
-  }
-
+  
 
   // PrimeNG Toast //@Component level:providers: [MessageService]
-  public showInfo() {
-    this.messageService.add({severity:'info', summary: 'Account Created!', detail: `Welcome ${this.newAccountData.username}!`});
-  }
+  // public showInfo() {
+  //   this.messageService.add({severity:'info', summary: 'Account Created!', detail: `Welcome ${this.newAccountData.username}!`});
+  // }
 
   public showError() {
     this.messageService.add({severity:'error', summary: 'Error', detail: 'Message Content'});

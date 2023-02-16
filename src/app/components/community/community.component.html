@@ -1,2 +1,42 @@
-<p>community works!</p>
-<button (click)="this.ui.changePage(pageName.HOME)">HOME</button>
+<!-- <p>community works!</p>
+<button (click)="this.ui.changePage(pageName.HOME)">HOME</button> -->
+<p-dialog
+  [(visible)]="userService.showAddCommunity"
+  [style]="{ width: 'auto' }"
+>
+  <!-- Header -->
+  <ng-template pTemplate="header"> Add New Community! </ng-template>
+  <small>+</small>
+  <span class="p-float-label mb-1 py-1">
+    <input
+      type="text"
+      id="inputtext"
+      pInputText
+      required
+      [(ngModel)]="communityInputData.name"
+    />
+    <label for="inputtext" class="ps-1">Community Name</label>
+  </span>
+  <!-- Footer -->
+  <ng-template pTemplate="footer">
+    <div class="ft-form">
+      <!-- cancel -->
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Cancel"
+        class="p-button-raised"
+        (click)="onCancel()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Add Community"
+        class="p-button-raised"
+        (click)="onAddCommunity()"
+      ></button>
+    </div>
+  </ng-template>
+</p-dialog>
