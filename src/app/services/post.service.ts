@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, take } from 'rxjs';
 import { Post } from '../models/Post';
 import { UiService } from './ui.service';
+import { Community } from '../models/Community';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,9 @@ export class PostService {
   }
 
   //Create
-  public createPost(post: FormData): void{
-    this.http.post<Post>(this.postUrl+"/"+this.ui.currentUserId, post)
+  public createPost(post: FormData, community: Community): void{
+    console.log('userID : ',this.ui.currentUserId);
+    this.http.post<Post>(`${this.postUrl}/${this.ui.currentUserId}/${community}`, post)
     .subscribe({
       next: () => {
         this.ui.openSnackBar('Post created successfully');

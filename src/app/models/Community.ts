@@ -1,9 +1,8 @@
 import { User } from './User';
 
 export interface Community {
-  id: number;
+  id: number | null;
   name: string;
-  user: User;
   // posts: number;
   // isMember: boolean;
   // dateCreated: Date;

@@ -28,6 +28,7 @@ import {EditorModule} from 'primeng/editor';
 import {FileUploadModule} from 'primeng/fileupload';
 import {DropdownModule} from 'primeng/dropdown';
 import { CommunityComponent } from './components/community/community.component';
+import { CommunitySearchComponent } from './components/community-search/community-search.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { CommunityComponent } from './components/community/community.component';
     NavigationComponent,
     PostComponent,
     ProfileComponent,
-    CommunityComponent
+    CommunityComponent,
+    CommunitySearchComponent
   ],
   imports: [
     BrowserModule,
