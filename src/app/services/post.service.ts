@@ -30,9 +30,11 @@ export class PostService {
   }
 
   //Create
-  public createPost(post: FormData, community: Community): void{
+  public createPost(post: FormData, communityName: String): void{
     console.log('userID : ',this.ui.currentUserId);
-    this.http.post<Post>(`${this.postUrl}/${this.ui.currentUserId}/${community}`, post)
+    console.log('Community Sent!', communityName)
+    //TODO: Need to handle currentUserId - NULL.
+    this.http.post<Post>(`${this.postUrl}/${this.ui.currentUserId}/b/${communityName}`, post)
     .subscribe({
       next: () => {
         this.ui.openSnackBar('Post created successfully');
