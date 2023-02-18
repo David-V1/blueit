@@ -6,7 +6,9 @@
   </div>
   <p-divider></p-divider>
   <!-- COMMUNITY SELECTION -->
-  <app-community-search></app-community-search>
+  <app-community-search
+    (selectionEvent)="onSelection($event)"
+  ></app-community-search>
 
   <!-- POST TOOLS -->
   <p-selectButton

@@ -56,7 +56,7 @@ export class CommunityService implements OnInit {
   }
 
   public getCommunityById(id: number): void{
-    this.http.get<Community>(`${this.url}/${id}`).pipe(take(1))
+    this.http.get<Community>(`${this.url}/comId/${id}`).pipe(take(1))
     .subscribe({
       next: (community) => {
         this.community.next(community);

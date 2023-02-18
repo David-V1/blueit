@@ -22,7 +22,7 @@ export class PostComponent {
   textArea: string = 'Text (Optional)';
   changeTextArea: boolean = false;
   uploadedFiles: any[] = [];
-  community = {} as Community;
+  communitySelection = {} as Community;
 
   newPost: Post = {
     id: null,
@@ -73,8 +73,12 @@ export class PostComponent {
     public postNewPost() {
       // Now we need to configure so it will comply with the BE MediaType.MULTI_FORM_DATA_VALUE
       let postData = this.postService.prepareFormData(this.newPost);
-      this.postService.createPost(postData, this.community)
+      console.log('postNewPost community Selection: ', this.communitySelection)
+      this.postService.createPost(postData, this.communitySelection.name)
     }
 
+    public onSelection(selectedCommunity: Community) {
+      this.communitySelection = selectedCommunity;
+    }
  
 } 
