@@ -29,6 +29,7 @@ import {FileUploadModule} from 'primeng/fileupload';
 import {DropdownModule} from 'primeng/dropdown';
 import { CommunityComponent } from './components/community/community.component';
 import { CommunitySearchComponent } from './components/community-search/community-search.component';
+import { PostCardComponent } from './components/post-card/post-card.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { CommunitySearchComponent } from './components/community-search/communit
     PostComponent,
     ProfileComponent,
     CommunityComponent,
-    CommunitySearchComponent
+    CommunitySearchComponent,
+    PostCardComponent
   ],
   imports: [
     BrowserModule,
