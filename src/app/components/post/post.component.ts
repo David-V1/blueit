@@ -73,8 +73,8 @@ export class PostComponent {
     public postNewPost() {
       // Now we need to configure so it will comply with the BE MediaType.MULTI_FORM_DATA_VALUE
       let postData = this.postService.prepareFormData(this.newPost);
-      console.log('postNewPost community Selection: ', this.communitySelection)
       this.postService.createPost(postData, this.communitySelection.name)
+      this.ui.changePage(PageName.HOME);
     }
 
     public onSelection(selectedCommunity: Community) {

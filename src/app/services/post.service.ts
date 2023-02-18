@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, take } from 'rxjs';
+import { Observable, Subject, take } from 'rxjs';
 import { Post } from '../models/Post';
 import { UiService } from './ui.service';
 import { Community } from '../models/Community';
@@ -10,10 +10,18 @@ import { Community } from '../models/Community';
 })
 export class PostService {
 
+  private postSubject: Subject<Post> = new Subject<Post>();
+  public post$ = this.postSubject.asObservable();
+
+  private postsSubject: Subject<Post[]> = new Subject<Post[]>();
+  public posts$ = this.postsSubject.asObservable();
+
   private url: string = 'http://localhost:8080/api/post';
   public postUrl: string = 'http://localhost:8080/api/post/create';
 
-  constructor(private http: HttpClient, private ui: UiService) { }
+  constructor(private http: HttpClient, private ui: UiService) {
+    this.getAllPosts();
+   }
 
   public prepareFormData(post: Post): FormData {
     // Preparing the post {} and the image[] to be sent to the backend
@@ -46,6 +54,19 @@ export class PostService {
   }
 
   //Read
+  public getAllPosts(): void{
+    this.http.get<Post[]>(`${this.url}`)
+    .subscribe({
+      next: (posts) => {
+        console.log('POST FROM SERVICE: ',posts);
+        this.postsSubject.next(posts);
+      },
+      error: (err) => {
+        console.log(err);
+        this.ui.onError('Error getting posts');
+      }
+    })
+  }
 
   //Update
 
