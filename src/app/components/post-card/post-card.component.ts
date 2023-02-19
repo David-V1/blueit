@@ -11,7 +11,14 @@ import { Post } from 'src/app/models/Post';
 export class PostCardComponent {
   pageName = PageName;
   @Input() post: any = {} as any;
+  postLikes: number = 0;
 
-  constructor(public uiService: UiService) { }
+  constructor(public uiService: UiService) { 
+    
+  }
 
+  test(){
+    console.log('post',this.post);
+    console.log('post.postImages',this.post.postImages);
+  }
 }

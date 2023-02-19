@@ -4,6 +4,7 @@ import { PageName } from 'src/app/enums/PageEnum';
 import { Post } from 'src/app/models/Post';
 import { PostService } from 'src/app/services/post.service';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -13,6 +14,12 @@ export class HomeComponent {
 
   // TODO: Need to return all POSTS
   constructor(public uiService: UiService, public postService: PostService) {
+    this.postService.getAllPosts();
    }
+
+  //  TESTING BUTTON
+  test() {
+    console.log("test");
+  }
 
 }

@@ -30,6 +30,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import { CommunityComponent } from './components/community/community.component';
 import { CommunitySearchComponent } from './components/community-search/community-search.component';
 import { PostCardComponent } from './components/post-card/post-card.component';
+import {CarouselModule} from 'primeng/carousel';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { PostCardComponent } from './components/post-card/post-card.component';
     SelectButtonModule,
     EditorModule,
     FileUploadModule,
-    DropdownModule
+    DropdownModule,
+    CarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]

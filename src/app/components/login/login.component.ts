@@ -30,7 +30,6 @@ export class LoginComponent {
 
   public onSingup() {
     this.showInfo();
-    console.log('newAccountData : ',this.newAccountData)
     this.userService.createUser(this.newAccountData);
     this.displayCreateAccount = false
     this.resetLoginFields();
