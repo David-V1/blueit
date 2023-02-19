@@ -31,6 +31,7 @@ import { CommunityComponent } from './components/community/community.component';
 import { CommunitySearchComponent } from './components/community-search/community-search.component';
 import { PostCardComponent } from './components/post-card/post-card.component';
 import {CarouselModule} from 'primeng/carousel';
+import { PostViewComponent } from './components/post-view/post-view.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import {CarouselModule} from 'primeng/carousel';
     ProfileComponent,
     CommunityComponent,
     CommunitySearchComponent,
-    PostCardComponent
+    PostCardComponent,
+    PostViewComponent
   ],
   imports: [
     BrowserModule,

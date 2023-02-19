@@ -10,7 +10,7 @@ import { Post } from 'src/app/models/Post';
 })
 export class PostCardComponent {
   pageName = PageName;
-  @Input() post: any = {} as any;
+  @Input() post: any = {} as any; // PostDTO
   postLikes: number = 0;
 
   constructor(public uiService: UiService) { 
@@ -20,5 +20,6 @@ export class PostCardComponent {
   test(){
     console.log('post',this.post);
     console.log('post.postImages',this.post.postImages);
+    
   }
 }

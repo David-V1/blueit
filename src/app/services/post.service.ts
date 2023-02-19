@@ -3,15 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, take } from 'rxjs';
 import { Post } from '../models/Post';
 import { UiService } from './ui.service';
-import { Community } from '../models/Community';
+import { PageName } from '.././enums/PageEnum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
-
+  pageName = PageName;
   private postSubject: Subject<Post> = new Subject<Post>();
   public post$ = this.postSubject.asObservable();
+  public currentPostId: number = localStorage.getItem('currentPostId') ? Number(localStorage.getItem('currentPostId')) : 0;
 
   private postsSubject: Subject<Post[]> = new Subject<Post[]>();
   public posts$ = this.postsSubject.asObservable();
@@ -37,6 +38,12 @@ export class PostService {
     return formData;
   }
 
+  public onPostSelection(post: number): void {
+    this.getPostById(post);
+    this.ui.changePage(PageName.POST_VIEW);
+  }
+  // TODO: Need to add Comment to posts
+  // TODO: Need to add upvote/downvote to posts logic
   //Create
   public createPost(post: FormData, communityName: String): void{
     console.log('userID : ',this.ui.currentUserId);
@@ -46,6 +53,18 @@ export class PostService {
     .subscribe({
       next: () => {
         this.ui.openSnackBar('Post created successfully');
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  public votePost(postId: number, vote: number): void{
+    this.http.post(`${this.url}/vote/${postId}/${vote}`, null)
+    .subscribe({
+      next: () => {
+        this.ui.openSnackBar('Vote successful');
       },
       error: (err) => {
         console.log(err);
@@ -64,6 +83,21 @@ export class PostService {
       error: (err) => {
         console.log(err);
         this.ui.onError('Error getting posts');
+      }
+    })
+  }
+
+  public getPostById(post: number): void{
+    this.http.get<Post>(`${this.url}/id/${post}`)
+    .pipe(take(1))
+    .subscribe({
+      next: (post) => {
+        this.postSubject.next(post);
+        localStorage.setItem('currentPostId', JSON.stringify(post.id));
+      },
+      error: (err) => {
+        console.log(err);
+        this.ui.onError('Error getting post');
       }
     })
   }

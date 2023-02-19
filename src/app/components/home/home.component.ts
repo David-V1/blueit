@@ -11,9 +11,8 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-
-  // TODO: Need to return all POSTS
-  constructor(public uiService: UiService, public postService: PostService) {
+  pageName = PageName;
+  constructor(public ui: UiService, public postService: PostService) {
     this.postService.getAllPosts();
    }
 
