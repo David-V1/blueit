@@ -39,11 +39,13 @@ export class PostService {
   }
 
   public onPostSelection(post: number): void {
+    this.currentPostId = post;
     this.getPostById(post);
     this.ui.changePage(PageName.POST_VIEW);
   }
   // TODO: Need to add Comment to posts
   // TODO: Need to add upvote/downvote to posts logic
+  //TODO: Handle are you sure no images to post.
   //Create
   public createPost(post: FormData, communityName: String): void{
     console.log('userID : ',this.ui.currentUserId);
@@ -60,14 +62,17 @@ export class PostService {
     })
   }
 
-  public votePost(postId: number, vote: number): void{
-    this.http.post(`${this.url}/vote/${postId}/${vote}`, null)
+  public votePost(userId: string, postId: number, voteType: string): void{
+    console.log('Voting on post: ', postId, ' with voteType: ', voteType)
+    console.log('USER ID Sent:', userId)
+    this.http.post(`${this.url}/vote/${userId}/${postId}/${voteType}`, null)
     .subscribe({
       next: () => {
         this.ui.openSnackBar('Vote successful');
       },
       error: (err) => {
         console.log(err);
+        this.ui.onError('Error voting');
       }
     })
   }
@@ -87,8 +92,9 @@ export class PostService {
     })
   }
 
-  public getPostById(post: number): void{
-    this.http.get<Post>(`${this.url}/id/${post}`)
+  public getPostById(postId: number): void{
+    console.log('Post id sent to BE: ',postId)
+    this.http.get<Post>(`${this.url}/id/${postId}`)
     .pipe(take(1))
     .subscribe({
       next: (post) => {
@@ -100,6 +106,10 @@ export class PostService {
         this.ui.onError('Error getting post');
       }
     })
+  }
+
+  public getPostLikes(postId: number): Observable<number>{
+    return this.http.get<number>(`${this.url}/likes/${postId}`)
   }
 
   //Update

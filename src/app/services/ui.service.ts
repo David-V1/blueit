@@ -12,7 +12,7 @@ export class UiService {
   pageName: Number | null = null;
   isLoggedIn: boolean = false;
   currentUsername: string = localStorage.getItem('username') ? localStorage.getItem('username')! : '';
-  currentUserId: string = localStorage.getItem('id')!;
+  currentUserId: string | null = null;
 
   constructor(public http: HttpClient, private _snackBar: MatSnackBar ) {
     localStorage.getItem("page") ? this.pageName = Number(localStorage.getItem("page")) : this.pageName = 0;
@@ -31,6 +31,7 @@ export class UiService {
     localStorage.setItem('id', loginData.id!.toString());
     localStorage.setItem('isLoggedIn', this.isLoggedIn.toString());
     localStorage.setItem('username', loginData.username);
+    this.currentUserId = localStorage.getItem('id');
   }
 
   public onLogout(): void {
@@ -40,6 +41,7 @@ export class UiService {
     localStorage.removeItem('id');
     localStorage.removeItem('username');
     localStorage.setItem('isLoggedIn', this.isLoggedIn.toString());
+    this.currentUserId = null;
   }
 
   public onError(msg: string): void {

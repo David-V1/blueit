@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { UiService } from 'src/app/services/ui.service';
 import { PageName } from 'src/app/enums/PageEnum';
 import { Post } from 'src/app/models/Post';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-post-card',
@@ -13,9 +14,9 @@ export class PostCardComponent {
   @Input() post: any = {} as any; // PostDTO
   postLikes: number = 0;
 
-  constructor(public uiService: UiService) { 
-    
-  }
+  constructor(public ui: UiService, public postService: PostService) {}
+
+  
 
   test(){
     console.log('post',this.post);

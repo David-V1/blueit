@@ -19,6 +19,8 @@ export class HomeComponent {
   //  TESTING BUTTON
   test() {
     console.log("test");
+    console.log('testing UI current userId for Null', this.ui.currentUserId);
+
   }
 
 }

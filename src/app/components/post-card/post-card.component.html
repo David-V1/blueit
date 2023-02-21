@@ -1,9 +1,19 @@
 <div class="main-card-container my-3">
   <div class="card-likes-container">
     <div class="arrow-wrapper">
-      <button><i class="pi pi-arrow-up"></i></button>
+      <!-- upvote -->
+      <button
+        (click)="postService.votePost(ui.currentUserId!, post.id, 'true')"
+      >
+        <i class="pi pi-arrow-up"></i>
+      </button>
       <span>{{ post.likes }}</span>
-      <button><i class="pi pi-arrow-down"></i></button>
+      <!-- downvote -->
+      <button
+        (click)="postService.votePost(ui.currentUserId!, post.id, 'false')"
+      >
+        <i class="pi pi-arrow-down"></i>
+      </button>
     </div>
   </div>
   <div class="card-details-container">
@@ -13,7 +23,8 @@
         <span>u/</span><small>{{ post.user.username }}</small>
         <p>Posted: {{ post.postedDate }}</p>
         <!-- underline -->
-        <span>b/</span><h5>{{ post.community.name }}</h5>
+        <span>b/</span>
+        <h5>{{ post.community.name }}</h5>
       </div>
       <div class="title-wrapper">
         <h1>{{ post.title }}</h1>
@@ -36,4 +47,4 @@
     <div class="card-statistics"></div>
   </div>
 </div>
-<!-- <button (click)="test()">TEST</button> -->
+<button (click)="test()">TEST</button>
