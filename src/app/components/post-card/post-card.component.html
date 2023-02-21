@@ -7,7 +7,7 @@
       >
         <i class="pi pi-arrow-up"></i>
       </button>
-      <span>{{ post.likes }}</span>
+      <span>{{ post.votes }}</span>
       <!-- downvote -->
       <button
         (click)="postService.votePost(ui.currentUserId!, post.id, 'false')"
