@@ -2,5 +2,6 @@ export enum PageName {
   HOME,
   POST,
   PROFILE,
-  COMMUNITY
+  COMMUNITY,
+  POST_VIEW
 }

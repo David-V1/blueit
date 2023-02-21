@@ -34,13 +34,12 @@ export class NavigationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.primengConfig.ripple = true;
   }
+  //TODO: Need to add current page status to the navigation bar
 
-  
-
-  // PrimeNG Toast //@Component level:providers: [MessageService]
-  // public showInfo() {
-  //   this.messageService.add({severity:'info', summary: 'Account Created!', detail: `Welcome ${this.newAccountData.username}!`});
-  // }
+  public onHomeBtnClick() {
+    localStorage.removeItem('currentPostId');
+    this.ui.changePage(PageName.HOME);
+  }
 
   public showError() {
     this.messageService.add({severity:'error', summary: 'Error', detail: 'Message Content'});

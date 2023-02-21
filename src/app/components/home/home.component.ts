@@ -11,15 +11,16 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-
-  // TODO: Need to return all POSTS
-  constructor(public uiService: UiService, public postService: PostService) {
+  pageName = PageName;
+  constructor(public ui: UiService, public postService: PostService) {
     this.postService.getAllPosts();
    }
 
   //  TESTING BUTTON
   test() {
     console.log("test");
+    console.log('testing UI current userId for Null', this.ui.currentUserId);
+
   }
 
 }

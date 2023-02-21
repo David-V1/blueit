@@ -3,15 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, take } from 'rxjs';
 import { Post } from '../models/Post';
 import { UiService } from './ui.service';
-import { Community } from '../models/Community';
+import { PageName } from '.././enums/PageEnum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
-
+  pageName = PageName;
   private postSubject: Subject<Post> = new Subject<Post>();
   public post$ = this.postSubject.asObservable();
+  public currentPostId: number = localStorage.getItem('currentPostId') ? Number(localStorage.getItem('currentPostId')) : 0;
 
   private postsSubject: Subject<Post[]> = new Subject<Post[]>();
   public posts$ = this.postsSubject.asObservable();
@@ -37,6 +38,14 @@ export class PostService {
     return formData;
   }
 
+  public onPostSelection(post: number): void {
+    this.currentPostId = post;
+    this.getPostById(post);
+    this.ui.changePage(PageName.POST_VIEW);
+  }
+  // TODO: Need to add Comment to posts
+  // TODO: Need to add upvote/downvote to posts logic
+  //TODO: Handle are you sure no images to post.
   //Create
   public createPost(post: FormData, communityName: String): void{
     console.log('userID : ',this.ui.currentUserId);
@@ -49,6 +58,21 @@ export class PostService {
       },
       error: (err) => {
         console.log(err);
+      }
+    })
+  }
+
+  public votePost(userId: string, postId: number, voteType: string): void{
+    console.log('Voting on post: ', postId, ' with voteType: ', voteType)
+    console.log('USER ID Sent:', userId)
+    this.http.post(`${this.url}/vote/${userId}/${postId}/${voteType}`, null)
+    .subscribe({
+      next: () => {
+        this.ui.openSnackBar('Vote successful');
+      },
+      error: (err) => {
+        console.log(err);
+        this.ui.onError('Error voting');
       }
     })
   }
@@ -66,6 +90,26 @@ export class PostService {
         this.ui.onError('Error getting posts');
       }
     })
+  }
+
+  public getPostById(postId: number): void{
+    console.log('Post id sent to BE: ',postId)
+    this.http.get<Post>(`${this.url}/id/${postId}`)
+    .pipe(take(1))
+    .subscribe({
+      next: (post) => {
+        this.postSubject.next(post);
+        localStorage.setItem('currentPostId', JSON.stringify(post.id));
+      },
+      error: (err) => {
+        console.log(err);
+        this.ui.onError('Error getting post');
+      }
+    })
+  }
+
+  public getPostLikes(postId: number): Observable<number>{
+    return this.http.get<number>(`${this.url}/likes/${postId}`)
   }
 
   //Update
