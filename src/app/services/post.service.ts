@@ -55,6 +55,7 @@ export class PostService {
     .subscribe({
       next: () => {
         this.ui.openSnackBar('Post created successfully');
+        this.getAllPosts();
       },
       error: (err) => {
         console.log(err);
