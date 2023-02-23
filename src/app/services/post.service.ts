@@ -44,13 +44,9 @@ export class PostService {
     this.ui.changePage(PageName.POST_VIEW);
   }
   // TODO: Need to add Comment to posts
-  // TODO: Need to add upvote/downvote to posts logic
   //TODO: Handle are you sure no images to post.
   //Create
   public createPost(post: FormData, communityName: String): void{
-    console.log('userID : ',this.ui.currentUserId);
-    console.log('Community Sent!', communityName)
-    //TODO: Need to handle currentUserId - NULL.
     this.http.post<Post>(`${this.postUrl}/${this.ui.currentUserId}/b/${communityName}`, post)
     .subscribe({
       next: () => {
@@ -59,13 +55,12 @@ export class PostService {
       },
       error: (err) => {
         console.log(err);
+        this.ui.onError('Error creating post');
       }
     })
   }
 
   public votePost(userId: string, postId: number, voteType: string): void{
-    console.log('Voting on post: ', postId, ' with voteType: ', voteType)
-    console.log('USER ID Sent:', userId)
     this.http.post(`${this.url}/vote/${userId}/${postId}/${voteType}`, null)
     .subscribe({
       next: () => {

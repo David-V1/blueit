@@ -1,1 +1,20 @@
-<p>profile works!</p>
+<app-navigation></app-navigation>
+<div class="user-info">
+  <ng-container *ngIf="userService.user$ | async as user">
+    <h1>Welcome to your profile, {{ user.username }}</h1>
+    <p-fileUpload
+      mode="basic"
+      name="demo[]"
+      url="./upload.php"
+      accept="image/*"
+      [maxFileSize]="1000000"
+      [chooseIcon]="'pi pi-image'"
+      (onSelect)="onUploadPic($event)"
+      (uploadHandler)="test()"
+    ></p-fileUpload>
+    <i class="pi pi-cog"></i>
+  </ng-container>
+  <p-button label="Cancel" class="pe-3"></p-button>
+  <p-button label="Post" (onClick)="addNewProfilePic()"></p-button>
+</div>
+<button (click)="test()">TEST</button>

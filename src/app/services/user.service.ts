@@ -26,9 +26,11 @@ export class UserService {
     const email = localStorage.getItem('email');
     const password = localStorage.getItem('password');
     const username = localStorage.getItem('username'); // for nav name display
+    //TODO: Check this logic  . Returning NULL
     if (email !== null && password !== null) {
       this.username = username!;
       this.getUserByEmailAndPassword(email, password);
+      // this.getUserById(this.ui.currentUserId!);
     }
    }
 
@@ -52,22 +54,6 @@ export class UserService {
     this.showAddCommunity = true;
   }
 
-  //Create
-  public createUser(newUser: User): void{
-    this.http.post<User>(this.url, newUser)
-    .pipe(take(1))
-    .subscribe({
-      next: user => {
-        this.userSubject.next(user);
-        // if (user.username) {this.ui.openSnackBar(`Welcome ${user.username}!`);}
-      },
-      error: err => {
-        console.error(err);
-        this.ui.onError(err);
-      }
-    });
-  }
-
   //Reactive Nav Menu
   public activeMenuItem(): MenuItem[] {
     const currentLogStatus = localStorage.getItem('isLoggedIn') ? JSON.parse(localStorage.getItem('isLoggedIn')!) : false;
@@ -80,6 +66,9 @@ export class UserService {
         {
           label: 'My Profile',
           icon: 'pi pi-fw pi-user-edit',
+          command: () => {
+            this.ui.changePage(PageName.PROFILE);
+          }
         },
         {
           separator: true
@@ -125,9 +114,70 @@ export class UserService {
     }]
   }
 
+  public prepareProfilePicForm(user: User): FormData {
+    const formData = new FormData();
+    // formData.append('id', user.id!.toString());
+    // formData.append('user', new Blob([JSON.stringify(user)], { type: 'application/json' }));
+    formData.append('imageFile', user.profilePic!.file, user.profilePic!.file.name);
+    return formData;
+  }
+
+    //Create
+    public createUser(newUser: User): void{
+      this.http.post<User>(this.url, newUser)
+      .pipe(take(1))
+      .subscribe({
+        next: user => {
+          this.userSubject.next(user);
+          // if (user.username) {this.ui.openSnackBar(`Welcome ${user.username}!`);}
+        },
+        error: err => {
+          console.error(err);
+          this.ui.onError(err);
+        }
+      });
+    }
+
+    public addProfilePic(user: User): void {
+    const formData = this.prepareProfilePicForm(user);
+    this.http.post<User>(`${this.url}/${user.id}`, formData)
+    .pipe(take(1))
+    .subscribe({
+      next: () => {
+        this.ui.openSnackBar(`Profile picture updated!`);
+      },
+      error: err => {
+        console.error(err);
+        this.ui.onError(err);
+      }
+    });
+  }
+
   //Read
   public getUserByEmailAndPassword(email: string, password: string): void{
     this.http.get<User>(`${this.url}/email/${email}/pass/${password}`)
+    .pipe(take(1))
+    .subscribe({
+      next: user => {
+        this.currentUser = user;
+        this.ui.onValidLogin(user);
+        this.userSubject.next(user);
+        this.activeMenuItem();
+        this.updateMenu(this.activeMenuItem());
+      },
+      error: err => {
+        console.error(err);
+        this.ui.onError(err);
+      }
+    });
+  }
+
+  public getAllUsers(): Observable<User[]>{
+    return this.http.get<User[]>(this.url);
+  }
+
+  public getUserById(id: string): void{
+    this.http.get<User>(`${this.url}/u/id/${id}`)
     .pipe(take(1))
     .subscribe({
       next: user => {
