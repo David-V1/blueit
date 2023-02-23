@@ -21,7 +21,11 @@ export class ProfileComponent {
     username: '',
     email: '',
     password: '',
-    profilePic: null,
+    imageName: '',
+    imgType: '',
+    // profilePicture: '',
+    profilePicture: null,
+    // profilePic: null,
   }
 
   constructor(public ui: UiService, public userService: UserService, private sanitizer: DomSanitizer) { }
@@ -35,17 +39,18 @@ export class ProfileComponent {
         file: file,
         url: this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file))
       }
-      this.user.profilePic = fileHandle;
+      this.user.profilePicture = fileHandle;
     }
   }
 
   public addNewProfilePic(): void {
-    console.log('USER {} being Sent!',this.user)
     this.userService.addProfilePic(this.user)
   }
 
  
   test(){
-    console.log(this.user)
+    this.userService.user$.subscribe(user => {
+      console.log(user)
+    });
   }
 }

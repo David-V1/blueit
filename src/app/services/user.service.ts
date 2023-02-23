@@ -118,7 +118,7 @@ export class UserService {
     const formData = new FormData();
     // formData.append('id', user.id!.toString());
     // formData.append('user', new Blob([JSON.stringify(user)], { type: 'application/json' }));
-    formData.append('imageFile', user.profilePic!.file, user.profilePic!.file.name);
+    formData.append('imageFile', user.profilePicture!.file, user.profilePicture!.file.name);
     return formData;
   }
 
