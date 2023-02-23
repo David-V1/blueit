@@ -32,7 +32,7 @@ import { CommunitySearchComponent } from './components/community-search/communit
 import { PostCardComponent } from './components/post-card/post-card.component';
 import {CarouselModule} from 'primeng/carousel';
 import { PostViewComponent } from './components/post-view/post-view.component';
-
+import {CardModule} from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -67,7 +67,8 @@ import { PostViewComponent } from './components/post-view/post-view.component';
     EditorModule,
     FileUploadModule,
     DropdownModule,
-    CarouselModule
+    CarouselModule,
+    CardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

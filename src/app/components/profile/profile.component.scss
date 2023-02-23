@@ -1,0 +1,21 @@
+.user-info{
+  .user-info-profile-container{
+    .user-info-profile{
+      .user-info-profile-image{
+        img{
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
+      }
+      .user-info-profile-name{
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+      .user-info-profile-email{
+        font-size: 1rem;
+        font-weight: 400;
+      }
+    }
+  }
+}

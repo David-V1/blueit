@@ -43,8 +43,7 @@
         </div>
       </ng-template>
     </p-carousel>
-    <!-- Comments -->
-    <div class="card-statistics"></div>
+    <div class="card-statistics" [innerHTML]="post.content"></div>
   </div>
 </div>
 <button (click)="test()">TEST</button>
