@@ -30,7 +30,6 @@ export class UserService {
     if (email !== null && password !== null) {
       this.username = username!;
       this.getUserByEmailAndPassword(email, password);
-      // this.getUserById(this.ui.currentUserId!);
     }
    }
 
@@ -116,8 +115,6 @@ export class UserService {
 
   public prepareProfilePicForm(user: User): FormData {
     const formData = new FormData();
-    // formData.append('id', user.id!.toString());
-    // formData.append('user', new Blob([JSON.stringify(user)], { type: 'application/json' }));
     formData.append('imageFile', user.profilePicture!.file, user.profilePicture!.file.name);
     return formData;
   }
@@ -129,7 +126,6 @@ export class UserService {
       .subscribe({
         next: user => {
           this.userSubject.next(user);
-          // if (user.username) {this.ui.openSnackBar(`Welcome ${user.username}!`);}
         },
         error: err => {
           console.error(err);
@@ -140,6 +136,7 @@ export class UserService {
 
     public addProfilePic(user: User): void {
     const formData = this.prepareProfilePicForm(user);
+    console.log('FORM DATA: ',formData)
     this.http.post<User>(`${this.url}/${user.id}`, formData)
     .pipe(take(1))
     .subscribe({

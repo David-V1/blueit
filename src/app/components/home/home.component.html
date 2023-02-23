@@ -8,7 +8,6 @@
           *ngFor="let post of posts"
           [post]="post"
           id="post-card"
-          (click)="postService.onPostSelection(post.id!)"
         ></app-post-card>
       </div>
       <div class="col-md-4"></div>

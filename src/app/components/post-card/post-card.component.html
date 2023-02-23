@@ -39,6 +39,7 @@
             alt="Post image"
             width="500"
             class="img-fluid postImg"
+            (click)="postService.onPostSelection(post.id!)"
           />
         </div>
       </ng-template>

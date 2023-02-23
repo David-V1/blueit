@@ -40,6 +40,8 @@ export class ProfileComponent {
         url: this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file))
       }
       this.user.profilePicture = fileHandle;
+      console.log('fileHandle',fileHandle)
+      console.log('user.profilePicture: ',this.user.profilePicture)
     }
   }
 
@@ -52,5 +54,6 @@ export class ProfileComponent {
     this.userService.user$.subscribe(user => {
       console.log(user)
     });
+    console.log('USER THIS: ',this.user)
   }
 }
