@@ -1,8 +1,9 @@
+import { FileHandler } from './FileHandler';
 
 export interface User {
-  id: number | null;
+  id: string | null;
   username: string;
   email: string;
   password: string;
-  profilePic: string;
+  profilePic: FileHandler | null;
 }
