@@ -46,7 +46,9 @@ export class PostService {
   // TODO: Need to add Comment to posts
   //TODO: Handle are you sure no images to post.
   //Create
-  public createPost(post: FormData, communityName: String): void{
+  public createPost(post: FormData, communityName: String): void {
+    if (communityName === 'undefined') return this.ui.onError('Please select a community');
+    
     this.http.post<Post>(`${this.postUrl}/${this.ui.currentUserId}/b/${communityName}`, post)
     .subscribe({
       next: () => {

@@ -33,6 +33,8 @@ import { PostCardComponent } from './components/post-card/post-card.component';
 import {CarouselModule} from 'primeng/carousel';
 import { PostViewComponent } from './components/post-view/post-view.component';
 import {CardModule} from 'primeng/card';
+import { CommentComponent } from './components/comment/comment.component';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import {CardModule} from 'primeng/card';
     CommunityComponent,
     CommunitySearchComponent,
     PostCardComponent,
-    PostViewComponent
+    PostViewComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,8 @@ import {CardModule} from 'primeng/card';
     FileUploadModule,
     DropdownModule,
     CarouselModule,
-    CardModule
+    CardModule,
+    InputTextareaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
