@@ -18,15 +18,10 @@ export class PostService {
   private postsSubject: Subject<Post[]> = new Subject<Post[]>();
   public posts$ = this.postsSubject.asObservable();
 
-  private commentSubject: Subject<Comment> = new Subject<Comment>();
-  public comment$ = this.commentSubject.asObservable();
 
-  private commentsSubject: Subject<Comment[]> = new Subject<Comment[]>();
-  public comments$ = this.commentsSubject.asObservable();
 
   private url: string = 'http://localhost:8080/api/post';
   public postUrl: string = 'http://localhost:8080/api/post/create';
-  public commentUrl: string = 'http://localhost:8080/api/comments';
 
   constructor(private http: HttpClient, private ui: UiService) {
     this.getAllPosts();
@@ -83,26 +78,11 @@ export class PostService {
     })
   }
 
-  public addComment(comment: Comment, postId:number, userId: string): void{
-    this.http.post<Comment>(`${this.commentUrl}/post/${postId}/user/${userId}`, comment)
-    .subscribe({
-      next: () => {
-        this.ui.openSnackBar('Comment created successfully');
-        this.getPostById(this.currentPostId);
-      },
-      error: (err) => {
-        console.log(err);
-        this.ui.onError('Error creating comment');
-      }
-    })
-  }
-
   //Read
   public getAllPosts(): void{
     this.http.get<Post[]>(`${this.url}`)
     .subscribe({
       next: (posts) => {
-        console.log('POST FROM SERVICE: ',posts);
         this.postsSubject.next(posts);
       },
       error: (err) => {
@@ -132,19 +112,6 @@ export class PostService {
     return this.http.get<number>(`${this.url}/likes/${postId}`)
   }
 
-  public getCommentsByPostId(postId: number): void{
-    this.http.get<Comment[]>(`${this.commentUrl}/post/${postId}`)
-    .subscribe({
-      next: (comments) => {
-        console.log(comments)
-        this.commentsSubject.next(comments);
-      },
-      error: (err) => {
-        console.log(err);
-        this.ui.onError('Error getting comments');
-      }
-    })
-  }
 
   //Update
 
