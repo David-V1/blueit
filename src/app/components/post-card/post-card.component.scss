@@ -16,6 +16,11 @@
     .postImg {
       width: auto;
     }
+    .card-details-container{
+      .img-wrapper:hover{
+        cursor: pointer;
+      }
+    }
 }
 // Profile Image
 // width: 100px;

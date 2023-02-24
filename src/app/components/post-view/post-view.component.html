@@ -1,12 +1,12 @@
 <app-navigation></app-navigation>
-<div *ngIf="postService.post$ | async as post">
+<ng-container *ngIf="postService.post$ | async as post">
   <div class="container">
     <div class="row">
       <div class="col-md-8">
         <app-post-card [post]="post"></app-post-card>
+        <app-comment></app-comment>
       </div>
-      <div class="col-md-4"></div>
     </div>
   </div>
-</div>
+</ng-container>
 <button (click)="test()">TEST</button>

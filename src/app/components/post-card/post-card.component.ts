@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UiService } from 'src/app/services/ui.service';
 import { PageName } from 'src/app/enums/PageEnum';
 import { Post } from 'src/app/models/Post';
@@ -16,7 +16,9 @@ export class PostCardComponent {
 
   constructor(public ui: UiService, public postService: PostService) {}
 
-  
+  onImgClick(){
+    console.log('image clicked')
+  }
 
   test(){
     console.log('post',this.post);
