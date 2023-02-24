@@ -20,7 +20,7 @@
   </div>
 </div>
 <div class="comments-wrap">
-  <ng-container *ngIf="postService.comments$ | async as comments">
+  <ng-container *ngIf="commentService.comments$ | async as comments">
     <div class="comments">
       <div class="comment" *ngFor="let comment of comments">
         <div class="comment-body">
