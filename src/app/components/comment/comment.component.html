@@ -1,7 +1,34 @@
-<textarea
-  [rows]="5"
-  [cols]="20"
-  pInputTextarea
-  [autoResize]="true"
-  class="text-area"
-></textarea>
+<div class="comment-text-container">
+  <textarea
+    [rows]="5"
+    [cols]="20"
+    pInputTextarea
+    [autoResize]="true"
+    placeholder="Enter your comment here..."
+    class="text-area"
+    [(ngModel)]="comment.commentText"
+  ></textarea>
+  <div class="btn-container d-flex justify-content-end w-100">
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="comment"
+      class="p-button-rounded p-button-secondary"
+      (click)="onCommentSubmit()"
+    ></button>
+  </div>
+</div>
+<div class="comments-wrap">
+  <ng-container *ngIf="postService.comments$ | async as comments">
+    <div class="comments">
+      <div class="comment" *ngFor="let comment of comments">
+        <div class="comment-body">
+          <div class="comment-text">{{ comment.commentText }}</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<button (click)="commentTest()">Comment Test</button>
