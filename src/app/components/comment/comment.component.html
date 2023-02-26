@@ -18,17 +18,7 @@
       (click)="onCommentSubmit()"
     ></button>
   </div>
-</div>
-<div class="comments-wrap">
-  <ng-container *ngIf="commentService.comments$ | async as comments">
-    <div class="comments">
-      <div class="comment" *ngFor="let comment of comments">
-        <div class="comment-body">
-          <div class="comment-text">{{ comment.commentText }}</div>
-        </div>
-      </div>
-    </div>
-  </ng-container>
+  <app-comment-card></app-comment-card>
 </div>
 
-<button (click)="commentTest()">Comment Test</button>
+<!-- <button (click)="commentTest()">Comment Test</button> -->

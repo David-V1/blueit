@@ -15,11 +15,10 @@ export class CommentComponent {
   constructor(public ui: UiService, public commentService: CommentService ,public postService: PostService) { }
 
   public onCommentSubmit(){ 
-    this.commentService.addComment(this.comment, this.postService.currentPostId, this.ui.currentUserId!);
+    this.postService.addComment(this.comment, this.postService.currentPostId, this.ui.currentUserId!);
   }
 
   commentTest() {
-
     this.commentService.getCommentsByPostId(this.postService.currentPostId);
     this.commentService.comment$.subscribe((data) => {
       console.log(data);

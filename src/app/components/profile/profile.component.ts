@@ -47,6 +47,7 @@ export class ProfileComponent {
 
   public addNewProfilePic(): void {
     this.userService.addProfilePic(this.user)
+    location.reload();
   }
 
  
