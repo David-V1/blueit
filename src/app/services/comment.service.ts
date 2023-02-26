@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, take } from 'rxjs';
 import { Comment } from '../models/Comment';
 import { UiService } from './ui.service';
-import { PostService } from './post.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,25 +18,40 @@ export class CommentService {
   private commentsSubject: Subject<Comment[]> = new Subject<Comment[]>();
   public comments$ = this.commentsSubject.asObservable();
 
-  constructor(private http: HttpClient, private ui: UiService, private postService: PostService) { }
+  constructor(private http: HttpClient, private ui: UiService) {
+   }
 
   //Create
-  public addComment(comment: Comment, postId:number, userId: string): void{
-    this.http.post<Comment>(`${this.url}/post/${postId}/user/${userId}`, comment)
+  public voteComment(userId: string, commentId: number, vote: string): void {
+    console.log(userId, commentId, vote)
+    this.http.post<Comment>(`${this.url}/vote/${userId}/${commentId}/${vote}`, null)
     .subscribe({
       next: () => {
-        this.ui.openSnackBar('Comment created successfully');
-        this.postService.getPostById(this.postService.currentPostId);
+        console.log('Voted comment');
       },
       error: (err) => {
         console.log(err);
-        this.ui.onError('Error creating comment');
+        this.ui.onError('Error voting comment');
       }
     })
   }
 
 
   //Read
+  public gettAllComments(): void{
+    this.http.get<Comment[]>(`${this.url}`)
+    .pipe(take(1))
+    .subscribe({
+      next: (comments) => {
+        console.log(comments)
+      },
+      error: (err) => {
+        console.log(err);
+        this.ui.onError('Error getting comments');
+      }
+    })
+  }
+
   public getCommentsByPostId(postId: number): void{
     this.http.get<Comment[]>(`${this.url}/post/${postId}`)
     .subscribe({

@@ -4,6 +4,7 @@ import { Observable, Subject, take } from 'rxjs';
 import { Post } from '../models/Post';
 import { UiService } from './ui.service';
 import { PageName } from '.././enums/PageEnum';
+import { CommentService } from './comment.service';
 import { Comment } from '../models/Comment';
 
 @Injectable({
@@ -18,13 +19,12 @@ export class PostService {
   private postsSubject: Subject<Post[]> = new Subject<Post[]>();
   public posts$ = this.postsSubject.asObservable();
 
-
-
   private url: string = 'http://localhost:8080/api/post';
   public postUrl: string = 'http://localhost:8080/api/post/create';
 
-  constructor(private http: HttpClient, private ui: UiService) {
+  constructor(private http: HttpClient, private ui: UiService, private commentService: CommentService) {
     this.getAllPosts();
+    this.commentService.getCommentsByPostId(this.currentPostId); // persisting comments on refresh
    }
 
   public prepareFormData(post: Post): FormData {
@@ -41,9 +41,10 @@ export class PostService {
     return formData;
   }
 
-  public onPostSelection(post: number): void {
-    this.currentPostId = post;
-    this.getPostById(post);
+  public onPostSelection(postId: number): void {
+    this.currentPostId = postId;
+    this.getPostById(postId);
+    this.commentService.getCommentsByPostId(postId);
     this.ui.changePage(PageName.POST_VIEW);
   }
   // TODO: Need to add Comment to posts
@@ -74,6 +75,20 @@ export class PostService {
       error: (err) => {
         console.log(err);
         this.ui.onError('Error voting');
+      }
+    })
+  }
+  //TODO: circular DI moved to post.service.ts
+  public addComment(comment: Comment, postId:number, userId: string): void{
+    this.http.post<Comment>(`http://localhost:8080/api/comments/post/${postId}/user/${userId}`, comment)
+    .subscribe({
+      next: () => {
+        this.ui.openSnackBar('Comment created successfully');
+        this.getPostById(this.currentPostId);
+      },
+      error: (err) => {
+        console.log(err);
+        this.ui.onError('Error creating comment');
       }
     })
   }

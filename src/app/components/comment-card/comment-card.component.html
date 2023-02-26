@@ -1,1 +1,61 @@
-<p>comment-card works!</p>
+<div class="comments-wrap">
+  <ng-container *ngIf="commentService.comments$ | async as comments">
+    <div class="comment-container" *ngFor="let comment of comments">
+      <div class="comment-header">
+        <div class="header-wrapper d-flex align-content-center">
+          <img
+            src="{{
+              'data:' +
+                comment.user.imgType +
+                ';base64,' +
+                comment.user.profilePicture
+            }}"
+            alt="avatar"
+            width="50"
+            height="50"
+            class="img-fluid rounded-circle"
+          />
+          <h6>{{ comment.user.username }}</h6>
+          <span>&#183;</span>
+          <p>{{ dateDuration(comment.date) }}</p>
+        </div>
+      </div>
+      <div class="comment-body">
+        <div class="body-wrapper">
+          <p>{{ comment.commentText }}</p>
+        </div>
+      </div>
+      <div class="comment footer">
+        <div class="footer-wrapper">
+          <div class="arrow-wrapper">
+            <!-- upvote -->
+            <button
+              (click)="
+                commentService.voteComment(
+                  comment.user.id!,
+                  comment.id!,
+                  'true'
+                )
+              "
+            >
+              <i class="pi pi-arrow-up"></i>
+            </button>
+            <!-- <span>{{ post.votes }}</span> -->
+            <!-- downvote -->
+            <button
+              (click)="
+                commentService.voteComment(
+                  comment.user.id!,
+                  comment.id!,
+                  'false'
+                )
+              "
+            >
+              <i class="pi pi-arrow-down"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
