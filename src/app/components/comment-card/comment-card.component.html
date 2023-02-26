@@ -32,7 +32,7 @@
             <button
               (click)="
                 commentService.voteComment(
-                  comment.user.id!,
+                  ui.currentUserId!,
                   comment.id!,
                   'true'
                 )
@@ -45,7 +45,7 @@
             <button
               (click)="
                 commentService.voteComment(
-                  comment.user.id!,
+                  ui.currentUserId!,
                   comment.id!,
                   'false'
                 )

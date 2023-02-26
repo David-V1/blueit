@@ -161,7 +161,6 @@ export class UserService {
         this.userSubject.next(user);
         this.activeMenuItem();
         this.updateMenu(this.activeMenuItem());
-        this.ui.openSnackBar(`Welcome back ${user.username}!`);
       },
       error: err => {
         console.error(err);
