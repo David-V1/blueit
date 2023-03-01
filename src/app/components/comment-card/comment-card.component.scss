@@ -1,0 +1,42 @@
+@mixin flexCenter(){
+  display: flex;
+          flex-direction: row;
+          align-items: center;
+          align-content: center;
+}
+
+@mixin flexBottomColumn(){
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.comment-container{
+  .comment-header{
+    .header-wrapper{
+      .header-details{
+        @include flexCenter();
+        margin-left: 5%;
+        justify-content: space-around;
+        width: fit-content;
+
+      }
+    }
+  }
+  .comment-body{
+    margin-left: 5%;
+   .body-wrapper{
+   } 
+  }
+  .comment-footer{
+    .footer-wrapper{
+      .arrow-wrapper-comment{
+        .comment-vote {
+          @include flexCenter();
+          margin-left: 5%;
+        }
+      }
+    }
+  }
+}
+

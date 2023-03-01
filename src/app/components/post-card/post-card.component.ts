@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UiService } from 'src/app/services/ui.service';
 import { PageName } from 'src/app/enums/PageEnum';
-import { Post } from 'src/app/models/Post';
 import { PostService } from 'src/app/services/post.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-post-card',
@@ -12,17 +12,21 @@ import { PostService } from 'src/app/services/post.service';
 export class PostCardComponent {
   pageName = PageName;
   @Input() post: any = {} as any; // PostDTO
-  postLikes: number = 0;
 
   constructor(public ui: UiService, public postService: PostService) {}
 
-  onImgClick(){
-    console.log('image clicked')
+  postDuration(dateString: string) {
+    const date = moment(dateString, 'DD-MM-YYYY HH:mm:ss');
+    return date.fromNow();
   }
 
-  test(){
-    console.log('post',this.post);
-    console.log('post.postImages',this.post.postImages);
+  onVote(event: Event) {
+    if(event){
+      this.postService.votePost(this.ui.currentUserId!, this.post.id, 'true')
+    } else{
+      this.postService.votePost(this.ui.currentUserId!, this.post.id, 'false')
+    }
     
   }
+  
 }

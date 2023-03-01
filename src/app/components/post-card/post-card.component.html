@@ -1,19 +1,10 @@
 <div class="main-card-container my-3">
   <div class="card-likes-container">
     <div class="arrow-wrapper">
-      <!-- upvote -->
-      <button
-        (click)="postService.votePost(ui.currentUserId!, post.id, 'true')"
-      >
-        <i class="pi pi-arrow-up"></i>
-      </button>
-      <span>{{ post.votes }}</span>
-      <!-- downvote -->
-      <button
-        (click)="postService.votePost(ui.currentUserId!, post.id, 'false')"
-      >
-        <i class="pi pi-arrow-down"></i>
-      </button>
+      <app-voting
+        (voteClick)="onVote($event)"
+        [numberVotes]="post.votes"
+      ></app-voting>
     </div>
   </div>
   <div class="card-details-container">
@@ -21,10 +12,9 @@
     <div class="card-main-info">
       <div class="username-wrapper">
         <span>u/</span><small>{{ post.user.username }}</small>
-        <p>Posted: {{ post.postedDate }}</p>
+        <p>Posted: {{ postDuration(post.postedDate) }}</p>
         <!-- underline -->
-        <span>b/</span>
-        <h5>{{ post.community.name }}</h5>
+        <h5>b/{{ post.community.name }}</h5>
       </div>
       <div class="title-wrapper">
         <h1>{{ post.title }}</h1>
@@ -47,4 +37,3 @@
     <div class="card-statistics" [innerHTML]="post.content"></div>
   </div>
 </div>
-<button (click)="test()">TEST</button>
