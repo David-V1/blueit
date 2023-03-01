@@ -19,5 +19,13 @@ export class CommentCardComponent {
     return date.fromNow();
   }
   
+  onVote(event: Event, comment:Comment ) {
+    if(event){
+      this.commentService.voteComment(this.ui.currentUserId!, comment.id!, 'true')
+    } else {
+      this.commentService.voteComment(this.ui.currentUserId!, comment.id!, 'false')
+    }
+    
+  }
 
 }

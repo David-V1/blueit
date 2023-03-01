@@ -1,8 +1,8 @@
-<div class="comments-wrap">
+<div class="comments-wrap my-3">
   <ng-container *ngIf="commentService.comments$ | async as comments">
-    <div class="comment-container" *ngFor="let comment of comments">
+    <div class="comment-container my-5" *ngFor="let comment of comments">
       <div class="comment-header">
-        <div class="header-wrapper d-flex align-content-center">
+        <div class="header-wrapper px-3">
           <img
             src="{{
               'data:' +
@@ -15,44 +15,30 @@
             height="50"
             class="img-fluid rounded-circle"
           />
-          <h6>{{ comment.user.username }}</h6>
-          <span>&#183;</span>
-          <p>{{ dateDuration(comment.date) }}</p>
+          <div class="header-details">
+            <h6 class="mb-3">
+              {{ comment.user.username }}
+            </h6>
+            <p class="px-3">&#183;</p>
+            <p class="d-flex align-items-end">
+              {{ dateDuration(comment.date) }}
+            </p>
+          </div>
         </div>
       </div>
       <div class="comment-body">
-        <div class="body-wrapper">
+        <div class="body-wrapper ms-3">
           <p>{{ comment.commentText }}</p>
         </div>
       </div>
-      <div class="comment footer">
-        <div class="footer-wrapper">
-          <div class="arrow-wrapper">
-            <!-- upvote -->
-            <button
-              (click)="
-                commentService.voteComment(
-                  comment.user.id!,
-                  comment.id!,
-                  'true'
-                )
-              "
-            >
-              <i class="pi pi-arrow-up"></i>
-            </button>
-            <!-- <span>{{ post.votes }}</span> -->
-            <!-- downvote -->
-            <button
-              (click)="
-                commentService.voteComment(
-                  comment.user.id!,
-                  comment.id!,
-                  'false'
-                )
-              "
-            >
-              <i class="pi pi-arrow-down"></i>
-            </button>
+      <div class="comment-footer">
+        <div class="footer-wrapper ms-3">
+          <div class="arrow-wrapper-comment">
+            <app-voting
+              class="comment-vote"
+              (voteClick)="onVote($event, comment)"
+              [numberVotes]="comment.likes"
+            ></app-voting>
           </div>
         </div>
       </div>

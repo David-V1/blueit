@@ -24,6 +24,7 @@ export class PostService {
 
   constructor(private http: HttpClient, private ui: UiService, private commentService: CommentService) {
     this.getAllPosts();
+    console.log('Current Post ID: ',this.currentPostId)
     this.commentService.getCommentsByPostId(this.currentPostId); // persisting comments on refresh
    }
 
@@ -108,7 +109,6 @@ export class PostService {
   }
 
   public getPostById(postId: number): void{
-    console.log('Post id sent to BE: ',postId)
     this.http.get<Post>(`${this.url}/id/${postId}`)
     .pipe(take(1))
     .subscribe({

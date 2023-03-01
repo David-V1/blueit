@@ -13,8 +13,8 @@ export class UserService {
   private url: string = 'http://localhost:8080/api/user';
   public currentUser = {} as User;
   public username: string = '';
-  displayLogin: boolean = false;
-  showAddCommunity: boolean = false;
+  public displayLogin: boolean = false;
+  public showAddCommunity: boolean = false;
 
   private userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(this.currentUser);
   public user$ = this.userSubject.asObservable();
@@ -164,7 +164,7 @@ export class UserService {
       },
       error: err => {
         console.error(err);
-        this.ui.onError(err);
+        this.getUserByEmail(email);
       }
     });
   }
@@ -186,9 +186,22 @@ export class UserService {
       },
       error: err => {
         console.error(err);
-        this.ui.onError(err);
+        this.ui.onError('Oops, Something went wrong');
       }
     });
+  }
+  
+  public getUserByEmail(email: string): void{
+    this.http.get<User>(`${this.url}/u/email/${email}`)
+    .pipe(take(1))
+    .subscribe({
+      next: () => {
+        this.ui.openSnackBar('Check your credentials and try again.');
+      },
+      error: err => {
+        this.ui.openSnackBar('You have not created an account yet.');
+      }
+    })
   }
 
   //Update

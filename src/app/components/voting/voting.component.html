@@ -1,0 +1,23 @@
+<!-- upvote -->
+<button
+  pButton
+  pRipple
+  type="button"
+  icon="pi pi-arrow-up"
+  class="p-button-rounded p-button-outlined"
+  styleClass="p-button-lg"
+  (click)="onUpVote()"
+></button>
+<p class="px-2 py-2 mx-2 my-2 d-flex align-items-center justify-content-center">
+  {{ numberVotes }}
+</p>
+<!-- downvote -->
+<button
+  pButton
+  pRipple
+  type="button"
+  icon="pi pi-arrow-down"
+  class="p-button-rounded p-button-outlined"
+  styleClass="p-button-lg"
+  (click)="onDownVote()"
+></button>
