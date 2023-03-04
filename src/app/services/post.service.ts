@@ -86,6 +86,7 @@ export class PostService {
       next: () => {
         this.ui.openSnackBar('Comment created successfully');
         this.getPostById(this.currentPostId);
+        this.commentService.getCommentsByPostId(this.currentPostId) // postid coming from
       },
       error: (err) => {
         console.log(err);
