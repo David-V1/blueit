@@ -71,7 +71,7 @@
 <p-divider></p-divider>
 <div class="post-container">
   <div class="btn-layout d-flex justify-content-end">
-    <p-button label="Cancel" class="pe-3"></p-button>
+    <p-button label="Cancel" class="pe-3" (onClick)="ui.changePage(PageName.HOME)"></p-button>
     <p-button label="Post" (onClick)="postNewPost()"></p-button>
   </div>
 </div>

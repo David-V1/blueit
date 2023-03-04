@@ -26,11 +26,9 @@ export class CommentService {
 
   //Create
   public voteComment(userId: string, commentId: number, vote: string): void {
-    console.log(userId, commentId, vote)
     this.http.post<Comment>(`${this.url}/vote/${userId}/${commentId}/${vote}`, null)
     .subscribe({
       next: () => {
-
         this.getCommentsByPostId(this.currentPostId);
       },
       error: (err) => {
@@ -42,12 +40,11 @@ export class CommentService {
 
 
   //Read
-  public gettAllComments(): void{
+  public gettAllComments(): void {
     this.http.get<Comment[]>(`${this.url}`)
     .pipe(take(1))
     .subscribe({
-      next: (comments) => {
-        console.log(comments)
+      next: () => {
       },
       error: (err) => {
         console.log(err);
@@ -56,10 +53,11 @@ export class CommentService {
     })
   }
 
-  public getCommentsByPostId(postId: number): void{
+  public getCommentsByPostId(postId: number): void {
     this.http.get<Comment[]>(`${this.url}/post/${postId}`)
     .subscribe({
       next: (comments) => {
+        console.log(comments)
         this.commentsSubject.next(comments);
       },
       error: (err) => {

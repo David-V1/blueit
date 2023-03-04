@@ -24,7 +24,6 @@ export class PostService {
 
   constructor(private http: HttpClient, private ui: UiService, private commentService: CommentService) {
     this.getAllPosts();
-    console.log('Current Post ID: ',this.currentPostId)
     this.commentService.getCommentsByPostId(this.currentPostId); // persisting comments on refresh
    }
 
@@ -114,7 +113,6 @@ export class PostService {
     .pipe(take(1))
     .subscribe({
       next: (post) => {
-        console.log(post)
         this.postSubject.next(post);
         localStorage.setItem('currentPostId', JSON.stringify(post.id));
       },
