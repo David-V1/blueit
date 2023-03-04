@@ -80,12 +80,14 @@ export class PostService {
   }
   //TODO: circular DI moved to post.service.ts
   public addComment(comment: Comment, postId:number, userId: string): void{
+    console.log('addComment Comment:', comment,'POSTID *', postId, 'USERID',userId)
     this.http.post<Comment>(`http://localhost:8080/api/comments/post/${postId}/user/${userId}`, comment)
     .subscribe({
       next: () => {
         this.ui.openSnackBar('Comment created successfully');
         this.getPostById(this.currentPostId);
-        this.commentService.getCommentsByPostId(this.currentPostId) // postid coming from
+        this.commentService.getCommentsByPostId(postId) // postid coming from
+        console.log('NEXT this.currentPostId',this.currentPostId)
       },
       error: (err) => {
         console.log(err);

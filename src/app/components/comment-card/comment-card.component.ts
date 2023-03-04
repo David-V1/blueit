@@ -19,6 +19,7 @@ export class CommentCardComponent {
     this.comments$ = this.commentService.comments$
     .pipe(
       map((comments: Comment[]) => {
+        console.log('from RxJs map', comments)
         return comments.sort((a, b) =>  b.likes - a.likes)
       }
     )

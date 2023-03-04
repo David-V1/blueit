@@ -12,8 +12,10 @@ import { CommentService } from 'src/app/services/comment.service';
 export class CommentComponent {
   comment = {} as Comment;
 
-  constructor(public ui: UiService, public commentService: CommentService ,public postService: PostService) { }
-
+  constructor(public ui: UiService, public commentService: CommentService ,public postService: PostService) {
+    this.postService.getPostById(this.postService.currentPostId)
+   }
+  //TODO: BUG, when adding the a comment and then voting on own comment, it will return comments from other posts except the current post
   public onCommentSubmit(){ 
     this.postService.addComment(this.comment, this.postService.currentPostId, this.ui.currentUserId!);
   }
