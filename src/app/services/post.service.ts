@@ -71,7 +71,7 @@ export class PostService {
     this.http.post(`${this.url}/vote/${userId}/${postId}/${voteType}`, null)
     .subscribe({
       next: () => {
-        this.ui.openSnackBar('Vote successful');
+        this.getPostById(postId);
       },
       error: (err) => {
         console.log(err);
@@ -114,6 +114,7 @@ export class PostService {
     .pipe(take(1))
     .subscribe({
       next: (post) => {
+        console.log(post)
         this.postSubject.next(post);
         localStorage.setItem('currentPostId', JSON.stringify(post.id));
       },

@@ -22,9 +22,10 @@ export class PostCardComponent {
 
   onVote(event: Event) {
     if(event){
-      this.postService.votePost(this.ui.currentUserId!, this.post.id, 'true')
+      this.postService.votePost(this.ui.currentUserId!, this.post.id, 'true');
+
     } else{
-      this.postService.votePost(this.ui.currentUserId!, this.post.id, 'false')
+      this.postService.votePost(this.ui.currentUserId!, this.post.id, 'false');
     }
     
   }
