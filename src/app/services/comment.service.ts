@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, take } from 'rxjs';
 import { Comment } from '../models/Comment';
 import { UiService } from './ui.service';
+import { PostService } from './post.service';
 
 
 @Injectable({
@@ -12,13 +13,15 @@ export class CommentService {
 
   url: string = 'http://localhost:8080/api/comments';
 
+  public currentPostId: number = localStorage.getItem('currentPostId') ? Number(localStorage.getItem('currentPostId')) : 0; // added due to DI cycle w/ PostService
+
   private commentSubject: Subject<Comment> = new Subject<Comment>();
   public comment$ = this.commentSubject.asObservable();
 
   private commentsSubject: Subject<Comment[]> = new Subject<Comment[]>();
   public comments$ = this.commentsSubject.asObservable();
 
-  constructor(private http: HttpClient, private ui: UiService) {
+  constructor(private http: HttpClient, private ui: UiService) { 
    }
 
   //Create
@@ -27,7 +30,8 @@ export class CommentService {
     this.http.post<Comment>(`${this.url}/vote/${userId}/${commentId}/${vote}`, null)
     .subscribe({
       next: () => {
-        console.log('Voted comment');
+
+        this.getCommentsByPostId(this.currentPostId);
       },
       error: (err) => {
         console.log(err);
