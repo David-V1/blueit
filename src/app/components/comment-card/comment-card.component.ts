@@ -16,6 +16,7 @@ export class CommentCardComponent {
   comments$: Observable<Comment[]>;
 
   constructor(public ui: UiService, public commentService: CommentService ,public postService: PostService) {
+    //sort comments by likes
     this.comments$ = this.commentService.comments$
     .pipe(
       map((comments: Comment[]) => {

@@ -71,6 +71,7 @@ export class PostService {
     .subscribe({
       next: () => {
         this.getPostById(postId);
+        this.getAllPosts();
       },
       error: (err) => {
         console.log(err);
