@@ -1,5 +1,5 @@
 <div class="comments-wrap my-3">
-  <ng-container *ngIf="commentService.comments$ | async as comments">
+  <ng-container *ngIf="comments$ | async as comments">
     <div class="comment-container my-5" *ngFor="let comment of comments">
       <div class="comment-header">
         <div class="header-wrapper px-3">

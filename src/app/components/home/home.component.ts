@@ -3,6 +3,8 @@ import { UiService } from 'src/app/services/ui.service';
 import { PageName } from 'src/app/enums/PageEnum';
 import { Post } from 'src/app/models/Post';
 import { PostService } from 'src/app/services/post.service';
+import { CommunityService } from 'src/app/services/community.service';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -12,15 +14,13 @@ import { PostService } from 'src/app/services/post.service';
 })
 export class HomeComponent {
   pageName = PageName;
-  constructor(public ui: UiService, public postService: PostService) {
+  constructor(public ui: UiService, public postService: PostService, public c:CommunityService, public u: UserService) {
     this.postService.getAllPosts();
    }
 
   //  TESTING BUTTON
   test() {
-    console.log("test");
-    console.log('testing UI current userId for Null', this.ui.currentUserId);
-
+    // this.c.getCommunity();
   }
 
 }

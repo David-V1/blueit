@@ -4,6 +4,8 @@ import {Comment} from 'src/app/models/Comment'
 import { PostService } from 'src/app/services/post.service';
 import { CommentService } from 'src/app/services/comment.service';
 import * as moment from 'moment';
+import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-comment-card',
@@ -11,8 +13,19 @@ import * as moment from 'moment';
   styleUrls: ['./comment-card.component.scss']
 })
 export class CommentCardComponent {
+  comments$: Observable<Comment[]>;
 
-  constructor(public ui: UiService, public commentService: CommentService ,public postService: PostService) { }
+  constructor(public ui: UiService, public commentService: CommentService ,public postService: PostService) {
+    //sort comments by likes
+    this.comments$ = this.commentService.comments$
+    .pipe(
+      map((comments: Comment[]) => {
+        console.log('from RxJs map', comments)
+        return comments.sort((a, b) =>  b.likes - a.likes)
+      }
+    )
+    )
+   }
 
   dateDuration(dateString:string) {
     const date = moment(dateString, 'DD-MM-YYYY HH:mm:ss');

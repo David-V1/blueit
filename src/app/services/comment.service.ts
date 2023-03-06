@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, take } from 'rxjs';
 import { Comment } from '../models/Comment';
 import { UiService } from './ui.service';
+import { PostService } from './post.service';
 
 
 @Injectable({
@@ -12,22 +13,23 @@ export class CommentService {
 
   url: string = 'http://localhost:8080/api/comments';
 
+  public currentPostId: number = localStorage.getItem('currentPostId') ? Number(localStorage.getItem('currentPostId')) : 0; // added due to DI cycle w/ PostService
+
   private commentSubject: Subject<Comment> = new Subject<Comment>();
   public comment$ = this.commentSubject.asObservable();
 
   private commentsSubject: Subject<Comment[]> = new Subject<Comment[]>();
   public comments$ = this.commentsSubject.asObservable();
 
-  constructor(private http: HttpClient, private ui: UiService) {
+  constructor(private http: HttpClient, private ui: UiService) { 
    }
 
   //Create
   public voteComment(userId: string, commentId: number, vote: string): void {
-    console.log(userId, commentId, vote)
     this.http.post<Comment>(`${this.url}/vote/${userId}/${commentId}/${vote}`, null)
     .subscribe({
       next: () => {
-        console.log('Voted comment');
+        this.getCommentsByPostId(this.currentPostId);
       },
       error: (err) => {
         console.log(err);
@@ -38,12 +40,11 @@ export class CommentService {
 
 
   //Read
-  public gettAllComments(): void{
+  public gettAllComments(): void {
     this.http.get<Comment[]>(`${this.url}`)
     .pipe(take(1))
     .subscribe({
-      next: (comments) => {
-        console.log(comments)
+      next: () => {
       },
       error: (err) => {
         console.log(err);
@@ -52,7 +53,7 @@ export class CommentService {
     })
   }
 
-  public getCommentsByPostId(postId: number): void{
+  public getCommentsByPostId(postId: number): void {
     this.http.get<Comment[]>(`${this.url}/post/${postId}`)
     .subscribe({
       next: (comments) => {

@@ -1,5 +1,7 @@
+<!-- TODO: comment-text area separate component -->
 <div class="comment-text-container">
-  <textarea
+  <ng-container *ngIf="ui.isLoggedIn">
+    <textarea
     [rows]="5"
     [cols]="20"
     pInputTextarea
@@ -18,6 +20,8 @@
       (click)="onCommentSubmit()"
     ></button>
   </div>
+  </ng-container>
+  
   <app-comment-card></app-comment-card>
 </div>
 
