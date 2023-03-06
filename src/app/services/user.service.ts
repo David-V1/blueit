@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, Subject, take } from 'rxjs';
 import { UiService } from './ui.service';
 import { MenuItem } from 'primeng/api';
 import { PageName } from '../enums/PageEnum';
+import { CommunityService } from './community.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class UserService {
   private menuSubject = new BehaviorSubject<MenuItem[]>(this.activeMenuItem());
   public menu$ = this.menuSubject.asObservable();
 
-  constructor(public ui: UiService, public http:HttpClient) {
+
+  constructor(public ui: UiService, public http:HttpClient, private communityService: CommunityService) {
     const email = localStorage.getItem('email');
     const password = localStorage.getItem('password');
     const username = localStorage.getItem('username'); // for nav name display
@@ -58,7 +60,7 @@ export class UserService {
     const currentLogStatus = localStorage.getItem('isLoggedIn') ? JSON.parse(localStorage.getItem('isLoggedIn')!) : false;
     return currentLogStatus ? 
     [{
-      label: `${this.currentUser.username}`,
+      label: this.currentUser.username,
       icon: 'pi pi-fw pi-user',
       items: [
         
@@ -92,6 +94,9 @@ export class UserService {
     {
       label: 'Community',
       icon: 'pi pi-fw pi-reddit',
+      command: () => {
+        this.communityService.getAllCommunities();
+      },
       items: [
         {
           label: 'Create Community',
@@ -99,6 +104,12 @@ export class UserService {
           command: () => {
             this.showAddCommunityForm();
           }
+        },
+        {
+          //Array of communities: MenuItem[]
+          label: 'all communities',
+          icon: 'pi pi-fw pi-list',
+          items: this.communityService.getCommunity()
         }
       ]
     }

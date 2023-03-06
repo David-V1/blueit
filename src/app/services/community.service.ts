@@ -4,6 +4,7 @@ import { UiService } from './ui.service';
 import { PageName } from '../enums/PageEnum';
 import { Community } from '../models/Community';
 import { Subject, take } from 'rxjs';
+import { MenuItem } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,8 @@ import { Subject, take } from 'rxjs';
 export class CommunityService implements OnInit {
   pageName = PageName;
   url: string = 'http://localhost:8080/b';
+  menuItems: MenuItem[] = [];
+  communityMenuItems = {} as MenuItem;
 
   private communites: Subject<Community[]> = new Subject<Community[]>();
   public communities$ = this.communites.asObservable();
@@ -18,7 +21,7 @@ export class CommunityService implements OnInit {
   private community: Subject<Community> = new Subject<Community>();
   public community$ = this.community.asObservable();
 
-  constructor(public ui: UiService, private http: HttpClient ) {
+  constructor(public ui: UiService, private http: HttpClient) {
     this.getAllCommunities();
    }
 
@@ -30,14 +33,30 @@ export class CommunityService implements OnInit {
     this.http.post<Community>(`${this.url}`, community).pipe(take(1))
     .subscribe({
       next: () => {
-        this.ui.openSnackBar('Community created successfully');
         this.getAllCommunities();
+        location.reload();
       },
       error: (err) => {
         console.log(err);
       }
     });
+  }
 
+  // Community object for Nav Bar
+  public getCommunity(): MenuItem[] {
+    this.getAllCommunities();
+    this.communites.subscribe((communities) => {
+      this.menuItems = [...communities.map((community) => {
+        return {
+          label: community.name,
+          icon: 'pi pi-fw pi-home',
+          command: () => {
+            this.community.next(community);
+          }
+        }
+      })]
+    });
+    return this.menuItems;
   }
 
   // Read

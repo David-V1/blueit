@@ -16,7 +16,6 @@ import { PageName } from 'src/app/enums/PageEnum';
 })
 export class NavigationComponent implements OnInit, OnDestroy {
   PageName = PageName;
-  // newAccountData = {} as User;
   searchValue: string = '';
   navMenuItems: MenuItem[] = [];
   menuSubscription: Subscription;
@@ -31,7 +30,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
       });
     }
 
-  ngOnInit(): void {
+    ngOnInit(): void {
     this.primengConfig.ripple = true;
   }
   //TODO: Need to add current page status to the navigation bar
