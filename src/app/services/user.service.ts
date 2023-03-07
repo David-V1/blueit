@@ -6,6 +6,7 @@ import { UiService } from './ui.service';
 import { MenuItem } from 'primeng/api';
 import { PageName } from '../enums/PageEnum';
 import { CommunityService } from './community.service';
+import { PostService } from './post.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class UserService {
   public menu$ = this.menuSubject.asObservable();
 
 
-  constructor(public ui: UiService, public http:HttpClient, private communityService: CommunityService) {
+  constructor(public ui: UiService, public http:HttpClient, private communityService: CommunityService, private postService: PostService) {
     const email = localStorage.getItem('email');
     const password = localStorage.getItem('password');
     const username = localStorage.getItem('username'); // for nav name display
@@ -68,6 +69,7 @@ export class UserService {
           label: 'My Profile',
           icon: 'pi pi-fw pi-user-edit',
           command: () => {
+            this.postService.getAllPosts();
             this.ui.changePage(PageName.PROFILE);
           }
         },
@@ -132,6 +134,14 @@ export class UserService {
 
     //Create
     public createUser(newUser: User): void{
+      if (!newUser.email) {
+        this.ui.onError('email can\'t be empty')
+        return;
+      }
+      if (!newUser.username) {
+        this.ui.onError('username can\'t be empty')
+        return;
+      }
       this.http.post<User>(this.url, newUser)
       .pipe(take(1))
       .subscribe({

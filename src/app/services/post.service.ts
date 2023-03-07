@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, take } from 'rxjs';
+import { filter, Observable, Subject, tap, take, map } from 'rxjs';
 import { Post } from '../models/Post';
 import { UiService } from './ui.service';
 import { PageName } from '.././enums/PageEnum';
 import { CommentService } from './comment.service';
 import { Comment } from '../models/Comment';
+import { User } from '../models/User';
+import { PostDto } from '../models/PostDto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +20,9 @@ export class PostService {
 
   private postsSubject: Subject<Post[]> = new Subject<Post[]>();
   public posts$ = this.postsSubject.asObservable();
+
+  private postIdSubject: Subject<number> = new Subject();
+  public userPostId$ = this.postIdSubject.asObservable();
 
   private url: string = 'http://localhost:8080/api/post';
   public postUrl: string = 'http://localhost:8080/api/post/create';
@@ -129,6 +134,12 @@ export class PostService {
     return this.http.get<number>(`${this.url}/likes/${postId}`)
   }
 
+
+  // Declarative 
+  userPosts$ = this.posts$.pipe(
+    map(posts => posts.filter((post: Post) => post.user!.id === this.ui.currentUserId)),
+    tap(x => console.log(x))
+  )
 
   //Update
 

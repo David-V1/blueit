@@ -1,6 +1,6 @@
 <app-navigation></app-navigation>
 <div class="main-container d-flex">
-  <div class="profile-info">
+  <div class="profile-info py-5 px-5">
     <ng-container *ngIf="userService.user$ | async as user">
       <p-card
         header="{{ user.email }}"
@@ -46,13 +46,18 @@
   </div>
   
   <div class="post-comments-container">
-    <div class="profile-posts"></div>
-    <div class="profile-comments px-5">
+    <div class="profile-posts px-5 py-5">
+      <ng-container *ngIf="postService.userPosts$ | async as posts">
+        <ng-container >
+          <app-profile-posts [userPost]="posts"></app-profile-posts>
+        </ng-container>
+      </ng-container>
+    </div>
+    <div class="profile-comments px-5 ">
       <ng-container *ngIf="commentService.userComments$ | async as comments">
         <ng-container >
           <app-profile-comments [userComments]="comments"></app-profile-comments>
         </ng-container>
-       
       </ng-container>
     </div>
   </div>

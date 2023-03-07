@@ -39,6 +39,7 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import { CommentCardComponent } from './components/comment-card/comment-card.component';
 import { VotingComponent } from './components/voting/voting.component';
 import { ProfileCommentsComponent } from './components/profile-comments/profile-comments.component';
+import { ProfilePostsComponent } from './components/profile-posts/profile-posts.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { ProfileCommentsComponent } from './components/profile-comments/profile-
     CommentComponent,
     CommentCardComponent,
     VotingComponent,
-    ProfileCommentsComponent
+    ProfileCommentsComponent,
+    ProfilePostsComponent
   ],
   imports: [
     BrowserModule,

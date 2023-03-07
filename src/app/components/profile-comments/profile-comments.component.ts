@@ -1,6 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { Post } from 'src/app/models/Post';
-import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-profile-comments',
