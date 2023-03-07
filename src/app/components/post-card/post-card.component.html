@@ -34,6 +34,6 @@
         </div>
       </ng-template>
     </p-carousel>
-    <div class="card-statistics" [innerHTML]="post.content"></div>
+    <div *ngIf="checkHomePage()" class="card-statistics" [innerHTML]="post.content"></div>
   </div>
 </div>
