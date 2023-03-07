@@ -1,0 +1,14 @@
+<div class="comment-card-container" *ngFor="let comment of userComments">
+    <div class="card-title">
+        <div class="title-wrapper">
+            <h5>{{comment.user.username}} commented on <small>b/</small>{{comment.post.community.name}}</h5>
+        </div>
+    </div>
+    <p-divider styleClass="my-divider"></p-divider>
+    <div class="card-body">
+        <div class="body-wrapper">
+            <h6><small>{{comment.user.username}}</small> · {{comment.likes}} likes · {{comment.date }}</h6>
+            <p>{{comment.commentText}}</p>
+        </div>
+    </div>
+</div>

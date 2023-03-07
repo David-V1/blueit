@@ -5,6 +5,7 @@ import { PageName } from 'src/app/enums/PageEnum';
 import { User } from 'src/app/models/User';
 import { FileHandler } from 'src/app/models/FileHandler';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CommentService } from 'src/app/services/comment.service';
 
 @Component({
   selector: 'app-profile',
@@ -23,14 +24,10 @@ export class ProfileComponent {
     password: '',
     imageName: '',
     imgType: '',
-    // profilePicture: '',
     profilePicture: null,
-    // profilePic: null,
   }
 
-  constructor(public ui: UiService, public userService: UserService, private sanitizer: DomSanitizer) { }
-  // TODO: Need to add pictures to profile
-  //TODO: CRUD for profile
+  constructor(public ui: UiService, public userService: UserService, private sanitizer: DomSanitizer, public commentService: CommentService) { }
   
   public onUploadPic(event: any){
     if (event.currentFiles){
@@ -51,10 +48,10 @@ export class ProfileComponent {
   }
 
  
-  test(){
-    this.userService.user$.subscribe(user => {
-      console.log(user)
-    });
-    console.log('USER THIS: ',this.user)
+  test() {
+    // this.userService.user$.subscribe(user => {
+    //   console.log(user)
+    // });
+    this.commentService.userComments$.subscribe()
   }
 }
