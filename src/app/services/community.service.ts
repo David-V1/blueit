@@ -3,7 +3,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { UiService } from './ui.service';
 import { PageName } from '../enums/PageEnum';
 import { Community } from '../models/Community';
-import { Subject, take } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, retry, Subject, switchMap, take, tap } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 
 @Injectable({
@@ -14,15 +14,24 @@ export class CommunityService implements OnInit {
   url: string = 'http://localhost:8080/b';
   menuItems: MenuItem[] = [];
   communityMenuItems = {} as MenuItem;
+  selectedCommunityId = Number(localStorage.getItem('selectedCommunityId'))
 
   private communites: Subject<Community[]> = new Subject<Community[]>();
   public communities$ = this.communites.asObservable();
 
-  private community: Subject<Community> = new Subject<Community>();
-  public community$ = this.community.asObservable();
+  private communitySubject: Subject<Community> = new Subject<Community>();
+  public community$ = this.communitySubject.asObservable();
+
+  private selectedComunnitySubject: BehaviorSubject<number> = new BehaviorSubject<number>(this.selectedCommunityId);
+  public selectedComunity$: Observable<number> = this.selectedComunnitySubject.asObservable();
 
   constructor(public ui: UiService, private http: HttpClient) {
     this.getAllCommunities();
+    // persist community view
+    if (this.selectedCommunityId !== null) {
+      this.onCommunitySelection(this.selectedCommunityId);
+    }
+      
    }
 
   ngOnInit(): void {
@@ -38,12 +47,13 @@ export class CommunityService implements OnInit {
       },
       error: (err) => {
         console.log(err);
+        this.ui.openSnackBar('Error creating community');
       }
     });
   }
 
   // Community object for Nav Bar
-  public getCommunity(): MenuItem[] {
+  public navbarCommunities(): MenuItem[] {
     this.getAllCommunities();
     this.communites.subscribe((communities) => {
       this.menuItems = [...communities.map((community) => {
@@ -51,7 +61,8 @@ export class CommunityService implements OnInit {
           label: community.name,
           icon: 'pi pi-fw pi-home',
           command: () => {
-            this.community.next(community);
+            this.onCommunitySelection(community.id!);
+            this.ui.changePage(this.pageName.COMMUNITY_PAGE);
           }
         }
       })]
@@ -74,35 +85,20 @@ export class CommunityService implements OnInit {
     });
   }
 
-  public getCommunityById(id: number): void{
-    this.http.get<Community>(`${this.url}/comId/${id}`).pipe(take(1))
-    .subscribe({
-      next: (community) => {
-        this.community.next(community);
-        this.getAllCommunities();
-      },
-      error: (err) => {
-        console.error(err);
-        this.ui.openSnackBar('Error getting community');
-
-      }
-    });
+  public onCommunitySelection(id: number): void {
+    localStorage.setItem('selectedCommunityId', id.toString())
+    this.selectedComunnitySubject.next(id);
   }
-
-  public getCommunityByName(name: string): void{
-    this.http.get<Community>(`${this.url}/${name}`).pipe(take(1))
-    .subscribe({
-      next: (community) => {
-        this.community.next(community);
-        this.getAllCommunities();
-      },
-      error: (err) => {
-        console.error(err);
-        this.ui.openSnackBar('Error getting community');
-
-      }
-    });
-  }
+  
+  public selection$ = this.selectedComunity$.pipe(
+    switchMap((communityId: number | null) => this.http.get<Community>(`${this.url}/comId/${communityId}`)),
+    catchError((err) => {
+      console.error(err);
+      this.ui.openSnackBar('Error getting community');
+      return of(err);
+    }),
+    retry(1),
+  );
 
   // Update
 

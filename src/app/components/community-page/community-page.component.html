@@ -1,0 +1,4 @@
+<app-navigation></app-navigation>
+<div *ngIf="communityService.selection$ | async as community">
+    <h1>{{community.name}}</h1>
+</div>

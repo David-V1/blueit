@@ -27,7 +27,12 @@ export class PostCardComponent {
     } else{
       this.postService.votePost(this.ui.currentUserId!, this.post.id, 'false');
     }
-    
+  }
+
+  checkHomePage(): boolean{
+    const currPage = Number(localStorage.getItem("page"))
+    if (currPage !== this.pageName.HOME) return true;
+    return false;
   }
   
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, take } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, Subject, switchMap, take, tap } from 'rxjs';
 import { Comment } from '../models/Comment';
 import { UiService } from './ui.service';
 import { PostService } from './post.service';
@@ -11,7 +11,7 @@ import { PostService } from './post.service';
 })
 export class CommentService {
 
-  url: string = 'http://localhost:8080/api/comments';
+  private url: string = 'http://localhost:8080/api/comments';
 
   public currentPostId: number = localStorage.getItem('currentPostId') ? Number(localStorage.getItem('currentPostId')) : 0; // added due to DI cycle w/ PostService
 
@@ -20,6 +20,9 @@ export class CommentService {
 
   private commentsSubject: Subject<Comment[]> = new Subject<Comment[]>();
   public comments$ = this.commentsSubject.asObservable();
+
+  private userCommentsSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  public getUserComments = this.userCommentsSubject.asObservable();
 
   constructor(private http: HttpClient, private ui: UiService) { 
    }
@@ -67,6 +70,13 @@ export class CommentService {
     })
   }
 
+  // Declarative
+  userComments$ = this.getUserComments.pipe(
+    switchMap(() => this.http.get<Comment[]>(`${this.url}/user/${this.ui.currentUserId}`)))
+      .pipe(
+        tap(comments => console.log(comments)),
+        catchError(err => of(err))
+      );
 
   //Update
 

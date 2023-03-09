@@ -1,0 +1,21 @@
+<div class="main-container">
+    <ng-container *ngFor="let post of userPost">
+        <div class="post-card-title">
+            <div class="post-details">
+                <h6><small>b/</small>{{post.community.name}} · Posted by {{post.user.username}} · {{post.postedDate}}</h6>
+            </div>
+        </div>
+        <p-divider></p-divider>
+        <div class="post-image">
+            <!-- <h1>{{post.postImages[0].name}}</h1> -->
+            <!-- <img src="{{post.postImages}}" alt="post image"> -->
+            <img src="{{ 'data:' + post.postImages[0].type + ';base64,' + post.postImages[0].picByte }}" alt="post" width="500" height="auto">
+        </div>
+        <div class="post-controls d-flex justify-content-around">
+            <p><i class="pi pi-delete-left"></i> Remove</p>
+            <p><i class="pi pi-comments"></i> Comments</p>
+            
+            
+        </div>
+    </ng-container>
+</div>

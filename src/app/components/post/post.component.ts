@@ -25,6 +25,7 @@ export class PostComponent {
   communitySelection = {} as Community;
 
   newPost: Post = {
+    user: null,
     id: null,
     title: '',
     likes: 0,

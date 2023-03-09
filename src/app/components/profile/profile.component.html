@@ -1,46 +1,67 @@
 <app-navigation></app-navigation>
-<div class="user-info">
-  <ng-container *ngIf="userService.user$ | async as user">
-    <p-card
-      header="{{ user.email }}"
-      subheader="u/{{ user.username }}"
-      [style]="{ width: '360px' }"
-      styleClass="p-card-shadow"
-    >
-      <ng-template pTemplate="header">
-        <div *ngIf="user.imgType" class="user-info-profile-container">
-          <img
-            src="{{
-              'data:' + user.imgType + ';base64,' + user.profilePicture
-            }}"
-            alt="Profile Picture"
-            width="350"
-            class="user-info__profile-pic--img"
-          />
-        </div>
-      </ng-template>
-      <!-- Card-Body -->
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed
-        consequuntur error repudiandae numquam deserunt quisquam repellat libero
-        asperiores earum nam nobis, culpa ratione quam perferendis esse,
-        cupiditate neque quas!
-      </p>
-      <ng-template pTemplate="footer">
-        <!-- IMAGE BTN -->
-        <p-fileUpload
-          mode="basic"
-          accept="image/*"
-          [maxFileSize]="1000000"
-          [chooseIcon]="'pi pi-image'"
-          chooseLabel="Select Picture"
-          uploadLabel="Upload Picture"
-          (onSelect)="onUploadPic($event)"
-          [customUpload]="true"
-          (uploadHandler)="addNewProfilePic()"
-        ></p-fileUpload>
-      </ng-template>
-    </p-card>
-  </ng-container>
+<div class="main-container d-flex">
+  <div class="profile-info py-5 px-5">
+    <ng-container *ngIf="userService.user$ | async as user">
+      <p-card
+        header="{{ user.email }}"
+        subheader="u/{{ user.username }}"
+        [style]="{ width: '360px' }"
+        styleClass="p-card-shadow"
+      >
+        <ng-template pTemplate="header">
+          <div *ngIf="user.imgType" class="user-info-profile-container">
+            <img
+              src="{{
+                'data:' + user.imgType + ';base64,' + user.profilePicture
+              }}"
+              alt="Profile Picture"
+              width="350"
+              class="user-info__profile-pic--img"
+            />
+          </div>
+        </ng-template>
+        <!-- Card-Body -->
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed
+          consequuntur error repudiandae numquam deserunt quisquam repellat libero
+          asperiores earum nam nobis, culpa ratione quam perferendis esse,
+          cupiditate neque quas!
+        </p>
+        <ng-template pTemplate="footer">
+          <!-- IMAGE BTN -->
+          <p-fileUpload
+            mode="basic"
+            accept="image/*"
+            [maxFileSize]="1000000"
+            [chooseIcon]="'pi pi-image'"
+            chooseLabel="Select Picture"
+            uploadLabel="Upload Picture"
+            (onSelect)="onUploadPic($event)"
+            [customUpload]="true"
+            (uploadHandler)="addNewProfilePic()"
+          ></p-fileUpload>
+        </ng-template>
+      </p-card>
+    </ng-container>
+  </div>
+  
+  <div class="post-comments-container">
+    <div class="profile-posts px-5 py-5">
+      <ng-container *ngIf="postService.userPosts$ | async as posts">
+        <ng-container >
+          <app-profile-posts [userPost]="posts"></app-profile-posts>
+        </ng-container>
+      </ng-container>
+    </div>
+    <div class="profile-comments px-5 ">
+      <ng-container *ngIf="commentService.userComments$ | async as comments">
+        <ng-container >
+          <app-profile-comments [userComments]="comments"></app-profile-comments>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
 </div>
+
+
 <button (click)="test()">TEST</button>
