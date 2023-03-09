@@ -40,6 +40,7 @@ import { CommentCardComponent } from './components/comment-card/comment-card.com
 import { VotingComponent } from './components/voting/voting.component';
 import { ProfileCommentsComponent } from './components/profile-comments/profile-comments.component';
 import { ProfilePostsComponent } from './components/profile-posts/profile-posts.component';
+import { CommunityPageComponent } from './components/community-page/community-page.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { ProfilePostsComponent } from './components/profile-posts/profile-posts.
     CommentCardComponent,
     VotingComponent,
     ProfileCommentsComponent,
-    ProfilePostsComponent
+    ProfilePostsComponent,
+    CommunityPageComponent
   ],
   imports: [
     BrowserModule,

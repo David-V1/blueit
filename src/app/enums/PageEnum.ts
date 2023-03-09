@@ -3,5 +3,6 @@ export enum PageName {
   POST,
   PROFILE,
   COMMUNITY,
-  POST_VIEW
+  POST_VIEW,
+  COMMUNITY_PAGE
 }

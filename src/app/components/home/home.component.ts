@@ -18,9 +18,11 @@ export class HomeComponent {
     this.postService.getAllPosts();
    }
 
+  
   //  TESTING BUTTON
   test() {
     // this.c.getCommunity();
   }
+  
 
 }
