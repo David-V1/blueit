@@ -1,0 +1,22 @@
+.page-banner-container {
+    .top-wrapper {
+        background-color: rgb(228, 137, 25);
+        height: 55px;
+    }
+    .bottom-wrapper {
+        .icon-name-container {
+            display: flex;
+            flex-direction: row;
+        }
+    }
+}
+:host ::ng-deep {
+    .p-fileupload-choose  {
+        background-color: var(--yellow-500);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        height: 25px;
+        width: 25px;
+    }
+}

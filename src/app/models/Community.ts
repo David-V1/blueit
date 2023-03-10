@@ -1,11 +1,12 @@
+import { FileHandler } from './FileHandler';
+import { Post } from './Post';
 import { User } from './User';
 
 export interface Community {
   id: number | null;
   name: string;
-  // posts: number;
-  // isMember: boolean;
-  // dateCreated: Date;
-  // description: string;
-  // image: string;
+  dateCreated: string;
+  description: string;
+  logo: FileHandler | null;
+  members: User[];
 }

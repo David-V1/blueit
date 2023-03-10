@@ -41,6 +41,7 @@ import { VotingComponent } from './components/voting/voting.component';
 import { ProfileCommentsComponent } from './components/profile-comments/profile-comments.component';
 import { ProfilePostsComponent } from './components/profile-posts/profile-posts.component';
 import { CommunityPageComponent } from './components/community-page/community-page.component';
+import { CommunityAboutComponent } from './components/community-about/community-about.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { CommunityPageComponent } from './components/community-page/community-pa
     VotingComponent,
     ProfileCommentsComponent,
     ProfilePostsComponent,
-    CommunityPageComponent
+    CommunityPageComponent,
+    CommunityAboutComponent
   ],
   imports: [
     BrowserModule,

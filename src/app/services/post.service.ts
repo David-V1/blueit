@@ -6,8 +6,6 @@ import { UiService } from './ui.service';
 import { PageName } from '.././enums/PageEnum';
 import { CommentService } from './comment.service';
 import { Comment } from '../models/Comment';
-import { User } from '../models/User';
-import { PostDto } from '../models/PostDto';
 
 @Injectable({
   providedIn: 'root'

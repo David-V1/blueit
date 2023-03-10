@@ -5,6 +5,7 @@ import { PageName } from '../enums/PageEnum';
 import { Community } from '../models/Community';
 import { BehaviorSubject, catchError, Observable, of, retry, Subject, switchMap, take, tap } from 'rxjs';
 import { MenuItem } from 'primeng/api';
+import { FileHandler } from '../models/FileHandler';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class CommunityService implements OnInit {
   public community$ = this.communitySubject.asObservable();
 
   private selectedComunnitySubject: BehaviorSubject<number> = new BehaviorSubject<number>(this.selectedCommunityId);
-  public selectedComunity$: Observable<number> = this.selectedComunnitySubject.asObservable();
+  public selectedCommunity$: Observable<number> = this.selectedComunnitySubject.asObservable();
 
   constructor(public ui: UiService, private http: HttpClient) {
     this.getAllCommunities();
@@ -35,6 +36,19 @@ export class CommunityService implements OnInit {
    }
 
   ngOnInit(): void {
+  }
+
+  public imageFormData(community: Community): FormData {
+    const formData = new FormData();
+
+    if (!community.logo) {
+      this.ui.onError('Please select a logo');
+      return formData;
+    }
+
+    formData.append('imageFile', community.logo.file, community.logo.file.name);
+    
+    return formData;
   }
 
   // Create
@@ -70,6 +84,23 @@ export class CommunityService implements OnInit {
     return this.menuItems;
   }
 
+  public addCommunityLogo(imageFile:Community): void {
+    const comId = this.selectedCommunityId;
+    const image = this.imageFormData(imageFile);
+
+    this.http.post<number>(`${this.url}/upload/${comId}`, image).pipe(take(1))
+    .subscribe({
+      next: () => {
+        this.ui.openSnackBar('Logo added');
+      },
+      error: (err) => {
+        console.error(err);
+        this.ui.openSnackBar('Error adding logo');
+      }
+    });
+
+  }
+
   // Read
   public getAllCommunities(): void {
     this.http.get<Community[]>(`${this.url}`).pipe(take(1))
@@ -90,7 +121,7 @@ export class CommunityService implements OnInit {
     this.selectedComunnitySubject.next(id);
   }
   
-  public selection$ = this.selectedComunity$.pipe(
+  public selection$ = this.selectedCommunity$.pipe(
     switchMap((communityId: number | null) => this.http.get<Community>(`${this.url}/comId/${communityId}`)),
     catchError((err) => {
       console.error(err);

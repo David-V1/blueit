@@ -7,7 +7,5 @@ export interface User {
   password: string;
   imageName: string;
   imgType: string;
-  // profilePicture: string;
   profilePicture: FileHandler | null;
-  // profilePic: FileHandler | null;
 }
