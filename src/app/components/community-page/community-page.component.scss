@@ -7,6 +7,15 @@
         .icon-name-container {
             display: flex;
             flex-direction: row;
+            .logo-wrapper {
+                .com-img {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    margin: 0 10px;
+                    transform: translateY(-25%);
+                }
+            }
         }
     }
 }

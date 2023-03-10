@@ -27,13 +27,17 @@ export class CommunityPageComponent {
   }
 
   public addNewLogo(community: Community): void {
+    if (!community.logo) {
+      console.log('Please select a logo');
+      return;
+    }
     this.communityService.addCommunityLogo(this.community);
     console.log(community);
   }
   test(c: Community){
     console.log('test')
     console.log(c);
-    console.log(this.community);
+    console.log(this.community.logo);
   }
 
 }

@@ -5,7 +5,6 @@ import { PageName } from '../enums/PageEnum';
 import { Community } from '../models/Community';
 import { BehaviorSubject, catchError, Observable, of, retry, Subject, switchMap, take, tap } from 'rxjs';
 import { MenuItem } from 'primeng/api';
-import { FileHandler } from '../models/FileHandler';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +28,7 @@ export class CommunityService implements OnInit {
   constructor(public ui: UiService, private http: HttpClient) {
     this.getAllCommunities();
     // persist community view
-    if (this.selectedCommunityId !== null) {
+    if (this.selectedCommunityId !== null || this.selectedCommunityId !== 0) {
       this.onCommunitySelection(this.selectedCommunityId);
     }
       
@@ -38,6 +37,7 @@ export class CommunityService implements OnInit {
   ngOnInit(): void {
   }
 
+  
   public imageFormData(community: Community): FormData {
     const formData = new FormData();
 
@@ -75,8 +75,12 @@ export class CommunityService implements OnInit {
           label: community.name,
           icon: 'pi pi-fw pi-home',
           command: () => {
+            if (!community.id) {
+              this.ui.onError('Invalid community id');
+            }
             this.onCommunitySelection(community.id!);
             this.ui.changePage(this.pageName.COMMUNITY_PAGE);
+            
           }
         }
       })]
@@ -85,9 +89,14 @@ export class CommunityService implements OnInit {
   }
 
   public addCommunityLogo(imageFile:Community): void {
+    if (imageFile.logo === undefined) {
+      this.ui.onError('Please select a logo');
+      return;
+    }
+
     const comId = this.selectedCommunityId;
     const image = this.imageFormData(imageFile);
-
+    
     this.http.post<number>(`${this.url}/upload/${comId}`, image).pipe(take(1))
     .subscribe({
       next: () => {
@@ -117,6 +126,10 @@ export class CommunityService implements OnInit {
   }
 
   public onCommunitySelection(id: number): void {
+    if (!id) {
+      this.ui.onError('Invalid community id');
+      return;
+    }
     localStorage.setItem('selectedCommunityId', id.toString())
     this.selectedComunnitySubject.next(id);
   }

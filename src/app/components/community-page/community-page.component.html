@@ -6,11 +6,11 @@
             <div class="icon-name-container">
                 <div class="logo-wrapper">
                     <!-- returning BE Image Object (id, name, type, picByte) -->
-                    <img
+                    <img *ngIf="community.logo"
                         src="{{ 'data:' + community.logo.type + ';base64,' + community.logo.picByte }}"
                         alt="Post image"
                         width="500"
-                        class="img-fluid"
+                        class="img-fluid com-img"
                     />
                     <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" [maxFileSize]="1000000" 
                     [styleClass]="'uploadBtn'"

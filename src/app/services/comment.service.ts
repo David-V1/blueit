@@ -60,7 +60,6 @@ export class CommentService {
     this.http.get<Comment[]>(`${this.url}/post/${postId}`)
     .subscribe({
       next: (comments) => {
-        console.log(comments)
         this.commentsSubject.next(comments);
       },
       error: (err) => {
