@@ -1,5 +1,4 @@
 import { FileHandler } from './FileHandler';
-import { Post } from './Post';
 import { User } from './User';
 
 export interface Community {
@@ -7,6 +6,7 @@ export interface Community {
   name: string;
   dateCreated: string;
   description: string;
-  logo: FileHandler | null;
-  members: User[];
+  logo: FileHandler;
+  admin: string;
+  members: User[]; // Number
 }

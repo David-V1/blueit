@@ -12,7 +12,8 @@
                         width="500"
                         class="img-fluid com-img"
                     />
-                    <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" [maxFileSize]="1000000" 
+                    <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" [maxFileSize]="1000000"
+                    *ngIf="community.admin === ui.currentUserId"
                     [styleClass]="'uploadBtn'"
                     [chooseIcon]="'pi pi-plus'"
                     [customUpload]="true"

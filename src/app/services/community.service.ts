@@ -45,15 +45,17 @@ export class CommunityService implements OnInit {
       this.ui.onError('Please select a logo');
       return formData;
     }
+    // formData.append('community',
+    // new Blob([JSON.stringify(community)], {type: 'application/json'}));
 
-    formData.append('imageFile', community.logo.file, community.logo.file.name);
+    formData.append('imageFile', community.logo.file, community.logo.file.name,);
     
     return formData;
   }
 
   // Create
-  public createCommunity(community: Community): void {
-    this.http.post<Community>(`${this.url}`, community).pipe(take(1))
+  public createCommunity(community: Community, admin: string): void {
+    this.http.post<Community>(`${this.url}/admin/${admin}`, community).pipe(take(1))
     .subscribe({
       next: () => {
         this.getAllCommunities();
@@ -97,7 +99,7 @@ export class CommunityService implements OnInit {
     const comId = this.selectedCommunityId;
     const image = this.imageFormData(imageFile);
     
-    this.http.post<number>(`${this.url}/upload/${comId}`, image).pipe(take(1))
+    this.http.post<Community>(`${this.url}/upload/${comId}`, image).pipe(take(1))
     .subscribe({
       next: () => {
         this.ui.openSnackBar('Logo added');
