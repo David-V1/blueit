@@ -1,1 +1,35 @@
-<p>community-about works!</p>
+<div class="desciption-container">
+    <h6>About Community</h6>
+    <div class="add-description-wrapper">
+        <input
+        *ngIf="community.admin === ui.currentUserId"
+        type="text" 
+        name="description" 
+        id="description-box" 
+        placeholder="{{descriptionClicked ? 'Tell me about your community': 'Add description'}}"
+        (click)="onDescriptionClick()"
+        (blur)="onDescriptionBlur()"
+        [(ngModel)]="community.description"
+        >
+        <div class="description-ctrls" *ngIf="descriptionClicked">
+            <button>Cancel</button>
+            <button>Save</button>
+        </div>
+    </div>
+    <div class="date-wrapper">
+        <p>Created {{community.dateCreated | date:'MMM dd, y'}}</p>
+    </div>
+    <p-divider></p-divider>
+    <div class="members-wrapper">
+        <div class="members">
+            <p>{{community.members.length}}</p>
+            <small>Members</small>
+        </div>
+        <div class="online-members">
+            <p>{{community.members.length}}</p>
+            <small>Online</small>
+        </div>
+    </div>
+    <p-divider></p-divider>
+    <button>Create Post</button>
+</div>

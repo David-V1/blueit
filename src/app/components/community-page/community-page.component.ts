@@ -28,11 +28,6 @@ export class CommunityPageComponent {
   }
 
   public addNewLogo(community: Community): void {
-    console.log(community)
-    // if (!community.logo) {
-    //   console.log('Please select a logo');
-    //   return;
-    // }
     this.communityService.addCommunityLogo(this.community);
     console.log(community);
   }
