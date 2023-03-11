@@ -1,18 +1,21 @@
 <div class="desciption-container">
     <h6>About Community</h6>
     <div class="add-description-wrapper">
-        <input
+        <textarea
+        pInputTextarea
+        [autoResize]="true"
         *ngIf="community.admin === ui.currentUserId"
         type="text" 
         name="description" 
         id="description-box" 
         placeholder="{{descriptionClicked ? 'Tell me about your community': 'Add description'}}"
         (click)="onDescriptionClick()"
-        (blur)="onDescriptionBlur()"
+        (blur)="onDescriptionBlur($event)"
         [(ngModel)]="community.description"
-        >
+        ></textarea>
         <div class="description-ctrls" *ngIf="descriptionClicked">
-            <button>Cancel</button>
+            <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+            <button id="cancelDescription" (click)="onCancel()">Cancel</button>
             <button>Save</button>
         </div>
     </div>
