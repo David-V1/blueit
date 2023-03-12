@@ -1,5 +1,6 @@
 <div class="desciption-container">
     <h6>About Community</h6>
+    
     <div class="add-description-wrapper">
         <textarea
         pInputTextarea
@@ -8,7 +9,7 @@
         type="text" 
         name="description" 
         id="description-box" 
-        placeholder="{{descriptionClicked ? 'Tell me about your community': 'Add description'}}"
+        placeholder="{{community.description ? community.description : (descriptionClicked ? 'Tell us about your community' : 'Add a description')}}"
         (click)="onDescriptionClick()"
         (blur)="onDescriptionBlur($event)"
         [(ngModel)]="community.description"
@@ -16,7 +17,7 @@
         <div class="description-ctrls" *ngIf="descriptionClicked">
             <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
             <button id="cancelDescription" (click)="onCancel()">Cancel</button>
-            <button>Save</button>
+            <button id="saveDescription" (click)="onSave(community.id!)">Save</button>
         </div>
     </div>
     <div class="date-wrapper">
@@ -36,3 +37,4 @@
     <p-divider></p-divider>
     <button>Create Post</button>
 </div>
+<button (click)="test()">click Test</button>

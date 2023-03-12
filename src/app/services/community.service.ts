@@ -25,6 +25,9 @@ export class CommunityService implements OnInit {
   private selectedComunnitySubject: BehaviorSubject<number> = new BehaviorSubject<number>(this.selectedCommunityId);
   public selectedCommunity$: Observable<number> = this.selectedComunnitySubject.asObservable();
 
+  private communityDescriptionSubject: Subject<string> = new Subject<string>();
+  public communityDescription$ = this.communityDescriptionSubject.asObservable();
+
   constructor(public ui: UiService, private http: HttpClient) {
     this.getAllCommunities();
     // persist community view
@@ -95,7 +98,6 @@ export class CommunityService implements OnInit {
       this.ui.onError('Please select a logo');
       return;
     }
-
     const comId = this.selectedCommunityId;
     const image = this.imageFormData(imageFile);
     
@@ -109,7 +111,23 @@ export class CommunityService implements OnInit {
         this.ui.openSnackBar('Error adding logo');
       }
     });
+  }
 
+  public addDescription(id:number ,description: string): void {
+    if (!id) {
+      this.ui.onError('Oops! Something went wrong');
+      return;
+    }
+    this.http.post<Community>(`${this.url}/description/${id}`, description).pipe(take(1))
+    .subscribe({
+      next: () => {
+        this.ui.openSnackBar('Description added');
+      },
+      error: (err) => {
+        console.error(err);
+        this.ui.openSnackBar('Error adding description');
+      }
+    });
   }
 
   // Read
@@ -145,6 +163,10 @@ export class CommunityService implements OnInit {
     }),
     retry(1),
   );
+
+  public onCommunityDescriptionChange(description: string): void {
+    this.communityDescriptionSubject.next(description);
+  }
 
   // Update
 
