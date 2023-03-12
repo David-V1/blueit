@@ -31,10 +31,5 @@ export class CommunityPageComponent {
     this.communityService.addCommunityLogo(this.community);
     console.log(community);
   }
-  test(c: Community){
-    console.log('test')
-    console.log(c);
-    console.log(this.community);
-  }
 
 }

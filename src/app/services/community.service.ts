@@ -121,6 +121,7 @@ export class CommunityService implements OnInit {
     this.http.post<Community>(`${this.url}/description/${id}`, description).pipe(take(1))
     .subscribe({
       next: () => {
+        this.selectedComunnitySubject.next(id);
         this.ui.openSnackBar('Description added');
       },
       error: (err) => {

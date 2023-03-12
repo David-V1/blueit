@@ -16,6 +16,7 @@ export class CommunityAboutComponent implements OnDestroy{
   descriptionClicked = false;
   originalDescription = '';
   descriptionSubscription: Subscription;
+  chars: number = 0;
 
   constructor(public communityService: CommunityService, public ui: UiService,private confirmationService: ConfirmationService) {
     this.descriptionSubscription = this.communityService.selection$.subscribe((community: Community) => {
@@ -74,10 +75,14 @@ export class CommunityAboutComponent implements OnDestroy{
     });
   }
 
+  public countChars(): number {
+    this.chars = this.community.description.length;
+    const maxChars = 500;
+    return maxChars - this.chars;
+  }
+
   test() {
-    console.log('test BTN RAN!!');
-    
-    
+    this.countChars();
   }
 
   ngOnDestroy(): void {
