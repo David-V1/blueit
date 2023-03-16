@@ -38,8 +38,6 @@ export class ProfileComponent {
         url: this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file))
       }
       this.user.profilePicture = fileHandle;
-      console.log('fileHandle',fileHandle)
-      console.log('user.profilePicture: ',this.user.profilePicture)
     }
   }
 

@@ -14,6 +14,13 @@
 .comment-container{
   .comment-header{
     .header-wrapper{
+      .comment-pic {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        
+      }
       .header-details{
         @include flexCenter();
         margin-left: 5%;

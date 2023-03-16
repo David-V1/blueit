@@ -1,0 +1,29 @@
+:host ::ng-deep {
+    .p-inputtextarea{
+        background: transparent;
+        color: #bbbbbb;
+        border-radius: 25px;
+
+    }.p-inputtextarea:hover{
+        cursor: pointer;
+    }
+}
+@mixin btn-background() {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+.add-description-wrapper {
+    .description-ctrls{
+
+    }#cancelDescription{
+        @include btn-background();
+        color:#c61c1c;
+    }#saveDescription{
+        @include btn-background();
+        color: #d4d4d4;
+    }
+}

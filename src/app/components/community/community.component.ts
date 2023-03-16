@@ -21,7 +21,11 @@ export class CommunityComponent {
   }
 
   public onAddCommunity() {
-    this.communityService.createCommunity(this.communityInputData);
+    if (!this.ui.currentUserId) {
+      this.ui.onError('error creating assigning admin to community');
+      return;
+    }
+    this.communityService.createCommunity(this.communityInputData, this.ui.currentUserId);
     this.userService.showAddCommunity = false;
   }
 }

@@ -16,19 +16,26 @@ export class CommunityService implements OnInit {
   communityMenuItems = {} as MenuItem;
   selectedCommunityId = Number(localStorage.getItem('selectedCommunityId'))
 
-  private communites: Subject<Community[]> = new Subject<Community[]>();
-  public communities$ = this.communites.asObservable();
+  private communitites: Subject<Community[]> = new Subject<Community[]>();
+  public communities$ = this.communitites.asObservable();
 
   private communitySubject: Subject<Community> = new Subject<Community>();
   public community$ = this.communitySubject.asObservable();
 
   private selectedComunnitySubject: BehaviorSubject<number> = new BehaviorSubject<number>(this.selectedCommunityId);
-  public selectedComunity$: Observable<number> = this.selectedComunnitySubject.asObservable();
+  public selectedCommunity$: Observable<number> = this.selectedComunnitySubject.asObservable();
+
+  private communityDescriptionSubject: Subject<string> = new Subject<string>();
+  public communityDescription$ = this.communityDescriptionSubject.asObservable();
+
+  private navbarMenuSubject: BehaviorSubject<MenuItem[]> = new BehaviorSubject<MenuItem[]>(this.menuItems);
+  public navbarMenu$ = this.navbarMenuSubject.asObservable();
+
 
   constructor(public ui: UiService, private http: HttpClient) {
     this.getAllCommunities();
     // persist community view
-    if (this.selectedCommunityId !== null) {
+    if (this.selectedCommunityId !== null || this.selectedCommunityId !== 0) {
       this.onCommunitySelection(this.selectedCommunityId);
     }
       
@@ -37,12 +44,31 @@ export class CommunityService implements OnInit {
   ngOnInit(): void {
   }
 
+  
+  public imageFormData(community: Community): FormData {
+    const formData = new FormData();
+
+    if (!community.logo) {
+      this.ui.onError('Please select a logo');
+      return formData;
+    }
+    // formData.append('community',
+    // new Blob([JSON.stringify(community)], {type: 'application/json'}));
+
+    formData.append('imageFile', community.logo.file, community.logo.file.name,);
+    
+    return formData;
+  }
+
+
   // Create
-  public createCommunity(community: Community): void {
-    this.http.post<Community>(`${this.url}`, community).pipe(take(1))
+
+  public createCommunity(community: Community, admin: string): void {
+    this.http.post<Community>(`${this.url}/admin/${admin}`, community).pipe(take(1))
     .subscribe({
       next: () => {
-        this.getAllCommunities();
+        //TODO: Fix this
+        // this.getAllCommunities();
         location.reload();
       },
       error: (err) => {
@@ -55,14 +81,18 @@ export class CommunityService implements OnInit {
   // Community object for Nav Bar
   public navbarCommunities(): MenuItem[] {
     this.getAllCommunities();
-    this.communites.subscribe((communities) => {
+    this.communitites.subscribe((communities) => {
       this.menuItems = [...communities.map((community) => {
         return {
           label: community.name,
           icon: 'pi pi-fw pi-home',
           command: () => {
+            if (!community.id) {
+              this.ui.onError('Invalid community id');
+            }
             this.onCommunitySelection(community.id!);
             this.ui.changePage(this.pageName.COMMUNITY_PAGE);
+            
           }
         }
       })]
@@ -70,12 +100,50 @@ export class CommunityService implements OnInit {
     return this.menuItems;
   }
 
+  public addCommunityLogo(imageFile:Community): void {
+    if (imageFile.logo === undefined) {
+      this.ui.onError('Please select a logo');
+      return;
+    }
+    const comId = this.selectedCommunityId;
+    const image = this.imageFormData(imageFile);
+    
+    this.http.post<Community>(`${this.url}/upload/${comId}`, image).pipe(take(1))
+    .subscribe({
+      next: () => {
+        this.ui.openSnackBar('Logo added');
+      },
+      error: (err) => {
+        console.error(err);
+        this.ui.openSnackBar('Error adding logo');
+      }
+    });
+  }
+
+  public addDescription(id:number ,description: string): void {
+    if (!id) {
+      this.ui.onError('Oops! Something went wrong');
+      return;
+    }
+    this.http.post<Community>(`${this.url}/description/${id}`, description).pipe(take(1))
+    .subscribe({
+      next: () => {
+        this.selectedComunnitySubject.next(id);
+        this.ui.openSnackBar('Description added');
+      },
+      error: (err) => {
+        console.error(err);
+        this.ui.openSnackBar('Error adding description');
+      }
+    });
+  }
+
   // Read
   public getAllCommunities(): void {
     this.http.get<Community[]>(`${this.url}`).pipe(take(1))
     .subscribe({
       next: (communities) => {
-        this.communites.next(communities);
+        this.communitites.next(communities);
       },
       error: (err) => {
         console.error(err);
@@ -86,11 +154,15 @@ export class CommunityService implements OnInit {
   }
 
   public onCommunitySelection(id: number): void {
+    if (!id) {
+      this.ui.onError('No community selected');
+      return;
+    }
     localStorage.setItem('selectedCommunityId', id.toString())
     this.selectedComunnitySubject.next(id);
   }
   
-  public selection$ = this.selectedComunity$.pipe(
+  public selection$ = this.selectedCommunity$.pipe(
     switchMap((communityId: number | null) => this.http.get<Community>(`${this.url}/comId/${communityId}`)),
     catchError((err) => {
       console.error(err);
@@ -99,6 +171,10 @@ export class CommunityService implements OnInit {
     }),
     retry(1),
   );
+
+  public onCommunityDescriptionChange(description: string): void {
+    this.communityDescriptionSubject.next(description);
+  }
 
   // Update
 

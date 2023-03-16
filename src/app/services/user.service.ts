@@ -111,11 +111,9 @@ export class UserService {
           //Array of communities: MenuItem[]
           label: 'all communities',
           icon: 'pi pi-fw pi-list',
-          items: this.communityService.navbarCommunities(),
-          command: () => {
-            this.communityService.getAllCommunities();
-          }
+          items: this.communityService.navbarCommunities()
         }
+        
       ]
     }
   // Else Not logged in so show this:

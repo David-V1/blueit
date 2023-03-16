@@ -1,0 +1,42 @@
+<div class="desciption-container">
+    <h6>About Community</h6>
+    
+    <div class="add-description-wrapper">
+        <textarea
+        pInputTextarea
+        [autoResize]="true"
+        *ngIf="community.admin === ui.currentUserId"
+        type="text" 
+        name="description" 
+        id="description-box" 
+        placeholder="{{community.description ? community.description : (descriptionClicked ? 'Tell us about your community' : 'Add a description')}}"
+        (click)="onDescriptionClick()"
+        (blur)="onDescriptionBlur($event)"
+        [(ngModel)]="community.description"
+        maxlength="500"
+        ></textarea>
+        <div class="description-ctrls" *ngIf="descriptionClicked">
+            <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+            <p>{{countChars()}} <small>Characters remaining </small></p>
+            <button id="cancelDescription" (click)="onCancel()">Cancel</button>
+            <button id="saveDescription" (click)="onSave(community.id!)">Save</button>
+        </div>
+    </div>
+    <div class="date-wrapper">
+        <p><i class="pi pi-clock"></i> Created {{community.dateCreated | date:'MMM dd, y'}}</p>
+    </div>
+    <p-divider></p-divider>
+    <div class="members-wrapper">
+        <div class="members">
+            <p >{{community.members ? community.members.length : 0}}</p>
+            <small>Members</small>
+        </div>
+        <div class="online-members">
+            <!-- <p>{{community.members.length}}</p> -->
+            <small>Online</small>
+        </div>
+    </div>
+    <p-divider></p-divider>
+    <button>Create Post</button>
+</div>
+<button (click)="test()">click Test</button>

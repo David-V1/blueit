@@ -40,6 +40,7 @@ export class UiService {
     localStorage.removeItem('password');
     localStorage.removeItem('id');
     localStorage.removeItem('username');
+    localStorage.removeItem('selectedCommunityId');
     localStorage.setItem('isLoggedIn', this.isLoggedIn.toString());
     this.currentUserId = null;
   }

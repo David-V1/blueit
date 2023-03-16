@@ -41,6 +41,8 @@ import { VotingComponent } from './components/voting/voting.component';
 import { ProfileCommentsComponent } from './components/profile-comments/profile-comments.component';
 import { ProfilePostsComponent } from './components/profile-posts/profile-posts.component';
 import { CommunityPageComponent } from './components/community-page/community-page.component';
+import { CommunityAboutComponent } from './components/community-about/community-about.component';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,8 @@ import { CommunityPageComponent } from './components/community-page/community-pa
     VotingComponent,
     ProfileCommentsComponent,
     ProfilePostsComponent,
-    CommunityPageComponent
+    CommunityPageComponent,
+    CommunityAboutComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +86,8 @@ import { CommunityPageComponent } from './components/community-page/community-pa
     DropdownModule,
     CarouselModule,
     CardModule,
-    InputTextareaModule
+    InputTextareaModule,
+    ConfirmDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
