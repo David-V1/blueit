@@ -125,7 +125,7 @@ export class CommunityService implements OnInit {
       this.ui.onError('Oops! Something went wrong');
       return;
     }
-    this.http.post<Community>(`${this.url}/description/${id}`, description).pipe(take(1))
+    this.http.post<string>(`${this.url}/description/${id}`, description).pipe(take(1))
     .subscribe({
       next: () => {
         this.selectedComunnitySubject.next(id);
