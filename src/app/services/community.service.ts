@@ -16,8 +16,8 @@ export class CommunityService implements OnInit {
   communityMenuItems = {} as MenuItem;
   selectedCommunityId = Number(localStorage.getItem('selectedCommunityId'))
 
-  private communites: Subject<Community[]> = new Subject<Community[]>();
-  public communities$ = this.communites.asObservable();
+  private communitites: Subject<Community[]> = new Subject<Community[]>();
+  public communities$ = this.communitites.asObservable();
 
   private communitySubject: Subject<Community> = new Subject<Community>();
   public community$ = this.communitySubject.asObservable();
@@ -27,6 +27,10 @@ export class CommunityService implements OnInit {
 
   private communityDescriptionSubject: Subject<string> = new Subject<string>();
   public communityDescription$ = this.communityDescriptionSubject.asObservable();
+
+  private navbarMenuSubject: BehaviorSubject<MenuItem[]> = new BehaviorSubject<MenuItem[]>(this.menuItems);
+  public navbarMenu$ = this.navbarMenuSubject.asObservable();
+
 
   constructor(public ui: UiService, private http: HttpClient) {
     this.getAllCommunities();
@@ -56,12 +60,15 @@ export class CommunityService implements OnInit {
     return formData;
   }
 
+
   // Create
+
   public createCommunity(community: Community, admin: string): void {
     this.http.post<Community>(`${this.url}/admin/${admin}`, community).pipe(take(1))
     .subscribe({
       next: () => {
-        this.getAllCommunities();
+        //TODO: Fix this
+        // this.getAllCommunities();
         location.reload();
       },
       error: (err) => {
@@ -74,7 +81,7 @@ export class CommunityService implements OnInit {
   // Community object for Nav Bar
   public navbarCommunities(): MenuItem[] {
     this.getAllCommunities();
-    this.communites.subscribe((communities) => {
+    this.communitites.subscribe((communities) => {
       this.menuItems = [...communities.map((community) => {
         return {
           label: community.name,
@@ -136,7 +143,7 @@ export class CommunityService implements OnInit {
     this.http.get<Community[]>(`${this.url}`).pipe(take(1))
     .subscribe({
       next: (communities) => {
-        this.communites.next(communities);
+        this.communitites.next(communities);
       },
       error: (err) => {
         console.error(err);
@@ -148,7 +155,7 @@ export class CommunityService implements OnInit {
 
   public onCommunitySelection(id: number): void {
     if (!id) {
-      this.ui.onError('Invalid community id');
+      this.ui.onError('No community selected');
       return;
     }
     localStorage.setItem('selectedCommunityId', id.toString())

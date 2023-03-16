@@ -47,7 +47,6 @@ export class CommunityAboutComponent implements OnDestroy{
   }
   
   public onCancel(): void {
-    // this.communityDescription = '';
     this.community.description = this.originalDescription;
     this.descriptionClicked = false;
   }
@@ -76,6 +75,9 @@ export class CommunityAboutComponent implements OnDestroy{
   }
 
   public countChars(): number {
+    if (!this.community.description) {
+      return 0;
+    }
     this.chars = this.community.description.length;
     const maxChars = 500;
     return maxChars - this.chars;

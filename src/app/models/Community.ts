@@ -8,5 +8,5 @@ export interface Community {
   description: string;
   logo: FileHandler;
   admin: string;
-  members: User[]; // Number
+  members: string[]; //user's UUIDs
 }

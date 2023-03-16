@@ -113,6 +113,7 @@ export class UserService {
           icon: 'pi pi-fw pi-list',
           items: this.communityService.navbarCommunities()
         }
+        
       ]
     }
   // Else Not logged in so show this:

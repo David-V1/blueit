@@ -23,13 +23,11 @@ export class CommunityPageComponent {
         url: this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file))
       }
       this.community.logo = fileHandle;
-      console.log('onLogoUpload', this.community);
     }
   }
 
   public addNewLogo(community: Community): void {
     this.communityService.addCommunityLogo(this.community);
-    console.log(community);
   }
 
 }

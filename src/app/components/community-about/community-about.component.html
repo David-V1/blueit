@@ -23,16 +23,16 @@
         </div>
     </div>
     <div class="date-wrapper">
-        <p>Created {{community.dateCreated | date:'MMM dd, y'}}</p>
+        <p><i class="pi pi-clock"></i> Created {{community.dateCreated | date:'MMM dd, y'}}</p>
     </div>
     <p-divider></p-divider>
     <div class="members-wrapper">
         <div class="members">
-            <p>{{community.members.length}}</p>
+            <p >{{community.members ? community.members.length : 0}}</p>
             <small>Members</small>
         </div>
         <div class="online-members">
-            <p>{{community.members.length}}</p>
+            <!-- <p>{{community.members.length}}</p> -->
             <small>Online</small>
         </div>
     </div>
