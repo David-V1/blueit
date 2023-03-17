@@ -5,6 +5,7 @@ import { PageName } from '../enums/PageEnum';
 import { Community } from '../models/Community';
 import { BehaviorSubject, catchError, Observable, of, retry, Subject, switchMap, take, tap } from 'rxjs';
 import { MenuItem } from 'primeng/api';
+import { UserCommunityService } from './user-community.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class CommunityService implements OnInit {
   public navbarMenu$ = this.navbarMenuSubject.asObservable();
 
 
-  constructor(public ui: UiService, private http: HttpClient) {
+  constructor(public ui: UiService, private http: HttpClient, private userCommunityService: UserCommunityService) {
     this.getAllCommunities();
     // persist community view
     if (this.selectedCommunityId !== null || this.selectedCommunityId !== 0) {
@@ -81,7 +82,8 @@ export class CommunityService implements OnInit {
   // Community object for Nav Bar
   public navbarCommunities(): MenuItem[] {
     this.getAllCommunities();
-    this.communitites.subscribe((communities) => {
+    this.communitites.pipe(take(1), retry(3))
+    .subscribe((communities) => {
       this.menuItems = [...communities.map((community) => {
         return {
           label: community.name,
@@ -160,6 +162,7 @@ export class CommunityService implements OnInit {
     }
     localStorage.setItem('selectedCommunityId', id.toString())
     this.selectedComunnitySubject.next(id);
+    this.userCommunityService.getNumberOfMembers(id);
   }
   
   public selection$ = this.selectedCommunity$.pipe(

@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserCommunity } from '../models/UserCommunity';
 import { HttpClient } from '@angular/common/http';
 import { Community } from '../models/Community';
-import { UserService } from './user.service';
-import { take } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 import { UiService } from './ui.service';
 
 @Injectable({
@@ -11,6 +10,9 @@ import { UiService } from './ui.service';
 })
 export class UserCommunityService {
   url: string = 'http://localhost:8080/api/u_community';
+
+  private membersSubject = new BehaviorSubject<number>(0);
+  public members$ = this.membersSubject.asObservable();
 
   constructor(private ui: UiService, private http: HttpClient) { }
 
@@ -21,13 +23,30 @@ export class UserCommunityService {
     .subscribe({
       next: () => {
       this.ui.openSnackBar('Joined Community');
+      if (community.id) {
+        this.getNumberOfMembers(community.id);
+      }
+      
     },
     error: () => {
-      this.ui.onError('Failed to join community');
+      this.ui.onError('Already a member of this community');
     }})
   }
 
   // Read
+  public getNumberOfMembers(communityId: Number): void {
+    this.http.get<number>(`${this.url}/members/${communityId}`).pipe(take(1))
+    .subscribe({
+      next: (numOfMembers) => {
+        this.membersSubject.next(numOfMembers);
+      },
+      error: () => {
+        console.error('Error getting number of members');
+        this.ui.onError('Oops! Something went wrong');
+      }
+    })
+
+  }
 
   // Update
 

@@ -4,6 +4,7 @@ import { CommunityService } from 'src/app/services/community.service';
 import { UiService } from 'src/app/services/ui.service';
 import {ConfirmationService} from 'primeng/api';
 import { Subscription } from 'rxjs';
+import { UserCommunityService } from 'src/app/services/user-community.service';
 
 @Component({
   selector: 'app-community-about',
@@ -18,7 +19,7 @@ export class CommunityAboutComponent implements OnDestroy{
   descriptionSubscription: Subscription;
   chars: number = 0;
 
-  constructor(public communityService: CommunityService, public ui: UiService,private confirmationService: ConfirmationService) {
+  constructor(public communityService: CommunityService, public ui: UiService,private confirmationService: ConfirmationService, public userCommunityService: UserCommunityService) {
     this.descriptionSubscription = this.communityService.selection$.subscribe((community: Community) => {
       this.originalDescription = community.description;
     });

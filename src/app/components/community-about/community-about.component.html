@@ -27,14 +27,17 @@
     </div>
     <p-divider></p-divider>
     <div class="members-wrapper">
-        <div class="members">
-            <p >{{community.members ? community.members.length : 0}}</p>
-            <small>Members</small>
-        </div>
-        <div class="online-members">
-            <!-- <p>{{community.members.length}}</p> -->
-            <small>Online</small>
-        </div>
+        <ng-container *ngIf="userCommunityService.members$ | async as members">
+            <div class="members">
+                <p >{{members}}</p>
+                <small>Members</small>
+            </div>
+            <div class="online-members">
+                <!-- <p>{{community.members.length}}</p> -->
+                <small>Online</small>
+            </div>
+        </ng-container>
+        
     </div>
     <p-divider></p-divider>
     <button>Create Post</button>
