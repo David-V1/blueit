@@ -48,9 +48,9 @@
   <div class="post-comments-container">
     <div class="profile-posts px-5 py-5">
       <ng-container *ngIf="postService.userPosts$ | async as posts">
-        <ng-container >
-          <app-profile-posts [userPost]="posts"></app-profile-posts>
-        </ng-container>
+        <div *ngFor="let post of posts">
+          <app-profile-posts [userPost]="post"></app-profile-posts>
+        </div>
       </ng-container>
     </div>
     <div class="profile-comments px-5 ">

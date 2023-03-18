@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, map, Observable, of, Subject, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, retry, Subject, switchMap, take, tap } from 'rxjs';
 import { Comment } from '../models/Comment';
 import { UiService } from './ui.service';
 import { PostService } from './post.service';
@@ -23,9 +23,11 @@ export class CommentService {
 
   private userCommentsSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public getUserComments = this.userCommentsSubject.asObservable();
+  //TODO: fix double
+  private numCommentsSubject: Subject<number> = new Subject<number>();
+  public numComments$ = this.numCommentsSubject.asObservable();
 
-  constructor(private http: HttpClient, private ui: UiService) { 
-   }
+  constructor(private http: HttpClient, private ui: UiService) { }
 
   //Create
   public voteComment(userId: string, commentId: number, vote: string): void {
@@ -56,17 +58,37 @@ export class CommentService {
     })
   }
 
-  public getCommentsByPostId(postId: number): void {
-    this.http.get<Comment[]>(`${this.url}/post/${postId}`)
+  public getNumCommentsOfUser(userId: string): void {
+    this.http.get<number>(`${this.url}/user_comment_count/${userId}`)
+    .pipe(take(1))
     .subscribe({
-      next: (comments) => {
-        this.commentsSubject.next(comments);
+      next: () => {
       },
       error: (err) => {
         console.log(err);
         this.ui.onError('Error getting comments');
       }
     })
+  }
+
+  public getCommentsByPostId(postId: number): void {
+    this.http.get<Comment[]>(`${this.url}/post/${postId}`)
+    .subscribe({
+      next: (comments) => {
+        console.log('FROM commentService: ',comments)
+        this.commentsSubject.next(comments); //post comments
+        this.numCommentsSubject.next(comments.length); //number of comments
+      },
+      error: (err) => {
+        console.log(err);
+        this.ui.onError('Error getting comments');
+      }
+    })
+  }
+  
+  public getNumberOfComments(postId: number): Observable<number> {
+    return this.http.get<number>(`${this.url}/post_comment_count/${postId}`).pipe(take(1))
+    
   }
 
   // Declarative
@@ -76,6 +98,8 @@ export class CommentService {
         tap(comments => console.log(comments)),
         catchError(err => of(err))
       );
+
+
 
   //Update
 

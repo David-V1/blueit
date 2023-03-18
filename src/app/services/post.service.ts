@@ -27,7 +27,10 @@ export class PostService {
 
   constructor(private http: HttpClient, private ui: UiService, private commentService: CommentService) {
     this.getAllPosts();
-    this.commentService.getCommentsByPostId(this.currentPostId); // persisting comments on refresh
+    const currPage = Number(localStorage.getItem("page"))
+    if (currPage === this.pageName.POST_VIEW) {
+      this.commentService.getCommentsByPostId(this.currentPostId); // persisting comments on refresh when selected a post
+    }
    }
 
   public prepareFormData(post: Post): FormData {
@@ -45,6 +48,8 @@ export class PostService {
   }
 
   public onPostSelection(postId: number): void {
+    const currPage = Number(localStorage.getItem("page"));
+    if (currPage === this.pageName.POST_VIEW) return; // prevent unnecessary calls
     this.currentPostId = postId;
     this.getPostById(postId);
     this.commentService.getCommentsByPostId(postId);

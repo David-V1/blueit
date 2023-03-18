@@ -27,7 +27,7 @@ export class CommunityPageComponent {
       this.community.logo = fileHandle;
     }
   }
-
+  //TODO: POST image logo to the wrong community. It is posting to the last community in the list
   public addNewLogo(community: Community): void {
     this.communityService.addCommunityLogo(this.community);
   }

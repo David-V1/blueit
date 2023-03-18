@@ -33,14 +33,13 @@
                 <small>Members</small>
             </div>
             <div class="online-members">
-                <!-- <p>{{community.members.length}}</p> -->
                 <small>Online</small>
             </div>
         </ng-container>
         
     </div>
     <p-divider></p-divider>
-    <button>Create Post</button>
+    <button (click)="ui.changePage(pageName.POST)">Create Post</button>
 
 </div>
 <button (click)="test()">click Test</button>

@@ -5,6 +5,7 @@ import { UiService } from 'src/app/services/ui.service';
 import {ConfirmationService} from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { UserCommunityService } from 'src/app/services/user-community.service';
+import { PageName } from 'src/app/enums/PageEnum';
 
 @Component({
   selector: 'app-community-about',
@@ -13,6 +14,7 @@ import { UserCommunityService } from 'src/app/services/user-community.service';
   providers: [ConfirmationService]
 })
 export class CommunityAboutComponent implements OnDestroy{
+  pageName = PageName;
   @Input() community = {} as Community;
   descriptionClicked = false;
   originalDescription = '';

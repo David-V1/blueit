@@ -28,7 +28,7 @@ export class PostCardComponent {
       this.postService.votePost(this.ui.currentUserId!, this.post.id, 'false');
     }
   }
-
+  //Homepage only display essenrtial info
   checkHomePage(): boolean{
     const currPage = Number(localStorage.getItem("page"))
     if (currPage !== this.pageName.HOME) return true;
