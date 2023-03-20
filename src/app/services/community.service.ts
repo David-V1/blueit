@@ -6,6 +6,7 @@ import { Community } from '../models/Community';
 import { BehaviorSubject, catchError, Observable, of, retry, Subject, switchMap, take, tap } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 import { UserCommunityService } from './user-community.service';
+import { Post } from '../models/Post';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,6 @@ export class CommunityService implements OnInit {
 
   private navbarMenuSubject: BehaviorSubject<MenuItem[]> = new BehaviorSubject<MenuItem[]>(this.menuItems);
   public navbarMenu$ = this.navbarMenuSubject.asObservable();
-
 
   constructor(public ui: UiService, private http: HttpClient, private userCommunityService: UserCommunityService) {
     this.getAllCommunities();
@@ -156,6 +156,7 @@ export class CommunityService implements OnInit {
   }
 
   public onCommunitySelection(id: number): void {
+    console.log('onCommunitySelection RAN!')
     if (!id) {
       this.ui.onError('No community selected');
       return;
@@ -178,6 +179,18 @@ export class CommunityService implements OnInit {
   public onCommunityDescriptionChange(description: string): void {
     this.communityDescriptionSubject.next(description);
   }
+
+  communityPosts$ = this.selectedCommunity$.pipe(
+    switchMap((communityId: number) => this.http.get<Post[]>(`http://localhost:8080/api/post/community/${communityId}`)),
+    take(1),
+    tap((posts) => console.log(posts)),
+    catchError((err) => {
+      console.error(err);
+      this.ui.openSnackBar('Error getting posts');
+      return of(err);
+    }),
+    retry(1),
+  );
 
   // Update
 

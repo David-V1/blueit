@@ -1,34 +1,10 @@
 <app-navigation></app-navigation>
 <ng-container *ngIf="communityService.selection$ | async as community">
-    <!-- <div class="page-banner-container">
-        <div class="top-wrapper"></div>
-        <div class="bottom-wrapper">
-            <div class="icon-name-container">
-                <div class="logo-wrapper">
-                    <img *ngIf="community.logo"
-                        src="{{ 'data:' + community.logo.type + ';base64,' + community.logo.picByte }}"
-                        alt="Post image"
-                        width="500"
-                        class="img-fluid com-img"
-                    />
-                    <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" [maxFileSize]="1000000"
-                    *ngIf="community.admin === ui.currentUserId"
-                    [styleClass]="'uploadBtn'"
-                    [chooseIcon]="'pi pi-plus'"
-                    [customUpload]="true"
-                    (onSelect)="onLogoUpload($event)"
-                    (uploadHandler)="addNewLogo(community)"
-                    ></p-fileUpload>
-
-                </div>
-                <div class="community-name-wrapper">
-                    <h1>{{community.name}}</h1>
-                    <small>b/{{community.name}}</small>
-                </div>
-            </div>
-        </div>
-        <button pButton pRipple type="button" label="Join" class="p-button-rounded" (click)="onJoinCommunity(community)"></button>
-    </div> -->
     <app-community-page-header [community]="community"></app-community-page-header>
+    <ng-container *ngIf="communityService.communityPosts$ | async as posts">
+        <div class="c-posts" *ngFor="let post of posts">
+            <app-community-post [communityPost]="post"></app-community-post>
+        </div>
+    </ng-container>
     <app-community-about [community]="community"></app-community-about>
 </ng-container>

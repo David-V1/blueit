@@ -137,6 +137,21 @@ export class PostService {
     return this.http.get<number>(`${this.url}/likes/${postId}`)
   }
 
+  public getPostsByCommunityId(communityId: number): void{
+    this.http.get<Post[]>(`${this.url}/community/${communityId}`)
+    .subscribe({
+      next: (posts) => {
+        console.log('posts', posts)
+        // this.postsSubject.next(posts);
+      },
+      error: (err) => {
+        console.log(err);
+        this.ui.onError('Error getting posts');
+      }
+    })
+  }
+
+
 
   // Declarative 
   userPosts$ = this.posts$.pipe(

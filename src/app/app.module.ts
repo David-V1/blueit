@@ -46,6 +46,10 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { CommunityPostComponent } from './components/community-post/community-post.component';
 import { CommunityPageHeaderComponent } from './components/community-page-header/community-page-header.component';
 
+//Angular Material
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -91,7 +95,9 @@ import { CommunityPageHeaderComponent } from './components/community-page-header
     CarouselModule,
     CardModule,
     InputTextareaModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
