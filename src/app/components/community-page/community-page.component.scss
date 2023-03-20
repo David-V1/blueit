@@ -1,32 +1,32 @@
-.page-banner-container {
-    .top-wrapper {
-        background-color: rgb(228, 137, 25);
-        height: 55px;
-    }
-    .bottom-wrapper {
-        .icon-name-container {
-            display: flex;
-            flex-direction: row;
-            .logo-wrapper {
-                .com-img {
-                    width: 100px;
-                    height: 100px;
-                    border-radius: 50%;
-                    margin: 0 10px;
-                    transform: translateY(-25%);
-                    object-fit: cover;
-                }
-            }
-        }
-    }
-}
-:host ::ng-deep {
-    .p-fileupload-choose  {
-        background-color: var(--yellow-500);
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        height: 25px;
-        width: 25px;
-    }
-}
+// .page-banner-container {
+//     .top-wrapper {
+//         background-color: rgb(228, 137, 25);
+//         height: 55px;
+//     }
+//     .bottom-wrapper {
+//         .icon-name-container {
+//             display: flex;
+//             flex-direction: row;
+//             .logo-wrapper {
+//                 .com-img {
+//                     width: 100px;
+//                     height: 100px;
+//                     border-radius: 50%;
+//                     margin: 0 10px;
+//                     transform: translateY(-25%);
+//                     object-fit: cover;
+//                 }
+//             }
+//         }
+//     }
+// }
+// :host ::ng-deep {
+//     .p-fileupload-choose  {
+//         background-color: var(--yellow-500);
+//         border: none;
+//         padding: 10px 20px;
+//         border-radius: 5px;
+//         height: 25px;
+//         width: 25px;
+//     }
+// }

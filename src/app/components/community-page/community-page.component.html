@@ -1,11 +1,10 @@
 <app-navigation></app-navigation>
 <ng-container *ngIf="communityService.selection$ | async as community">
-    <div class="page-banner-container">
+    <!-- <div class="page-banner-container">
         <div class="top-wrapper"></div>
         <div class="bottom-wrapper">
             <div class="icon-name-container">
                 <div class="logo-wrapper">
-                    <!-- returning BE Image Object (id, name, type, picByte) -->
                     <img *ngIf="community.logo"
                         src="{{ 'data:' + community.logo.type + ';base64,' + community.logo.picByte }}"
                         alt="Post image"
@@ -29,6 +28,7 @@
             </div>
         </div>
         <button pButton pRipple type="button" label="Join" class="p-button-rounded" (click)="onJoinCommunity(community)"></button>
-    </div>
+    </div> -->
+    <app-community-page-header [community]="community"></app-community-page-header>
     <app-community-about [community]="community"></app-community-about>
 </ng-container>

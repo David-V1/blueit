@@ -43,6 +43,8 @@ import { ProfilePostsComponent } from './components/profile-posts/profile-posts.
 import { CommunityPageComponent } from './components/community-page/community-page.component';
 import { CommunityAboutComponent } from './components/community-about/community-about.component';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import { CommunityPostComponent } from './components/community-post/community-post.component';
+import { CommunityPageHeaderComponent } from './components/community-page-header/community-page-header.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,9 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     ProfileCommentsComponent,
     ProfilePostsComponent,
     CommunityPageComponent,
-    CommunityAboutComponent
+    CommunityAboutComponent,
+    CommunityPostComponent,
+    CommunityPageHeaderComponent
   ],
   imports: [
     BrowserModule,

@@ -19,7 +19,7 @@ export class CommentComponent {
   public onCommentSubmit(){ 
     this.postService.addComment(this.comment, this.postService.currentPostId, this.ui.currentUserId!);
   }
-
+  //TODO: Reset the comment input to '' after submit
   commentTest() {
     this.commentService.getCommentsByPostId(this.postService.currentPostId);
     this.commentService.comment$.subscribe((data) => {

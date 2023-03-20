@@ -11,7 +11,7 @@ import { PostService } from 'src/app/services/post.service';
 })
 export class ProfilePostsComponent implements OnInit {
   @Input() userPost: any; // [{...}, {...}] array of post objects
-  showComments: boolean = false;
+  // showComments: boolean = false;
   numberOfComments: number = 0;
 
   constructor(public postService: PostService, public commentService: CommentService) {
@@ -29,10 +29,10 @@ export class ProfilePostsComponent implements OnInit {
     return date.fromNow();
   }
 
-  showCommentsToggle(postId: number) {
-    this.commentService.getNumberOfComments(postId);
-    this.showComments = !this.showComments;
-  }
+  // showCommentsToggle(postId: number) {
+  //   this.commentService.getNumberOfComments(postId);
+  //   // this.showComments = !this.showComments;
+  // }
 
 
 }
