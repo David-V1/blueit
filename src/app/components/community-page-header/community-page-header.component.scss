@@ -7,7 +7,9 @@
         .icon-name-container {
             display: flex;
             flex-direction: row;
+            width: 100%;
             .logo-wrapper {
+                margin-left: 1%;
                 .com-img {
                     width: 100px;
                     height: 100px;
@@ -16,6 +18,13 @@
                     transform: translateY(-25%);
                     object-fit: cover;
                 }
+            }
+            .community-name-wrapper {
+                margin-right: 5%;
+            }
+            #joinBtn {
+                height: min-content;
+                margin: .5% 0;
             }
         }
     }
@@ -26,7 +35,10 @@
         border: none;
         padding: 10px 20px;
         border-radius: 5px;
-        height: 25px;
-        width: 25px;
+        color: var(--white);
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        
     }
 }

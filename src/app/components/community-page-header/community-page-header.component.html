@@ -10,21 +10,24 @@
                     width="500"
                     class="img-fluid com-img"
                 />
-                <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" [maxFileSize]="1000000"
-                *ngIf="community.admin === ui.currentUserId"
-                [styleClass]="'uploadBtn'"
-                [chooseIcon]="'pi pi-plus'"
+                <p-fileUpload  *ngIf="community.admin === ui.currentUserId"
+                mode="basic"
+                accept="image/*" 
+                [maxFileSize]="1000000"
+                [chooseLabel]="'Update Logo'"
+                [uploadLabel]="'Upload'"
                 [customUpload]="true"
                 (onSelect)="onLogoUpload($event)"
-                (uploadHandler)="addNewLogo(community)"
+                (uploadHandler)="addNewLogo()"
                 ></p-fileUpload>
 
             </div>
+            <!-- TODO: Add community Title -->
             <div class="community-name-wrapper">
                 <h1>{{community.name}}</h1>
                 <small>b/{{community.name}}</small>
             </div>
+            <button pButton pRipple type="button" label="Join" class="p-button-rounded" id="joinBtn" (click)="onJoinCommunity(community)"></button>
         </div>
     </div>
-    <button pButton pRipple type="button" label="Join" class="p-button-rounded" (click)="onJoinCommunity(community)"></button>
 </div>

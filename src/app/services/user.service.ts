@@ -162,7 +162,6 @@ export class UserService {
 
     public addProfilePic(user: User): void {
     const formData = this.prepareProfilePicForm(user);
-    console.log('FORM DATA: ',formData)
     this.http.post<User>(`${this.url}/${user.id}`, formData)
     .pipe(take(1))
     .subscribe({

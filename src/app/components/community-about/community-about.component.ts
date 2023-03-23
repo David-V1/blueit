@@ -32,7 +32,7 @@ export class CommunityAboutComponent implements OnDestroy{
     this.descriptionClicked = true;
   }
   public onDescriptionBlur(event: any) {
-    // FocusEvent doesnt have a relatedTarget property id 
+    // using Any, FocusEvent doesnt have a relatedTarget property id 
     if (event.relatedTarget !== null && event.relatedTarget.id === 'cancelDescription') {
       event.stopPropagation();
     } 

@@ -75,7 +75,7 @@ export class CommunityService implements OnInit {
         location.reload();
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
         this.ui.openSnackBar('Error creating community');
       }
     });
@@ -116,6 +116,7 @@ export class CommunityService implements OnInit {
     .subscribe({
       next: () => {
         this.ui.openSnackBar('Logo added');
+        this.onCommunitySelection(comId);
       },
       error: (err) => {
         console.error(err);
@@ -166,11 +167,9 @@ export class CommunityService implements OnInit {
     this.selectedCommunitySubject.next(id);
     this.userCommunityService.getNumberOfMembers(id);
     this.getCommunityPosts(id);
-    console.log('onCommunitySelection RAN!', id)
   }
   
   public selection$ = this.selectedCommunity$.pipe(
-    tap((id) => console.log('selection$ ran!', id)),
     switchMap((communityId: number | null) => this.http.get<Community>(`${this.url}/comId/${communityId}`)),
     catchError((err) => {
       console.error(err);
@@ -184,6 +183,7 @@ export class CommunityService implements OnInit {
     this.communityDescriptionSubject.next(description);
   }
   
+    // Note: Doesn't update the view with this declarative method. no refactor needed
   public getCommunityPosts(communityId: number): void {
     this.http.get<Post[]>(`http://localhost:8080/api/post/community/${communityId}`).pipe(take(1))
     .subscribe({
@@ -196,24 +196,6 @@ export class CommunityService implements OnInit {
       }
     });
   }
-
-  // Doesn't update the view with this declarative method..
-  /*public communityPosts$ = this.selectedCommunityP$.pipe(
-    tap((id) => console.log('communityPosts$ ran!', id)),
-    switchMap((communityId: number) => this.http.get<Post[]>(`http://localhost:8080/api/post/community/${communityId}`)),
-    take(1),
-    tap((posts) => {
-      console.log('communityPosts$ ran!')
-      console.log(posts);
-    }),
-    catchError((err) => {
-      console.error(err);
-      this.ui.openSnackBar('Error getting posts');
-      return of(err);
-    }),
-    retry(1),
-  );
-  */
 
   // Update
 
