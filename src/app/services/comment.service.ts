@@ -13,8 +13,6 @@ export class CommentService {
 
   private url: string = 'http://localhost:8080/api/comments';
 
-  public currentPostId: number = localStorage.getItem('currentPostId') ? Number(localStorage.getItem('currentPostId')) : 0; // added due to DI cycle w/ PostService
-
   private commentSubject: Subject<Comment> = new Subject<Comment>();
   public comment$ = this.commentSubject.asObservable();
 
@@ -31,10 +29,12 @@ export class CommentService {
 
   //Create
   public voteComment(userId: string, commentId: number, vote: string): void {
+    const selectedPostId: number = Number(localStorage.getItem('currentPostId'));
     this.http.post<Comment>(`${this.url}/vote/${userId}/${commentId}/${vote}`, null)
     .subscribe({
       next: () => {
-        this.getCommentsByPostId(this.currentPostId);
+        console.log('voteComment() this.currentPostId: => ', selectedPostId)
+        this.getCommentsByPostId(selectedPostId);
       },
       error: (err) => {
         console.log(err);
