@@ -71,8 +71,6 @@ export class UserService {
           icon: 'pi pi-fw pi-user-edit',
           command: () => {
             this.postService.getAllPosts();
-            //TODO: FIX this...
-            // this.commentService.getCommentsByPostId(this.postService.currentPostId);
             if (this.ui.currentUserId) {
               this.commentService.getNumCommentsOfUser(this.ui.currentUserId);
             }

@@ -24,14 +24,17 @@ export class CommunityService implements OnInit {
   private communitySubject: Subject<Community> = new Subject<Community>();
   public community$ = this.communitySubject.asObservable();
 
-  private selectedComunnitySubject: BehaviorSubject<number> = new BehaviorSubject<number>(this.selectedCommunityId);
-  public selectedCommunity$: Observable<number> = this.selectedComunnitySubject.asObservable();
+  private selectedCommunitySubject: BehaviorSubject<number> = new BehaviorSubject<number>(this.selectedCommunityId);
+  public selectedCommunity$: Observable<number> = this.selectedCommunitySubject.asObservable();
 
   private communityDescriptionSubject: Subject<string> = new Subject<string>();
   public communityDescription$ = this.communityDescriptionSubject.asObservable();
 
   private navbarMenuSubject: BehaviorSubject<MenuItem[]> = new BehaviorSubject<MenuItem[]>(this.menuItems);
   public navbarMenu$ = this.navbarMenuSubject.asObservable();
+
+  private communityPostsSubject: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]); // any[]
+  public communityPosts$ = this.communityPostsSubject.asObservable();
 
   constructor(public ui: UiService, private http: HttpClient, private userCommunityService: UserCommunityService) {
     this.getAllCommunities();
@@ -63,7 +66,6 @@ export class CommunityService implements OnInit {
 
 
   // Create
-
   public createCommunity(community: Community, admin: string): void {
     this.http.post<Community>(`${this.url}/admin/${admin}`, community).pipe(take(1))
     .subscribe({
@@ -130,7 +132,7 @@ export class CommunityService implements OnInit {
     this.http.post<string>(`${this.url}/description/${id}`, description).pipe(take(1))
     .subscribe({
       next: () => {
-        this.selectedComunnitySubject.next(id);
+        this.selectedCommunitySubject.next(id);
         this.ui.openSnackBar('Description added');
       },
       error: (err) => {
@@ -156,17 +158,19 @@ export class CommunityService implements OnInit {
   }
 
   public onCommunitySelection(id: number): void {
-    console.log('onCommunitySelection RAN!')
     if (!id) {
       this.ui.onError('No community selected');
       return;
     }
     localStorage.setItem('selectedCommunityId', id.toString())
-    this.selectedComunnitySubject.next(id);
+    this.selectedCommunitySubject.next(id);
     this.userCommunityService.getNumberOfMembers(id);
+    this.getCommunityPosts(id);
+    console.log('onCommunitySelection RAN!', id)
   }
   
   public selection$ = this.selectedCommunity$.pipe(
+    tap((id) => console.log('selection$ ran!', id)),
     switchMap((communityId: number | null) => this.http.get<Community>(`${this.url}/comId/${communityId}`)),
     catchError((err) => {
       console.error(err);
@@ -179,11 +183,29 @@ export class CommunityService implements OnInit {
   public onCommunityDescriptionChange(description: string): void {
     this.communityDescriptionSubject.next(description);
   }
+  
+  public getCommunityPosts(communityId: number): void {
+    this.http.get<Post[]>(`http://localhost:8080/api/post/community/${communityId}`).pipe(take(1))
+    .subscribe({
+      next: (posts) => {
+        this.communityPostsSubject.next(posts);
+      },
+      error: (err) => {
+        console.error(err);
+        this.ui.openSnackBar('Error getting posts');
+      }
+    });
+  }
 
-  communityPosts$ = this.selectedCommunity$.pipe(
+  // Doesn't update the view with this declarative method..
+  /*public communityPosts$ = this.selectedCommunityP$.pipe(
+    tap((id) => console.log('communityPosts$ ran!', id)),
     switchMap((communityId: number) => this.http.get<Post[]>(`http://localhost:8080/api/post/community/${communityId}`)),
     take(1),
-    tap((posts) => console.log(posts)),
+    tap((posts) => {
+      console.log('communityPosts$ ran!')
+      console.log(posts);
+    }),
     catchError((err) => {
       console.error(err);
       this.ui.openSnackBar('Error getting posts');
@@ -191,6 +213,7 @@ export class CommunityService implements OnInit {
     }),
     retry(1),
   );
+  */
 
   // Update
 
