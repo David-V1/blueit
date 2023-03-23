@@ -45,10 +45,12 @@ import { CommunityAboutComponent } from './components/community-about/community-
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { CommunityPostComponent } from './components/community-post/community-post.component';
 import { CommunityPageHeaderComponent } from './components/community-page-header/community-page-header.component';
+import { AvatarModule } from 'primeng/avatar';
 
 //Angular Material
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
+import { CommunityPageCreatePostComponent } from './components/community-page-create-post/community-page-create-post.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +72,8 @@ import {MatButtonModule} from '@angular/material/button';
     CommunityPageComponent,
     CommunityAboutComponent,
     CommunityPostComponent,
-    CommunityPageHeaderComponent
+    CommunityPageHeaderComponent,
+    CommunityPageCreatePostComponent
   ],
   imports: [
     BrowserModule,
@@ -96,6 +99,7 @@ import {MatButtonModule} from '@angular/material/button';
     CardModule,
     InputTextareaModule,
     ConfirmDialogModule,
+    AvatarModule,
     MatCardModule,
     MatButtonModule
   ],

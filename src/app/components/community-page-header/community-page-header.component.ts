@@ -38,5 +38,4 @@ export class CommunityPageHeaderComponent {
 
   // TODO: add a random background color to the community. Once intialized, the color should not change. 
 
-
 }

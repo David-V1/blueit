@@ -1,5 +1,5 @@
 <div class="desciption-container">
-    <h6>About Community</h6>
+    <h6 class="mt-2 mb-5">About Community</h6>
     
     <div class="add-description-wrapper">
         <textarea
@@ -39,7 +39,10 @@
         
     </div>
     <p-divider></p-divider>
-    <button (click)="ui.changePage(pageName.POST)">Create Post</button>
-
+    <p-button 
+    label="Create Post" 
+    styleClass="p-button-rounded"
+    id="create-post-btn" 
+    (click)="ui.changePage(pageName.POST)"
+    ></p-button>
 </div>
-<button (click)="test()">click Test</button>

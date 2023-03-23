@@ -8,6 +8,7 @@ import { CommunityService } from 'src/app/services/community.service';
   styleUrls: ['./community-page.component.scss']
 })
 export class CommunityPageComponent {
+  
   community = {} as Community;
 
   constructor(public communityService: CommunityService) {}
