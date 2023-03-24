@@ -27,7 +27,12 @@
                 <h1>{{community.name}}</h1>
                 <small>b/{{community.name}}</small>
             </div>
-            <button pButton pRipple type="button" label="Join" class="p-button-rounded" id="joinBtn" (click)="onJoinCommunity(community)"></button>
+            <button pButton pRipple type="button" 
+            label=" {{isMember ? 'Leave' : 'Join'}}" 
+            class="p-button-rounded" 
+            id="joinBtn" 
+            (click)="onJoinCommunity(community)"
+            ></button>
         </div>
     </div>
 </div>

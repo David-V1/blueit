@@ -15,12 +15,11 @@ export class CommentComponent {
   constructor(public ui: UiService, public commentService: CommentService ,public postService: PostService) {
     this.postService.getPostById(this.postService.currentPostId)
    }
-  //TODO: BUG, when adding the a comment and then voting on own comment, it will return comments from other posts except the current post
+
   public onCommentSubmit(){ 
     this.postService.addComment(this.comment, this.postService.currentPostId, this.ui.currentUserId!);
     this.comment = {} as Comment;
   }
-  //TODO: Reset the comment input to '' after submit
   commentTest() {
     this.commentService.getCommentsByPostId(this.postService.currentPostId);
     this.commentService.comment$.subscribe((data) => {

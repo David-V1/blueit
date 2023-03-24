@@ -167,6 +167,7 @@ export class CommunityService implements OnInit {
     this.selectedCommunitySubject.next(id);
     this.userCommunityService.getNumberOfMembers(id);
     this.getCommunityPosts(id);
+    this.userCommunityService.getIsMember(id);
   }
   
   public selection$ = this.selectedCommunity$.pipe(

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { UserCommunity } from '../models/UserCommunity';
 import { HttpClient } from '@angular/common/http';
 import { Community } from '../models/Community';
-import { BehaviorSubject, take } from 'rxjs';
+import { BehaviorSubject, switchMap, take } from 'rxjs';
 import { UiService } from './ui.service';
 
 @Injectable({
@@ -10,12 +9,18 @@ import { UiService } from './ui.service';
 })
 export class UserCommunityService {
   url: string = 'http://localhost:8080/api/u_community';
+  
+  private isMemberSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isMemberObservable$ = this.isMemberSubject.asObservable();
 
   private membersSubject = new BehaviorSubject<number>(0);
   public members$ = this.membersSubject.asObservable();
 
   constructor(private ui: UiService, private http: HttpClient) { }
+  
 
+
+  //TODO: Add method to leave Community. BTN must reflect the current community status.
   // Create
   public joinCoummunity(community: Community): void {
     const user = this.ui.currentUserId;
@@ -23,8 +28,10 @@ export class UserCommunityService {
     .subscribe({
       next: () => {
       this.ui.openSnackBar('Joined Community');
+
       if (community.id) {
         this.getNumberOfMembers(community.id);
+        this.isMemberSubject.next(true);
       }
       
     },
@@ -45,10 +52,40 @@ export class UserCommunityService {
         this.ui.onError('Oops! Something went wrong');
       }
     })
+  }
 
+  public getIsMember(communityId: Number): void {
+    const user = this.ui.currentUserId;
+    this.http.get<boolean>(`${this.url}/is_member/u/${user}/b/${communityId}`).pipe(take(1))
+    .subscribe({
+      next: (isMember) => {
+        this.isMemberSubject.next(isMember);
+        console.log('isMember ',isMember);
+      },
+      error: () => {
+        console.error('Error getting number of members');
+        this.ui.onError('Oops! Something went wrong');
+      }
+    })
   }
 
   // Update
 
   // Delete
+  public leaveCommunity(community: Community): void {
+    const user = this.ui.currentUserId;
+    this.http.delete<void>(`${this.url}/leave_community/u/${user}/b/${community.id}`).pipe(take(1))
+    .subscribe({
+      next: () => {
+        this.ui.openSnackBar('Left Community');
+        if (community.id) {
+          this.getNumberOfMembers(community.id);
+          this.isMemberSubject.next(false);
+        }
+      },
+      error: () => {
+        this.ui.onError('Error leaving community');
+      }
+    })
+  }
 }
