@@ -1,0 +1,38 @@
+<div class="page-banner-container">
+    <div class="top-wrapper"></div>
+    <div class="bottom-wrapper">
+        <div class="icon-name-container">
+            <div class="logo-wrapper">
+                <!-- returning BE Image Object (id, name, type, picByte) -->
+                <img *ngIf="community.logo"
+                    src="{{ 'data:' + community.logo.type + ';base64,' + community.logo.picByte }}"
+                    alt="Post image"
+                    width="500"
+                    class="img-fluid com-img"
+                />
+                <p-fileUpload  *ngIf="community.admin === ui.currentUserId"
+                mode="basic"
+                accept="image/*" 
+                [maxFileSize]="1000000"
+                [chooseLabel]="'Update Logo'"
+                [uploadLabel]="'Upload'"
+                [customUpload]="true"
+                (onSelect)="onLogoUpload($event)"
+                (uploadHandler)="addNewLogo()"
+                ></p-fileUpload>
+
+            </div>
+            <!-- TODO: Add community Title -->
+            <div class="community-name-wrapper">
+                <h1>{{community.name}}</h1>
+                <small>b/{{community.name}}</small>
+            </div>
+            <button pButton pRipple type="button" 
+            label=" {{isMember ? 'Leave' : 'Join'}}" 
+            class="p-button-rounded" 
+            id="joinBtn" 
+            (click)="onJoinCommunity(community)"
+            ></button>
+        </div>
+    </div>
+</div>

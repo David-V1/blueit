@@ -1,5 +1,5 @@
 import { FileHandler } from './FileHandler';
-import { User } from './User';
+
 
 export interface Community {
   id: number | null;
@@ -8,5 +8,4 @@ export interface Community {
   description: string;
   logo: FileHandler;
   admin: string;
-  members: string[]; //user's UUIDs
 }

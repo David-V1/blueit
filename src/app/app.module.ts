@@ -43,6 +43,14 @@ import { ProfilePostsComponent } from './components/profile-posts/profile-posts.
 import { CommunityPageComponent } from './components/community-page/community-page.component';
 import { CommunityAboutComponent } from './components/community-about/community-about.component';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import { CommunityPostComponent } from './components/community-post/community-post.component';
+import { CommunityPageHeaderComponent } from './components/community-page-header/community-page-header.component';
+import { AvatarModule } from 'primeng/avatar';
+
+//Angular Material
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import { CommunityPageCreatePostComponent } from './components/community-page-create-post/community-page-create-post.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +70,10 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     ProfileCommentsComponent,
     ProfilePostsComponent,
     CommunityPageComponent,
-    CommunityAboutComponent
+    CommunityAboutComponent,
+    CommunityPostComponent,
+    CommunityPageHeaderComponent,
+    CommunityPageCreatePostComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +98,10 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     CarouselModule,
     CardModule,
     InputTextareaModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    AvatarModule,
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

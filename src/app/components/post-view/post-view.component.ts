@@ -13,6 +13,8 @@ export class PostViewComponent {
    }
 
   test(){
+    console.log('test')
+    console.log('FROM post-view.component.ts: ')
   }
 
 }

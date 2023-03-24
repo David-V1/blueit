@@ -5,6 +5,8 @@ import { PageName } from '../enums/PageEnum';
 import { Community } from '../models/Community';
 import { BehaviorSubject, catchError, Observable, of, retry, Subject, switchMap, take, tap } from 'rxjs';
 import { MenuItem } from 'primeng/api';
+import { UserCommunityService } from './user-community.service';
+import { Post } from '../models/Post';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +24,8 @@ export class CommunityService implements OnInit {
   private communitySubject: Subject<Community> = new Subject<Community>();
   public community$ = this.communitySubject.asObservable();
 
-  private selectedComunnitySubject: BehaviorSubject<number> = new BehaviorSubject<number>(this.selectedCommunityId);
-  public selectedCommunity$: Observable<number> = this.selectedComunnitySubject.asObservable();
+  private selectedCommunitySubject: BehaviorSubject<number> = new BehaviorSubject<number>(this.selectedCommunityId);
+  public selectedCommunity$: Observable<number> = this.selectedCommunitySubject.asObservable();
 
   private communityDescriptionSubject: Subject<string> = new Subject<string>();
   public communityDescription$ = this.communityDescriptionSubject.asObservable();
@@ -31,8 +33,10 @@ export class CommunityService implements OnInit {
   private navbarMenuSubject: BehaviorSubject<MenuItem[]> = new BehaviorSubject<MenuItem[]>(this.menuItems);
   public navbarMenu$ = this.navbarMenuSubject.asObservable();
 
+  private communityPostsSubject: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]); // any[]
+  public communityPosts$ = this.communityPostsSubject.asObservable();
 
-  constructor(public ui: UiService, private http: HttpClient) {
+  constructor(public ui: UiService, private http: HttpClient, private userCommunityService: UserCommunityService) {
     this.getAllCommunities();
     // persist community view
     if (this.selectedCommunityId !== null || this.selectedCommunityId !== 0) {
@@ -62,7 +66,6 @@ export class CommunityService implements OnInit {
 
 
   // Create
-
   public createCommunity(community: Community, admin: string): void {
     this.http.post<Community>(`${this.url}/admin/${admin}`, community).pipe(take(1))
     .subscribe({
@@ -72,7 +75,7 @@ export class CommunityService implements OnInit {
         location.reload();
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
         this.ui.openSnackBar('Error creating community');
       }
     });
@@ -81,7 +84,8 @@ export class CommunityService implements OnInit {
   // Community object for Nav Bar
   public navbarCommunities(): MenuItem[] {
     this.getAllCommunities();
-    this.communitites.subscribe((communities) => {
+    this.communitites.pipe(take(1), retry(3))
+    .subscribe((communities) => {
       this.menuItems = [...communities.map((community) => {
         return {
           label: community.name,
@@ -112,6 +116,7 @@ export class CommunityService implements OnInit {
     .subscribe({
       next: () => {
         this.ui.openSnackBar('Logo added');
+        this.onCommunitySelection(comId);
       },
       error: (err) => {
         console.error(err);
@@ -125,10 +130,10 @@ export class CommunityService implements OnInit {
       this.ui.onError('Oops! Something went wrong');
       return;
     }
-    this.http.post<Community>(`${this.url}/description/${id}`, description).pipe(take(1))
+    this.http.post<string>(`${this.url}/description/${id}`, description).pipe(take(1))
     .subscribe({
       next: () => {
-        this.selectedComunnitySubject.next(id);
+        this.selectedCommunitySubject.next(id);
         this.ui.openSnackBar('Description added');
       },
       error: (err) => {
@@ -159,7 +164,10 @@ export class CommunityService implements OnInit {
       return;
     }
     localStorage.setItem('selectedCommunityId', id.toString())
-    this.selectedComunnitySubject.next(id);
+    this.selectedCommunitySubject.next(id);
+    this.userCommunityService.getNumberOfMembers(id);
+    this.getCommunityPosts(id);
+    this.userCommunityService.getIsMember(id);
   }
   
   public selection$ = this.selectedCommunity$.pipe(
@@ -174,6 +182,20 @@ export class CommunityService implements OnInit {
 
   public onCommunityDescriptionChange(description: string): void {
     this.communityDescriptionSubject.next(description);
+  }
+  
+    // Note: Doesn't update the view with this declarative method. no refactor needed
+  public getCommunityPosts(communityId: number): void {
+    this.http.get<Post[]>(`http://localhost:8080/api/post/community/${communityId}`).pipe(take(1))
+    .subscribe({
+      next: (posts) => {
+        this.communityPostsSubject.next(posts);
+      },
+      error: (err) => {
+        console.error(err);
+        this.ui.openSnackBar('Error getting posts');
+      }
+    });
   }
 
   // Update

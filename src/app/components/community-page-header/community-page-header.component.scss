@@ -1,0 +1,44 @@
+.page-banner-container {
+    .top-wrapper {
+        background-color: rgb(228, 137, 25);
+        height: 55px;
+    }
+    .bottom-wrapper {
+        background-color: rgb(33, 33, 33);
+        .icon-name-container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            margin: 0 10% 5% 10%;
+            .logo-wrapper {
+                margin-left: 1%;
+                .com-img {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    margin: 0 10px;
+                    transform: translateY(-25%);
+                    object-fit: cover;
+                }
+            }
+            .community-name-wrapper {
+                margin-right: 5%;
+            }
+            #joinBtn {
+                height: min-content;
+                margin: .5% 0;
+            }
+        }
+    }
+}
+:host ::ng-deep {
+    .p-fileupload-choose  {
+        background-color: transparent;
+        background-repeat: no-repeat;
+        border: none;
+        cursor: pointer;
+        overflow: hidden;
+        outline: none;
+        
+    }
+}

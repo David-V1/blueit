@@ -7,6 +7,7 @@ import { MenuItem } from 'primeng/api';
 import { PageName } from '../enums/PageEnum';
 import { CommunityService } from './community.service';
 import { PostService } from './post.service';
+import { CommentService } from './comment.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class UserService {
   public menu$ = this.menuSubject.asObservable();
 
 
-  constructor(public ui: UiService, public http:HttpClient, private communityService: CommunityService, private postService: PostService) {
+  constructor(public ui: UiService, public http:HttpClient, private communityService: CommunityService, private postService: PostService, private commentService: CommentService) {
     const email = localStorage.getItem('email');
     const password = localStorage.getItem('password');
     const username = localStorage.getItem('username'); // for nav name display
@@ -70,6 +71,9 @@ export class UserService {
           icon: 'pi pi-fw pi-user-edit',
           command: () => {
             this.postService.getAllPosts();
+            if (this.ui.currentUserId) {
+              this.commentService.getNumCommentsOfUser(this.ui.currentUserId);
+            }
             this.ui.changePage(PageName.PROFILE);
           }
         },
@@ -158,7 +162,6 @@ export class UserService {
 
     public addProfilePic(user: User): void {
     const formData = this.prepareProfilePicForm(user);
-    console.log('FORM DATA: ',formData)
     this.http.post<User>(`${this.url}/${user.id}`, formData)
     .pipe(take(1))
     .subscribe({

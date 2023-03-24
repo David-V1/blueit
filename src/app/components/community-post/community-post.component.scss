@@ -1,0 +1,42 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    color: #000;
+    .likes-container {
+      margin: 20px 20px 0 0;
+    }
+    .post-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      max-width: 640px;
+      max-height: 620px;
+      img {
+        max-width: 640px;
+        max-height: 600px;
+        object-fit: contain;
+        object-position: center;
+        height: auto;
+        display: block;
+      }
+    }
+  }
+  .example-card {
+    max-width: 400px;
+    color: #000;
+    .example-header-image {
+      background-image: url('../../../assets/img/img_placeholder.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 72%;
+    }
+    img:hover {
+      cursor: pointer;
+    }
+  }
+  

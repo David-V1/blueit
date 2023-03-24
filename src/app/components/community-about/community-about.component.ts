@@ -4,6 +4,8 @@ import { CommunityService } from 'src/app/services/community.service';
 import { UiService } from 'src/app/services/ui.service';
 import {ConfirmationService} from 'primeng/api';
 import { Subscription } from 'rxjs';
+import { UserCommunityService } from 'src/app/services/user-community.service';
+import { PageName } from 'src/app/enums/PageEnum';
 
 @Component({
   selector: 'app-community-about',
@@ -12,13 +14,14 @@ import { Subscription } from 'rxjs';
   providers: [ConfirmationService]
 })
 export class CommunityAboutComponent implements OnDestroy{
+  pageName = PageName;
   @Input() community = {} as Community;
   descriptionClicked = false;
   originalDescription = '';
   descriptionSubscription: Subscription;
   chars: number = 0;
 
-  constructor(public communityService: CommunityService, public ui: UiService,private confirmationService: ConfirmationService) {
+  constructor(public communityService: CommunityService, public ui: UiService,private confirmationService: ConfirmationService, public userCommunityService: UserCommunityService) {
     this.descriptionSubscription = this.communityService.selection$.subscribe((community: Community) => {
       this.originalDescription = community.description;
     });
@@ -29,7 +32,7 @@ export class CommunityAboutComponent implements OnDestroy{
     this.descriptionClicked = true;
   }
   public onDescriptionBlur(event: any) {
-    // FocusEvent doesnt have a relatedTarget property id 
+    // using Any, FocusEvent doesnt have a relatedTarget property id 
     if (event.relatedTarget !== null && event.relatedTarget.id === 'cancelDescription') {
       event.stopPropagation();
     } 
