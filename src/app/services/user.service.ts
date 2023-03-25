@@ -166,6 +166,7 @@ export class UserService {
     .pipe(take(1))
     .subscribe({
       next: () => {
+        this.getUserById(user.id!);
         this.ui.openSnackBar(`Profile picture updated!`);
       },
       error: err => {

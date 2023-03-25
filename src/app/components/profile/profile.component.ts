@@ -43,19 +43,10 @@ export class ProfileComponent {
 
   public addNewProfilePic(): void {
     this.userService.addProfilePic(this.user)
-    location.reload();
   }
 
  
   test() {
     console.log('test ran!')
-    // this.userService.user$.subscribe(user => {
-    //   console.log(user)
-    // });
-    // this.postService.getAllPostByUserId(this.ui.currentUserId!)
-    this.postService.getAllPosts();
-    // this.postService.posts$.subscribe(x => console.log(x))
-    this.postService.userPosts$.subscribe(x => console.log(x))
-
   }
 }
