@@ -109,9 +109,9 @@ export class CommunityService implements OnInit {
       this.ui.onError('Please select a logo');
       return;
     }
-    const comId = this.selectedCommunityId;
+    const comId = Number(localStorage.getItem('selectedCommunityId'))
     const image = this.imageFormData(imageFile);
-    
+
     this.http.post<Community>(`${this.url}/upload/${comId}`, image).pipe(take(1))
     .subscribe({
       next: () => {

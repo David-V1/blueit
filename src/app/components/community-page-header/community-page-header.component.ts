@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, ViewChild } from '@angular/core';
 import { Community } from 'src/app/models/Community';
 import { CommunityService } from 'src/app/services/community.service';
 import { UiService } from 'src/app/services/ui.service';
@@ -6,6 +6,7 @@ import { UserCommunityService } from 'src/app/services/user-community.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FileHandler } from 'src/app/models/FileHandler';
 import { Subscription } from 'rxjs';
+import { FileUpload } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-community-page-header',
@@ -35,6 +36,7 @@ export class CommunityPageHeaderComponent implements OnDestroy {
   }
   public addNewLogo(): void {
     this.communityService.addCommunityLogo(this.communityLogo);
+
   }
 
   public onJoinCommunity(community: Community): void {

@@ -11,8 +11,10 @@
                     class="img-fluid com-img"
                 />
                 <p-fileUpload  *ngIf="community.admin === ui.currentUserId"
+                name="communityLogo"
                 mode="basic"
-                accept="image/*" 
+                accept="image/png, image/jpeg" 
+                [fileLimit]="1"
                 [maxFileSize]="1000000"
                 [chooseLabel]="'Update Logo'"
                 [uploadLabel]="'Upload'"

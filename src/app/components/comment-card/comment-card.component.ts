@@ -22,7 +22,6 @@ export class CommentCardComponent implements OnInit {
     this.comments$ = this.commentService.comments$
     .pipe(
       map((comments: Comment[]) => {
-        //TODO: sort check for null
         console.log('from RxJs map', comments)
         return comments.sort((a, b) =>  b.likes - a.likes)
       }))
@@ -40,6 +39,10 @@ export class CommentCardComponent implements OnInit {
       this.commentService.voteComment(this.ui.currentUserId!, comment.id!, 'false')
     }
     
+  }
+  test(comments: any) {
+    console.log('test')
+    console.log(comments)
   }
 
 }

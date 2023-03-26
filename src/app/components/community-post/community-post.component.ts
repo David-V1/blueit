@@ -22,7 +22,8 @@ export class CommunityPostComponent {
   }
 
 
-  test(){
-    this.postService.getPostsByCommunityId(this.communityPost.id);
+  test(c: any){
+    console.log('test ran!', c);
+    // this.postService.getPostsByCommunityId(this.communityPost.id);
   }
 }
