@@ -1,0 +1,21 @@
+<ng-container *ngIf="ui.isLoggedIn">
+    <textarea
+    [rows]="5"
+    [cols]="20"
+    pInputTextarea
+    [autoResize]="true"
+    placeholder="Enter your comment here..."
+    class="text-area"
+    [(ngModel)]="comment.commentText"
+    ></textarea>
+    <div class="btn-container d-flex justify-content-end w-100">
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="comment"
+        class="p-button-rounded p-button-secondary"
+        (click)="onCommentSubmit()"
+      ></button>
+    </div>
+  </ng-container>

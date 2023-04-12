@@ -1,28 +1,4 @@
-<!-- TODO: comment-text area separate component -->
 <div class="comment-text-container">
-  <ng-container *ngIf="ui.isLoggedIn">
-    <textarea
-    [rows]="5"
-    [cols]="20"
-    pInputTextarea
-    [autoResize]="true"
-    placeholder="Enter your comment here..."
-    class="text-area"
-    [(ngModel)]="comment.commentText"
-  ></textarea>
-  <div class="btn-container d-flex justify-content-end w-100">
-    <button
-      pButton
-      pRipple
-      type="button"
-      label="comment"
-      class="p-button-rounded p-button-secondary"
-      (click)="onCommentSubmit()"
-    ></button>
-  </div>
-  </ng-container>
-  
+  <app-comment-text-area></app-comment-text-area>
   <app-comment-card></app-comment-card>
 </div>
-
-<!-- <button (click)="commentTest()">Comment Test</button> -->

@@ -51,6 +51,7 @@ import { AvatarModule } from 'primeng/avatar';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import { CommunityPageCreatePostComponent } from './components/community-page-create-post/community-page-create-post.component';
+import { CommentTextAreaComponent } from './components/comment-text-area/comment-text-area.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { CommunityPageCreatePostComponent } from './components/community-page-cr
     CommunityAboutComponent,
     CommunityPostComponent,
     CommunityPageHeaderComponent,
-    CommunityPageCreatePostComponent
+    CommunityPageCreatePostComponent,
+    CommentTextAreaComponent
   ],
   imports: [
     BrowserModule,
